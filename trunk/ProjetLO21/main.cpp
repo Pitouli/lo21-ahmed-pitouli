@@ -1,11 +1,6 @@
 #include <QtGui/QApplication>
 #include "mainwindow.h"
 
-///test
-
-
-
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -14,6 +9,3 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
-
-
-pifpafpoudf
