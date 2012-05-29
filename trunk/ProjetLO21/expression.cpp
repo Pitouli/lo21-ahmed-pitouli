@@ -29,7 +29,7 @@ expression::Complexe::Complexe(const Complexe& c):Nombre(12){
 }
 
 Complexe* expression::Complexe::operator+(const Nombre& n){
-    Complexe* res;
+    Complexe* res = NULL;
     //const Nombre* temp;
     const Complexe* tempC;
     const Reel* tempR;
@@ -60,7 +60,7 @@ Complexe* expression::Complexe::operator+(double c){
 }
 
 Complexe* expression::Complexe::operator-(const Nombre& n){
-    Complexe* res;
+    Complexe* res = NULL;
     //const Nombre* temp;
     const Complexe* tempC;
     const Reel* tempR;
@@ -88,6 +88,74 @@ Complexe* expression::Complexe::operator-(const Nombre& n){
 
 Complexe* expression::Complexe::operator-(double c){
     return new Complexe(getPartieI(),getPartieR()-c);
+}
+
+Complexe* expression::Complexe::operator*(const Nombre& n){
+    Complexe* res = NULL;
+    //const Nombre* temp;
+    const Complexe* tempC;
+    const Reel* tempR;
+    const Entier* tempE;
+    const Rationnel* tempRat;
+    switch(n.getType()){
+        case 11:    tempR = dynamic_cast <const Reel*> (&n);
+                    res=new Complexe(tempR->getVal()*getPartieI(),tempR->getVal()*getPartieR());
+                    break;
+        case 12:    tempC = dynamic_cast <const Complexe*> (&n);
+                    res=new Complexe((getPartieR()*tempC->getPartieI())+(tempC->getPartieR()*getPartieI()),
+                                     (getPartieR()*tempC->getPartieR())+(getPartieI()*tempC->getPartieI()));
+                    break;
+        case 21:    tempE = dynamic_cast <const Entier*> (&n);
+                    res=new Complexe(tempE->getVal()*getPartieI(),getPartieR()*tempE->getVal());
+                    break;
+        case 22:    tempRat = dynamic_cast <const Rationnel*> (&n);
+                    res=new Complexe(new Entier(getPartieI()),
+                                     new Rationnel(tempRat->getNum()-(getPartieR()*tempRat->getDenom()),
+                                                   tempRat->getDenom()));
+                    new Complexe(new Rationnel(getPartieI()*tempRat->getNum(),tempRat->getDenom()),
+                                 new Rationnel(getPartieR()*tempRat->getNum(),tempRat->getDenom()));
+                    break;
+        default:    break;
+    };
+    return res;
+}
+
+Complexe* expression::Complexe::operator*(double c){
+    return new Complexe(c*getPartieI(),c*getPartieR());
+}
+
+Complexe* expression::Complexe::operator*(const Nombre& n){
+    Complexe* res = NULL;
+    //const Nombre* temp;
+    const Complexe* tempC;
+    const Reel* tempR;
+    const Entier* tempE;
+    const Rationnel* tempRat;
+    switch(n.getType()){
+        case 11:    tempR = dynamic_cast <const Reel*> (&n);
+                    res=new Complexe(tempR->getVal()*getPartieI(),tempR->getVal()*getPartieR());
+                    break;
+        case 12:    tempC = dynamic_cast <const Complexe*> (&n);
+                    res=new Complexe((getPartieR()*tempC->getPartieI())+(tempC->getPartieR()*getPartieI()),
+                                     (getPartieR()*tempC->getPartieR())+(getPartieI()*tempC->getPartieI()));
+                    break;
+        case 21:    tempE = dynamic_cast <const Entier*> (&n);
+                    res=new Complexe(tempE->getVal()*getPartieI(),getPartieR()*tempE->getVal());
+                    break;
+        case 22:    tempRat = dynamic_cast <const Rationnel*> (&n);
+                    res=new Complexe(new Entier(getPartieI()),
+                                     new Rationnel(tempRat->getNum()-(getPartieR()*tempRat->getDenom()),
+                                                   tempRat->getDenom()));
+                    new Complexe(new Rationnel(getPartieI()*tempRat->getNum(),tempRat->getDenom()),
+                                 new Rationnel(getPartieR()*tempRat->getNum(),tempRat->getDenom()));
+                    break;
+        default:    break;
+    };
+    return res;
+}
+
+Complexe* expression::Complexe::operator*(double c){
+    return new Complexe(c*getPartieI(),c*getPartieR());
 }
 
 Complexe* expression::Complexe::operator=(const Complexe& c){
