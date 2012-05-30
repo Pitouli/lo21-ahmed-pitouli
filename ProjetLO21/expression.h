@@ -73,8 +73,10 @@ namespace expression{
             Complexe* operator/(double c);
             Complexe* operator=(const Complexe& c);
             Complexe* clone()const{return new Complexe(*this);}
-            double getPartieR()const{const Reel* temp = dynamic_cast <const Reel*>(partieR); return temp->getVal();}
-            double getPartieI()const{const Reel* temp = dynamic_cast <const Reel*>(partieI); return temp->getVal();}
+            double getPartieR()const{const Reel* temp = dynamic_cast <const Reel*>(partieR); return temp->getVal();}//MOD
+            double getPartieI()const{const Reel* temp = dynamic_cast <const Reel*>(partieI); return temp->getVal();}//MOD
+            //const Nombre* getPartieR()const{return partieR;}
+            //const Nombre* getPartieI()const{return partieI;}
             Nombre* operation(){return NULL;}
     };
 
