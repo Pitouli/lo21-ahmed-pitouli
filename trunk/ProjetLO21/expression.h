@@ -92,6 +92,18 @@ namespace expression{
             int val;
         public:
             Entier(int _val=0):NombreE(21),val(_val){}
+            Nombre* operator+(const Nombre& n);
+            Reel* operator+(double c);
+            Entier* operator+(int c);
+            Nombre* operator*(const Nombre& n);
+            Reel* operator*(double c);
+            Entier* operator*(int c);
+            Nombre* operator-(const Nombre& n);
+            Reel* operator-(double c);
+            Entier* operator-(int c);
+            Nombre* operator/(const Nombre& n);
+            Reel* operator/(double c);
+            Entier* operator/(int c);
             Entier* clone()const{return new Entier(*this);}
             double getVal()const{return val;}
             NombreE* operation(){return NULL;}
@@ -115,6 +127,18 @@ namespace expression{
             Rationnel(int _num, int _denom):NombreE(17),num(new Entier(_num)),denom(new Entier(_denom)){}
             Rationnel(const Rationnel& c);
             Rationnel* operator=(const Rationnel& c);
+            Nombre* operator+(const Nombre& n);
+            Reel* operator+(double c);
+            Rationnel* operator+(int c);
+            Nombre* operator*(const Nombre& n);
+            Reel* operator*(double c);
+            Rationnel* operator*(int c);
+            Nombre* operator-(const Nombre& n);
+            Reel* operator-(double c);
+            Rationnel* operator-(int c);
+            Nombre* operator/(const Nombre& n);
+            Reel* operator/(double c);
+            Rationnel* operator/(int c);
             Rationnel* clone()const{return new Rationnel(*this);}
             int getNum()const{const Entier* temp = dynamic_cast <const Entier*>(num); return temp->getVal();}
             int getDenom()const{const Entier* temp = dynamic_cast <const Entier*>(denom); return temp->getVal();}
