@@ -52,10 +52,10 @@ namespace expression{
         public:
             Reel(double _val=0):Nombre(TYPE_REEL),val(_val){}
             Reel(const Nombre& n);
-            Reel* operator+(const Reel& n)const;
-            Reel* operator*(const Reel& n)const;
-            Reel* operator-(const Reel& n)const;
-            Reel* operator/(const Reel& n)const;
+            Reel operator+(const Reel& n)const;
+            Reel operator*(const Reel& n)const;
+            Reel operator-(const Reel& n)const;
+            Reel operator/(const Reel& n)const;
             Reel* clone()const{return new Reel(*this);}
             double getVal()const{return val;}
             Nombre* operation(){return NULL;}
@@ -68,17 +68,18 @@ namespace expression{
         public:
             Complexe(Nombre* _partieR=0, Nombre* _partieI=0);
             Complexe(double _partieR, double _partieI);
+            Complexe(const Nombre& _partieR, const Nombre& _partieI);
             Complexe(const Complexe& c);
             Complexe(const Nombre& n);
             ~Complexe();
-            Complexe* operator+(const Complexe& n)const;
-            Complexe* operator*(const Complexe& n)const;
-            Complexe* operator-(const Complexe& n)const;
-            Complexe* operator/(const Complexe& n)const;
+            Complexe operator+(const Complexe& n)const;
+            Complexe operator*(const Complexe& n)const;
+            Complexe operator-(const Complexe& n)const;
+            Complexe operator/(const Complexe& n)const;
             Complexe& operator=(const Complexe& n);
             Complexe* clone()const{return new Complexe(*this);}
-            Reel* getPartieR()const{return new Reel(*partieR);}
-            Reel* getPartieI()const{return new Reel(*partieI);}
+            Reel getPartieR()const{return Reel(*partieR);}
+            Reel getPartieI()const{return Reel(*partieI);}
             Nombre* operation(){return NULL;}
     };
 
@@ -95,10 +96,10 @@ namespace expression{
         public:
             Entier(int _val=0):NombreE(TYPE_ENTIER),val(_val){}
             Entier(const Nombre& n);
-            Entier* operator+(const Entier& n)const;
-            Entier* operator*(const Entier& n)const;
-            Entier* operator-(const Entier& n)const;
-            Entier* operator/(const Entier& n)const;
+            Entier operator+(const Entier& n)const;
+            Entier operator*(const Entier& n)const;
+            Entier operator-(const Entier& n)const;
+            Entier operator/(const Entier& n)const;
             Entier* clone()const{return new Entier(*this);}
             double getVal()const{return val;}
             NombreE* operation(){return NULL;}
@@ -111,17 +112,18 @@ namespace expression{
         public:
             Rationnel(NombreE* _num=0, NombreE* _denom=0);
             Rationnel(int _num, int _denom);
+            Rationnel(const Nombre& _num, const Nombre& _denom);
             Rationnel(const Rationnel& c);
             Rationnel(const Nombre& n);
             ~Rationnel();
-            Rationnel* operator+(const Rationnel& n)const;
-            Rationnel* operator*(const Rationnel& n)const;
-            Rationnel* operator-(const Rationnel& n)const;
-            Rationnel* operator/(const Rationnel& n)const;
+            Rationnel operator+(const Rationnel& n)const;
+            Rationnel operator*(const Rationnel& n)const;
+            Rationnel operator-(const Rationnel& n)const;
+            Rationnel operator/(const Rationnel& n)const;
             Rationnel& operator=(const Rationnel& n);
             Rationnel* clone()const{return new Rationnel(*this);}
-            const Entier* getNum()const{return dynamic_cast <const Entier*> (num);}
-            const Entier* getDenom()const{return dynamic_cast <const Entier*> (denom);}
+            Entier getNum()const{return Entier(*num);}
+            Entier getDenom()const{return Entier(*denom);}
             NombreE* operation(){return NULL;}
     };
 
@@ -163,5 +165,7 @@ namespace expression{
     };
 
 }
+
+
 
 #endif // EXPRESSION_H
