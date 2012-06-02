@@ -10,7 +10,7 @@ expression::Reel::Reel(const Nombre& n):Nombre(TYPE_REEL){
 
     switch(n.getType()){
         case TYPE_RATIONNEL:    tempRat = dynamic_cast <const Rationnel*> (&n);
-                                val=((*(tempRat->getNum()))/(*(tempRat->getDenom())))->getVal();
+                                val=(tempRat->getNum()/tempRat->getDenom()).getVal();
                                 break;
 
         case TYPE_ENTIER:   tempE = dynamic_cast <const Entier*> (&n);
@@ -24,21 +24,21 @@ expression::Reel::Reel(const Nombre& n):Nombre(TYPE_REEL){
     };
 }
 
-Reel* expression::Reel::operator+(const Reel& n)const{
-    return new Reel(val+n.getVal());
+Reel expression::Reel::operator+(const Reel& n)const{
+    return Reel(val+n.getVal());
 }
 
-Reel* expression::Reel::operator*(const Reel& n)const{
-    return new Reel(val+n.getVal());
+Reel expression::Reel::operator*(const Reel& n)const{
+    return Reel(val+n.getVal());
 }
 
-Reel* expression::Reel::operator-(const Reel& n)const{
-    return new Reel(val-n.getVal());
+Reel expression::Reel::operator-(const Reel& n)const{
+    return Reel(val-n.getVal());
 }
 
-Reel* expression::Reel::operator/(const Reel& n)const{
+Reel expression::Reel::operator/(const Reel& n)const{
     if(n.getVal()!=0)
-        return new Reel(val/n.getVal());
+        return Reel(val/n.getVal());
     else
         return NULL;
 }
@@ -60,6 +60,11 @@ expression::Complexe::Complexe(double _partieR, double _partieI):Nombre(TYPE_COM
     partieI=new Reel(_partieI);
 }
 
+expression::Complexe::Complexe(const Nombre& _partieR, const Nombre& _partieI){
+    partieR=_partieR.clone();
+    partieI=_partieI.clone();
+}
+
 expression::Complexe::Complexe(const Complexe& c):Nombre(TYPE_COMPLEXE){
        partieR=c.partieR->clone();
        partieI=c.partieI->clone();
@@ -73,8 +78,8 @@ expression::Complexe::Complexe(const Nombre& n):Nombre(TYPE_COMPLEXE){
 
     switch(n.getType()){
         case TYPE_COMPLEXE: tempC = dynamic_cast <const Complexe*> (&n);
-                            partieI=tempC->getPartieI()->clone();
-                            partieR=tempC->getPartieR()->clone();
+                            partieI=tempC->getPartieI().clone();
+                            partieR=tempC->getPartieR().clone();
                             break;
 
         case TYPE_REEL:     tempR = dynamic_cast <const Reel*> (&n);
@@ -84,7 +89,7 @@ expression::Complexe::Complexe(const Nombre& n):Nombre(TYPE_COMPLEXE){
 
         case TYPE_RATIONNEL:    tempRat = dynamic_cast <const Rationnel*> (&n);
                                 partieI=new Reel(0);
-                                partieR=new Reel(*((*(tempRat->getNum()))/(*(tempRat->getDenom()))));
+                                partieR=new Reel(tempRat->getNum()/tempRat->getDenom());
                                 break;
 
         case TYPE_ENTIER:   tempE = dynamic_cast <const Entier*> (&n);
@@ -101,24 +106,25 @@ expression::Complexe::~Complexe(){
     delete partieI;
 }
 
-Complexe* expression::Complexe::operator+(const Complexe& n)const{
-    return new Complexe((*(getPartieR()))+(*(n.getPartieR())),(*(getPartieI()))+(*(n.getPartieI())));
+Complexe expression::Complexe::operator+(const Complexe& n)const{
+    return Complexe(getPartieR()+n.getPartieR(),getPartieI()+n.getPartieI());
 }
 
-Complexe* expression::Complexe::operator*(const Complexe& n)const{
-    return new Complexe((*((*(getPartieR()))*(*(n.getPartieR())))-(*((*(getPartieI()))*(*(n.getPartieI()))))),
-                        ((*((*(getPartieR()))*(*(n.getPartieI()))))+(*((*(getPartieI()))*(*(n.getPartieR()))))));
+Complexe expression::Complexe::operator*(const Complexe& n)const{
+    return Complexe((getPartieR()*n.getPartieR())-(getPartieI()*n.getPartieI()),
+                    (getPartieR()*n.getPartieI())+(getPartieI()*n.getPartieR()));
 }
 
-Complexe* expression::Complexe::operator-(const Complexe& n)const{
-    return new Complexe((*(getPartieR()))-(*(n.getPartieR())),(*(getPartieI()))-(*(n.getPartieI())));
+Complexe expression::Complexe::operator-(const Complexe& n)const{
+    return Complexe(getPartieR()-n.getPartieR(),getPartieI()-n.getPartieI());
 }
 
-Complexe* expression::Complexe::operator/(const Complexe& n)const{
-    Complexe temp((*((*(n.getPartieR()))/(*((*(n.getPartieR()))*(*(n.getPartieR()))))))-(*((*(n.getPartieI()))*(*(n.getPartieI())))),
-                  (*((*(n.getPartieI()))/(*((*(n.getPartieR()))*(*(n.getPartieR()))))))-(*((*(n.getPartieI()))*(*(n.getPartieI())))));
-    return new Complexe((*((*(getPartieR()))*(*(temp.getPartieR()))))-(*((*(getPartieI()))*(*(temp.getPartieI())))),
-                        (*((*(getPartieR()))*(*(temp.getPartieI()))))+(*((*(getPartieI()))*(*(temp.getPartieR())))));
+Complexe expression::Complexe::operator/(const Complexe& n)const{
+    Complexe temp(n.getPartieR()/((n.getPartieR()*n.getPartieR())+(n.getPartieI()*n.getPartieI())),
+                  n.getPartieR()/((n.getPartieR()*n.getPartieR())+(n.getPartieI()*n.getPartieI())));
+
+    return Complexe((getPartieR()*temp.getPartieR())-(getPartieI()*temp.getPartieI()),
+                    (getPartieR()*temp.getPartieI())+(getPartieI()*temp.getPartieR()));
 
 }
 
@@ -145,21 +151,21 @@ expression::Entier::Entier(const Nombre& n){
     };
 }
 
-Entier* expression::Entier::operator+(const Entier& n)const{
-    return new Entier(val+n.getVal());
+Entier expression::Entier::operator+(const Entier& n)const{
+    return Entier(val+n.getVal());
 }
 
-Entier* expression::Entier::operator*(const Entier& n)const{
-    return new Entier(val+n.getVal());
+Entier expression::Entier::operator*(const Entier& n)const{
+    return Entier(val+n.getVal());
 }
 
-Entier* expression::Entier::operator-(const Entier& n)const{
-    return new Entier(val-n.getVal());
+Entier expression::Entier::operator-(const Entier& n)const{
+    return Entier(val-n.getVal());
 }
 
-Entier* expression::Entier::operator/(const Entier& n)const{
+Entier expression::Entier::operator/(const Entier& n)const{
     if(n.getVal()!=0)
-        return new Entier(val/n.getVal());
+        return Entier(val/n.getVal());
     else
         return NULL;
 }
@@ -180,6 +186,36 @@ expression::Rationnel::Rationnel(NombreE* _num, NombreE* _denom):NombreE(TYPE_RA
        denom=_denom;
 }
 
+expression::Rationnel::Rationnel(const Nombre& _num, const Nombre& _denom){
+    const Reel* tempR;
+    const Rationnel* tempRat1;
+    const Rationnel* tempRat2;
+    const Entier* tempE1;
+    const Entier* tempE2;
+
+    switch(_num.getType()+_denom.getType()){
+        case TYPE_RATIONNEL*2:  tempRat1 = dynamic_cast <const Rationnel*> (&_num);
+                                tempRat2 = dynamic_cast <const Rationnel*> (&_denom);
+                                num=new Entier(tempRat1->getNum()/tempRat2->getDenom());
+                                denom=new Entier(tempRat2->getNum()/tempRat2->getDenom());
+                                break;
+
+        case TYPE_ENTIER*2: tempE1 = dynamic_cast <const Entier*> (&_num);
+                            tempE2 = dynamic_cast <const Entier*> (&_denom);
+                            num=new Entier(tempE1->getVal());
+                            denom=new Entier(tempE2->getVal());
+                            break;
+
+    default:                tempR = new Reel(_num);
+                            num=new Entier((int)tempR->getVal());
+                            delete tempR;
+                            tempR = new Reel(_denom);
+                            denom=new Entier((int)tempR->getVal());
+                            delete tempR;
+                            break;
+    };
+}
+
 expression::Rationnel::Rationnel(const Rationnel& c):NombreE(TYPE_RATIONNEL){
     num=c.num->clone();
     denom=c.denom->clone();
@@ -191,8 +227,8 @@ expression::Rationnel::Rationnel(const Nombre& n):NombreE(TYPE_RATIONNEL){
 
     switch(n.getType()){
         case TYPE_RATIONNEL:    tempRat = dynamic_cast <const Rationnel*> (&n);
-                                num=tempRat->getNum()->clone();
-                                denom=tempRat->getDenom()->clone();
+                                num=tempRat->getNum().clone();
+                                denom=tempRat->getDenom().clone();
                                 break;
 
         case TYPE_ENTIER:   tempE = dynamic_cast <const Entier*> (&n);
@@ -204,24 +240,21 @@ expression::Rationnel::Rationnel(const Nombre& n):NombreE(TYPE_RATIONNEL){
     };
 }
 
-Rationnel* expression::Rationnel::operator+(const Rationnel& c)const{
-    return new Rationnel((*((*(getNum()))*(*(c.getDenom()))))+(*((*(c.getNum()))*(*(getDenom())))),
-                         (*(getDenom()))*(*(c.getDenom())));
+Rationnel expression::Rationnel::operator+(const Rationnel& c)const{
+    return Rationnel((getNum()*c.getDenom())+(c.getNum()*getDenom()),getDenom()*c.getDenom());
 }
 
-Rationnel* expression::Rationnel::operator*(const Rationnel& c)const{
-    return new Rationnel((*(getNum()))*(*(c.getNum())),(*(getDenom()))*(*(c.getDenom())));
+Rationnel expression::Rationnel::operator*(const Rationnel& c)const{
+    return Rationnel(getNum()*c.getNum(),getDenom()*c.getDenom());
 }
 
-Rationnel* expression::Rationnel::operator-(const Rationnel& c)const{
-    return new Rationnel((*((*(getNum()))*(*(c.getDenom())))-(*((*(c.getNum()))*(*(getDenom()))))),
-                         (*(getDenom()))*(*(c.getDenom())));
+Rationnel expression::Rationnel::operator-(const Rationnel& c)const{
+    return Rationnel((getNum()*c.getDenom())-(c.getNum()*getDenom()),getDenom()*c.getDenom());
 }
 
-Rationnel* expression::Rationnel::operator/(const Rationnel& c)const{
-    Entier temp(*(c.getNum()));
-    if(temp.getVal()!=0)
-        new Rationnel((*(getNum()))*(*(c.getDenom())),(*(getDenom()))*(*(c.getNum())));
+Rationnel expression::Rationnel::operator/(const Rationnel& c)const{
+    if(c.getNum().getVal()!=0)
+        return Rationnel(getNum()*c.getDenom(),getDenom()*c.getNum());
     else
         return NULL;
 }
