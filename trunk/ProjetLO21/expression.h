@@ -132,26 +132,27 @@ namespace expression{
             Expression* res;
         public:
             Operation(int _type=TYPE_OPERATION):Expression(_type){}
-            Expression* operation()=0;
+            virtual Expression* operation()=0;
             void setRes(Expression* _res){delete res; res=_res;}
             Expression* getRes()const{return res;}
     };
 
     class OperationUnaire: public Operation{
         private:
-            Expression* exp;
+            const Expression* exp;
         public:
-            OperationUnaire(Expression* _exp):exp(_exp){}
+            OperationUnaire(const Expression* _exp):exp(_exp){}
             Expression* operation()=0;
+            const Expression* getExp()const{return exp;}
     };
 
     class OperationBinaire: public Operation{
         private:
-            Expression* expLeft;
-            Expression* expRight;
+            const Expression* expLeft;
+            const Expression* expRight;
         public:
-            OperationBinaire(Expression* _expLeft, Expression* _expRight):expLeft(_expLeft),expRight(_expRight){}
-            Expression* operation()=0;
+            OperationBinaire(const Expression* _expLeft, const Expression* _expRight):expLeft(_expLeft),expRight(_expRight){}
+            virtual Expression* operation()=0;
             const Expression* getExpLeft()const{return expLeft;}
             const Expression* getExpRight()const{return expRight;}
 
@@ -159,11 +160,114 @@ namespace expression{
 
     class Somme: public OperationBinaire{
     public:
-        Somme(Expression* _expLeft, Expression* _expRight):OperationBinaire(_expLeft,_expRight){}
+        Somme(const Expression* _expLeft, const Expression* _expRight):OperationBinaire(_expLeft,_expRight){}
         Expression* operation();
 
     };
 
+    class Difference: public OperationBinaire{
+    public:
+        Difference(const Expression* _expLeft, const Expression* _expRight):OperationBinaire(_expLeft,_expRight){}
+        Expression* operation();
+
+    };
+
+    class Multiplication: public OperationBinaire{
+    public:
+        Multiplication(const Expression* _expLeft, const Expression* _expRight):OperationBinaire(_expLeft,_expRight){}
+        Expression* operation();
+
+    };
+
+    class Division: public OperationBinaire{
+    public:
+        Division(const Expression* _expLeft, const Expression* _expRight):OperationBinaire(_expLeft,_expRight){}
+        Expression* operation();
+
+    };
+
+    class Sin: public OperationUnaire{
+    public:
+        Sin(const Expression* _exp);
+        Expression* operation();
+    };
+
+    class Cos: public OperationUnaire{
+    public:
+        Cos(const Expression* _exp);
+        Expression* operation();
+    };
+
+    class Tan: public OperationUnaire{
+    public:
+        Tan(const Expression* _exp);
+        Expression* operation();
+    };
+
+    class Sinh: public OperationUnaire{
+    public:
+        Sinh(const Expression* _exp);
+        Expression* operation();
+    };
+
+    class Cosh: public OperationUnaire{
+    public:
+        Cosh(const Expression* _exp);
+        Expression* operation();
+    };
+
+    class Tanh: public OperationUnaire{
+    public:
+        Tanh(const Expression* _exp);
+        Expression* operation();
+    };
+
+    class Ln: public OperationUnaire{
+    public:
+        Ln(const Expression* _exp);
+        Expression* operation();
+    };
+
+    class Log: public OperationUnaire{
+    public:
+        Log(const Expression* _exp);
+        Expression* operation();
+    };
+
+    class Inv: public OperationUnaire{
+    public:
+        Inv(const Expression* _exp);
+        Expression* operation();
+    };
+
+    class Sqrt: public OperationUnaire{
+    public:
+        Sqrt(const Expression* _exp);
+        Expression* operation();
+    };
+
+    class Sqr: public OperationUnaire{
+    public:
+        Sqr(const Expression* _exp);
+        Expression* operation();
+    };
+
+    class Cube: public OperationUnaire{
+    public:
+        Cube(const Expression* _exp);
+        Expression* operation();
+    };
+
+    class Factoriel: public OperationUnaire{
+    public:
+        Factoriel(const Expression* _exp);
+        Expression* operation();
+    };
+    class Eval: public OperationUnaire{
+    public:
+        Eval(const Expression* _exp);
+        Expression* operation();
+    };
 }
 
 
