@@ -51,12 +51,14 @@ expression::Nombre* Factory::analyzeNombre() const
 
 expression::Operation* Factory::analyzeOperation() const
 {
-    /*if(_adn == "+" || _adn == "PLUS")
-	return new expression::Somme();
+    if(_adn == "+" || _adn == "PLUS")
+	return new expression::Somme;
     else if(_adn == "-" || _adn == "MOINS")
-	return new expression::Difference();
+	return new expression::Difference;
     else if(_adn == "/" || _adn == "DIVISER")
-	return new expression::Division();
+	return new expression::Division;
     else if(_adn == "*" || _adn == "MULTIPLIER")
-	return new expression::Multiplication();*/
+	return new expression::Multiplication;
+    else
+	throw("Echec de l'analyse : L'expression n'est pas un élément connu");
 }

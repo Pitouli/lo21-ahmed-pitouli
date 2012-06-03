@@ -13,12 +13,26 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     expression.cpp \
-    analyzer.cpp
+    pile.cpp \
+    factory.cpp
 
 HEADERS  += mainwindow.h \
     expression.h \
-    analyzer.h
+    pile.h \
+    factory.h
 
 FORMS    += mainwindow.ui
+
+
+
+
+
+
+
+
+
+
+
+
 
 
