@@ -9,15 +9,15 @@ expression::Reel::Reel(const Nombre& n):Nombre(TYPE_REEL){
     const Rationnel* tempRat;
 
     switch(n.getType()){
-        case TYPE_RATIONNEL:    tempRat = dynamic_cast <const Rationnel*> (&n);
+	case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (&n);
                                 val=(tempRat->getNum()/tempRat->getDenom()).getVal();
                                 break;
 
-        case TYPE_ENTIER:   tempE = dynamic_cast <const Entier*> (&n);
+	case TYPE_ENTIER:   tempE = static_cast <const Entier*> (&n);
                             val=tempE->getVal();
                             break;
 
-        case TYPE_REEL:     tempR = dynamic_cast <const Reel*> (&n);
+	case TYPE_REEL:     tempR = static_cast <const Reel*> (&n);
                             val=tempR->getVal();
                             break;
         default:    break; //erreur
@@ -77,22 +77,22 @@ expression::Complexe::Complexe(const Nombre& n):Nombre(TYPE_COMPLEXE){
     const Rationnel* tempRat;
 
     switch(n.getType()){
-        case TYPE_COMPLEXE: tempC = dynamic_cast <const Complexe*> (&n);
+	case TYPE_COMPLEXE: tempC = static_cast <const Complexe*> (&n);
                             partieI=tempC->getPartieI().clone();
                             partieR=tempC->getPartieR().clone();
                             break;
 
-        case TYPE_REEL:     tempR = dynamic_cast <const Reel*> (&n);
+	case TYPE_REEL:     tempR = static_cast <const Reel*> (&n);
                             partieI=new Reel(0);
                             partieR=new Reel(tempR->getVal());
                             break;
 
-        case TYPE_RATIONNEL:    tempRat = dynamic_cast <const Rationnel*> (&n);
+	case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (&n);
                                 partieI=new Reel(0);
                                 partieR=new Reel(tempRat->getNum()/tempRat->getDenom());
                                 break;
 
-        case TYPE_ENTIER:   tempE = dynamic_cast <const Entier*> (&n);
+	case TYPE_ENTIER:   tempE = static_cast <const Entier*> (&n);
                             partieI=new Reel(0);
                             partieR=new Reel(tempE->getVal());
                             break;
@@ -143,7 +143,7 @@ expression::Entier::Entier(const Nombre& n){
     const Entier* tempE;
 
     switch(n.getType()){
-        case TYPE_ENTIER:   tempE = dynamic_cast <const Entier*> (&n);
+	case TYPE_ENTIER:   tempE = static_cast <const Entier*> (&n);
                             val=tempE->getVal();
                             break;
 
@@ -194,14 +194,14 @@ expression::Rationnel::Rationnel(const Nombre& _num, const Nombre& _denom){
     const Entier* tempE2;
 
     switch(_num.getType()+_denom.getType()){
-        case TYPE_RATIONNEL*2:  tempRat1 = dynamic_cast <const Rationnel*> (&_num);
-                                tempRat2 = dynamic_cast <const Rationnel*> (&_denom);
+	case TYPE_RATIONNEL*2:  tempRat1 = static_cast <const Rationnel*> (&_num);
+				tempRat2 = static_cast <const Rationnel*> (&_denom);
                                 num=new Entier(tempRat1->getNum()/tempRat2->getDenom());
                                 denom=new Entier(tempRat2->getNum()/tempRat2->getDenom());
                                 break;
 
-        case TYPE_ENTIER*2: tempE1 = dynamic_cast <const Entier*> (&_num);
-                            tempE2 = dynamic_cast <const Entier*> (&_denom);
+	case TYPE_ENTIER*2: tempE1 = static_cast <const Entier*> (&_num);
+			    tempE2 = static_cast <const Entier*> (&_denom);
                             num=new Entier(tempE1->getVal());
                             denom=new Entier(tempE2->getVal());
                             break;
@@ -226,12 +226,12 @@ expression::Rationnel::Rationnel(const Nombre& n):NombreE(TYPE_RATIONNEL){
     const Entier* tempE;
 
     switch(n.getType()){
-        case TYPE_RATIONNEL:    tempRat = dynamic_cast <const Rationnel*> (&n);
+	case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (&n);
                                 num=tempRat->getNum().clone();
                                 denom=tempRat->getDenom().clone();
                                 break;
 
-        case TYPE_ENTIER:   tempE = dynamic_cast <const Entier*> (&n);
+	case TYPE_ENTIER:   tempE = static_cast <const Entier*> (&n);
                             num=new Entier(tempE->getVal());
                             denom=new Entier(0);
                             break;
@@ -276,8 +276,8 @@ expression::Rationnel::~Rationnel(){
 }
 
 Expression* expression::Somme::operation(){
-    const Nombre* expLeftTemp=dynamic_cast<const Nombre*>(getExpLeft());
-    const Nombre* expRightTemp=dynamic_cast<const Nombre*>(getExpRight());
+    const Nombre* expLeftTemp=static_cast<const Nombre*>(getExpLeft());
+    const Nombre* expRightTemp=static_cast<const Nombre*>(getExpRight());
 
     const Complexe* tempC1;
     const Complexe* tempC2;
@@ -292,22 +292,22 @@ Expression* expression::Somme::operation(){
 
     if(expLeftTemp->getType()<expRightTemp->getType()){
         switch(expLeftTemp->getType()){
-            case TYPE_COMPLEXE: tempC1 = dynamic_cast <const Complexe*> (expLeftTemp);
+	    case TYPE_COMPLEXE: tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
                                 setRes(new Complexe((*tempC1)+(*tempC2)));
                                 break;
 
-            case TYPE_REEL:     tempR1 = dynamic_cast <const Reel*> (expLeftTemp);
+	    case TYPE_REEL:     tempR1 = static_cast <const Reel*> (expLeftTemp);
                                 tempR2 = new Reel(*expRightTemp);
                                 setRes(new Reel((*tempR1)+(*tempR2)));
                                 break;
 
-            case TYPE_RATIONNEL:    tempRat1 = dynamic_cast <const Rationnel*> (expLeftTemp);
+	    case TYPE_RATIONNEL:    tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
                                     tempRat2 = new Rationnel(*expRightTemp);
                                     setRes(new Rationnel((*tempRat1)+(*tempRat2)));
                                     break;
 
-            case TYPE_ENTIER:   tempE1 = dynamic_cast <const Entier*> (expLeftTemp);
+	    case TYPE_ENTIER:   tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
                                 setRes(new Entier((*tempE1)+(*tempE2)));
                                 break;
@@ -318,22 +318,22 @@ Expression* expression::Somme::operation(){
     else{
         switch(expRightTemp->getType()){
             case TYPE_COMPLEXE: tempC1 = new Complexe(*expLeftTemp);
-                                tempC2 = dynamic_cast <const Complexe*> (expRightTemp);
+				tempC2 = static_cast <const Complexe*> (expRightTemp);
                                 setRes(new Complexe((*tempC1)+(*tempC2)));
                                 break;
 
             case TYPE_REEL:     tempR1 = new Reel(*expLeftTemp);
-                                tempR2 = dynamic_cast <const Reel*> (expRightTemp);
+				tempR2 = static_cast <const Reel*> (expRightTemp);
                                 setRes(new Reel((*tempR1)+(*tempR2)));
                                 break;
 
             case TYPE_RATIONNEL:    tempRat1 = new Rationnel(*expLeftTemp);
-                                    tempRat2 = dynamic_cast <const Rationnel*> (expRightTemp);
+				    tempRat2 = static_cast <const Rationnel*> (expRightTemp);
                                     setRes(new Rationnel((*tempRat1)+(*tempRat2)));
                                     break;
 
             case TYPE_ENTIER:   tempE1 = new Entier(*expLeftTemp);
-                                tempE2 = dynamic_cast <const Entier*> (expRightTemp);
+				tempE2 = static_cast <const Entier*> (expRightTemp);
                                 setRes(new Entier((*tempE1)+(*tempE2)));
                                 break;
 
@@ -354,8 +354,8 @@ Expression* expression::Somme::operation(){
 }
 
 Expression* expression::Difference::operation(){
-    const Nombre* expLeftTemp=dynamic_cast<const Nombre*>(getExpLeft());
-    const Nombre* expRightTemp=dynamic_cast<const Nombre*>(getExpRight());
+    const Nombre* expLeftTemp=static_cast<const Nombre*>(getExpLeft());
+    const Nombre* expRightTemp=static_cast<const Nombre*>(getExpRight());
 
     const Complexe* tempC1;
     const Complexe* tempC2;
@@ -370,22 +370,22 @@ Expression* expression::Difference::operation(){
 
     if(expLeftTemp->getType()<expRightTemp->getType()){
         switch(expLeftTemp->getType()){
-            case TYPE_COMPLEXE: tempC1 = dynamic_cast <const Complexe*> (expLeftTemp);
+	    case TYPE_COMPLEXE: tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
                                 setRes(new Complexe((*tempC1)-(*tempC2)));
                                 break;
 
-            case TYPE_REEL:     tempR1 = dynamic_cast <const Reel*> (expLeftTemp);
+	    case TYPE_REEL:     tempR1 = static_cast <const Reel*> (expLeftTemp);
                                 tempR2 = new Reel(*expRightTemp);
                                 setRes(new Reel((*tempR1)-(*tempR2)));
                                 break;
 
-            case TYPE_RATIONNEL:    tempRat1 = dynamic_cast <const Rationnel*> (expLeftTemp);
+	    case TYPE_RATIONNEL:    tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
                                     tempRat2 = new Rationnel(*expRightTemp);
                                     setRes(new Rationnel((*tempRat1)-(*tempRat2)));
                                     break;
 
-            case TYPE_ENTIER:   tempE1 = dynamic_cast <const Entier*> (expLeftTemp);
+	    case TYPE_ENTIER:   tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
                                 setRes(new Entier((*tempE1)-(*tempE2)));
                                 break;
@@ -396,22 +396,22 @@ Expression* expression::Difference::operation(){
     else{
         switch(expRightTemp->getType()){
             case TYPE_COMPLEXE: tempC1 = new Complexe(*expLeftTemp);
-                                tempC2 = dynamic_cast <const Complexe*> (expRightTemp);
+				tempC2 = static_cast <const Complexe*> (expRightTemp);
                                 setRes(new Complexe((*tempC1)-(*tempC2)));
                                 break;
 
             case TYPE_REEL:     tempR1 = new Reel(*expLeftTemp);
-                                tempR2 = dynamic_cast <const Reel*> (expRightTemp);
+				tempR2 = static_cast <const Reel*> (expRightTemp);
                                 setRes(new Reel((*tempR1)-(*tempR2)));
                                 break;
 
             case TYPE_RATIONNEL:    tempRat1 = new Rationnel(*expLeftTemp);
-                                    tempRat2 = dynamic_cast <const Rationnel*> (expRightTemp);
+				    tempRat2 = static_cast <const Rationnel*> (expRightTemp);
                                     setRes(new Rationnel((*tempRat1)-(*tempRat2)));
                                     break;
 
             case TYPE_ENTIER:   tempE1 = new Entier(*expLeftTemp);
-                                tempE2 = dynamic_cast <const Entier*> (expRightTemp);
+				tempE2 = static_cast <const Entier*> (expRightTemp);
                                 setRes(new Entier((*tempE1)-(*tempE2)));
                                 break;
 
@@ -432,8 +432,8 @@ Expression* expression::Difference::operation(){
 }
 
 Expression* expression::Multiplication::operation(){
-    const Nombre* expLeftTemp=dynamic_cast<const Nombre*>(getExpLeft());
-    const Nombre* expRightTemp=dynamic_cast<const Nombre*>(getExpRight());
+    const Nombre* expLeftTemp=static_cast<const Nombre*>(getExpLeft());
+    const Nombre* expRightTemp=static_cast<const Nombre*>(getExpRight());
 
     const Complexe* tempC1;
     const Complexe* tempC2;
@@ -448,22 +448,22 @@ Expression* expression::Multiplication::operation(){
 
     if(expLeftTemp->getType()<expRightTemp->getType()){
         switch(expLeftTemp->getType()){
-            case TYPE_COMPLEXE: tempC1 = dynamic_cast <const Complexe*> (expLeftTemp);
+	    case TYPE_COMPLEXE: tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
                                 setRes(new Complexe((*tempC1)*(*tempC2)));
                                 break;
 
-            case TYPE_REEL:     tempR1 = dynamic_cast <const Reel*> (expLeftTemp);
+	    case TYPE_REEL:     tempR1 = static_cast <const Reel*> (expLeftTemp);
                                 tempR2 = new Reel(*expRightTemp);
                                 setRes(new Reel((*tempR1)*(*tempR2)));
                                 break;
 
-            case TYPE_RATIONNEL:    tempRat1 = dynamic_cast <const Rationnel*> (expLeftTemp);
+	    case TYPE_RATIONNEL:    tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
                                     tempRat2 = new Rationnel(*expRightTemp);
                                     setRes(new Rationnel((*tempRat1)*(*tempRat2)));
                                     break;
 
-            case TYPE_ENTIER:   tempE1 = dynamic_cast <const Entier*> (expLeftTemp);
+	    case TYPE_ENTIER:   tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
                                 setRes(new Entier((*tempE1)*(*tempE2)));
                                 break;
@@ -474,22 +474,22 @@ Expression* expression::Multiplication::operation(){
     else{
         switch(expRightTemp->getType()){
             case TYPE_COMPLEXE: tempC1 = new Complexe(*expLeftTemp);
-                                tempC2 = dynamic_cast <const Complexe*> (expRightTemp);
+				tempC2 = static_cast <const Complexe*> (expRightTemp);
                                 setRes(new Complexe((*tempC1)*(*tempC2)));
                                 break;
 
             case TYPE_REEL:     tempR1 = new Reel(*expLeftTemp);
-                                tempR2 = dynamic_cast <const Reel*> (expRightTemp);
+				tempR2 = static_cast <const Reel*> (expRightTemp);
                                 setRes(new Reel((*tempR1)*(*tempR2)));
                                 break;
 
             case TYPE_RATIONNEL:    tempRat1 = new Rationnel(*expLeftTemp);
-                                    tempRat2 = dynamic_cast <const Rationnel*> (expRightTemp);
+				    tempRat2 = static_cast <const Rationnel*> (expRightTemp);
                                     setRes(new Rationnel((*tempRat1)*(*tempRat2)));
                                     break;
 
             case TYPE_ENTIER:   tempE1 = new Entier(*expLeftTemp);
-                                tempE2 = dynamic_cast <const Entier*> (expRightTemp);
+				tempE2 = static_cast <const Entier*> (expRightTemp);
                                 setRes(new Entier((*tempE1)*(*tempE2)));
                                 break;
 
@@ -510,8 +510,8 @@ Expression* expression::Multiplication::operation(){
 }
 
 Expression* expression::Division::operation(){
-    const Nombre* expLeftTemp=dynamic_cast<const Nombre*>(getExpLeft());
-    const Nombre* expRightTemp=dynamic_cast<const Nombre*>(getExpRight());
+    const Nombre* expLeftTemp=static_cast<const Nombre*>(getExpLeft());
+    const Nombre* expRightTemp=static_cast<const Nombre*>(getExpRight());
 
     const Complexe* tempC1;
     const Complexe* tempC2;
@@ -526,22 +526,22 @@ Expression* expression::Division::operation(){
 
     if(expLeftTemp->getType()<expRightTemp->getType()){
         switch(expLeftTemp->getType()){
-            case TYPE_COMPLEXE: tempC1 = dynamic_cast <const Complexe*> (expLeftTemp);
+	    case TYPE_COMPLEXE: tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
                                 setRes(new Complexe((*tempC1)/(*tempC2)));
                                 break;
 
-            case TYPE_REEL:     tempR1 = dynamic_cast <const Reel*> (expLeftTemp);
+	    case TYPE_REEL:     tempR1 = static_cast <const Reel*> (expLeftTemp);
                                 tempR2 = new Reel(*expRightTemp);
                                 setRes(new Reel((*tempR1)/(*tempR2)));
                                 break;
 
-            case TYPE_RATIONNEL:    tempRat1 = dynamic_cast <const Rationnel*> (expLeftTemp);
+	    case TYPE_RATIONNEL:    tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
                                     tempRat2 = new Rationnel(*expRightTemp);
                                     setRes(new Rationnel((*tempRat1)/(*tempRat2)));
                                     break;
 
-            case TYPE_ENTIER:   tempE1 = dynamic_cast <const Entier*> (expLeftTemp);
+	    case TYPE_ENTIER:   tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
                                 setRes(new Entier((*tempE1)/(*tempE2)));
                                 break;
@@ -552,22 +552,22 @@ Expression* expression::Division::operation(){
     else{
         switch(expRightTemp->getType()){
             case TYPE_COMPLEXE: tempC1 = new Complexe(*expLeftTemp);
-                                tempC2 = dynamic_cast <const Complexe*> (expRightTemp);
+				tempC2 = static_cast <const Complexe*> (expRightTemp);
                                 setRes(new Complexe((*tempC1)/(*tempC2)));
                                 break;
 
             case TYPE_REEL:     tempR1 = new Reel(*expLeftTemp);
-                                tempR2 = dynamic_cast <const Reel*> (expRightTemp);
+				tempR2 = static_cast <const Reel*> (expRightTemp);
                                 setRes(new Reel((*tempR1)/(*tempR2)));
                                 break;
 
             case TYPE_RATIONNEL:    tempRat1 = new Rationnel(*expLeftTemp);
-                                    tempRat2 = dynamic_cast <const Rationnel*> (expRightTemp);
+				    tempRat2 = static_cast <const Rationnel*> (expRightTemp);
                                     setRes(new Rationnel((*tempRat1)/(*tempRat2)));
                                     break;
 
             case TYPE_ENTIER:   tempE1 = new Entier(*expLeftTemp);
-                                tempE2 = dynamic_cast <const Entier*> (expRightTemp);
+				tempE2 = static_cast <const Entier*> (expRightTemp);
                                 setRes(new Entier((*tempE1)/(*tempE2)));
                                 break;
 
