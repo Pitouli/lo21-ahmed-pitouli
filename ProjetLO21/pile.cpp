@@ -1,5 +1,7 @@
 #include "pile.h"
 
+Pile* Pile::_curPile = NULL;
+
 void Pile::clear()
 {
     while(!this->isEmpty())
@@ -58,7 +60,38 @@ void Pile::sum(expression::Expression* x)
 	    this->push(new expression::Entier(0)); // Si on ne somme rien, on empile 0
     }
     else
-	throw("SWAP impossible : les paramètres ne sont pas valides (ce ne sont pas des entiers)");
+	throw("SUM impossible : le paramètre n'est pas valide (ce n'est pas un entier)");
+}
+
+void Pile::mean(expression::Expression* x)
+{
+    if(x->getType() == TYPE_ENTIER)
+    {
+	expression::Entier* entier_x = static_cast<expression::Entier*>(x);
+	int int_x = entier_x->getVal();
+
+	if(int_x > this->size()) int_x = this->size(); // Si on essaie de moyenner plus que la hauteur de la pile, on somme toute la pile.
+	if(int_x < 0) int_x = 0; // Si x est négatif, on ne moyenne rien
+
+	if(int_x != 0) // Si on moyenne plus d'1 élément
+	{
+	    this->sum(x); // On fait faire la somme par sum()
+	    expression::Expression* resSomme = this->pop(); // On récupère le résultat de la somme
+
+	    expression::Division* division = new expression::Division(resSomme, x); // On initialise la division avec le résultat de la somme et le nb par lequel diviser
+
+	    expression::Expression* resultat = division->operation();
+
+	    delete resSomme;
+	    delete division;
+
+	    this->push(resultat);
+	}
+	else // Si on moyenne 0 élément
+	    this->push(new expression::Entier(0)); // Si on ne moyenne rien, on empile 0
+    }
+    else
+	throw("MEAN impossible : le paramètre n'est pas valide (ce n'est pas un entier)");
 }
 
 void Pile::dup()

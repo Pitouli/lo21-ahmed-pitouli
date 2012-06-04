@@ -188,6 +188,7 @@ namespace expression{
         private:
             const Expression* expLeft;
             const Expression* expRight;
+
         public:
             OperationBinaire(const Expression* _expLeft, const Expression* _expRight):expLeft(_expLeft),expRight(_expRight){}
             virtual Expression* operation()=0;
