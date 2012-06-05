@@ -32,17 +32,41 @@
     #define TYPE_OPERATION_UNAIRE_START 200
 	#define TYPE_SUM 210
 	#define TYPE_MEAN 212
+    #define TYPE_SIN 214
+    #define TYPE_COS 216
+    #define TYPE_TAN 218
+    #define TYPE_SINH 220
+    #define TYPE_COSH 222
+    #define TYPE_TANH 224
+    #define TYPE_LN 226
+    #define TYPE_LOG 228
+    #define TYPE_INV 230
+    #define TYPE_SQRT 232
+    #define TYPE_SQR 234
+    #define TYPE_CUBE 236
+    #define TYPE_FACTORIEL 238
+    #define TYPE_EVAL 240
+    #define TYPE_DEGTORAD 242
+    #define TYPE_RADTODEG 244
     #define TYPE_OPERATION_UNAIRE_END 299
 
     #define TYPE_OPERATION_BINAIRE_START 300
 	#define TYPE_SOMME 305
+    #define TYPE_DIFFERENCE 310
+    #define TYPE_MULTIPLICATION 315
+    #define TYPE_DIVISION 320
     #define TYPE_OPERATION_BINAIRE_END 399
 
 #define TYPE_OPERATION_END 400
 
+#define PI 3.14159265
+
 // FIN DE DEFINITION DES TYPES DE VALEURS
 
 #include <iostream>
+#include <cmath>
+//#include "pile.h"
+
 using namespace std;
 
 namespace expression{
@@ -110,8 +134,10 @@ namespace expression{
             Complexe operator/(const Complexe& n)const;
             Complexe& operator=(const Complexe& n);
             Complexe* clone()const{return new Complexe(*this);}
-            Reel getPartieR()const{return Reel(*partieR);}
-            Reel getPartieI()const{return Reel(*partieI);}
+            const Nombre* getPartieR()const{return partieR;}
+            const Nombre* getPartieI()const{return partieI;}
+            Reel getPartieRVal()const{return Reel(*partieR);}
+            Reel getPartieIVal()const{return Reel(*partieI);}
             Nombre* operation(){return NULL;}
     };
 
@@ -154,8 +180,10 @@ namespace expression{
             Rationnel operator/(const Rationnel& n)const;
             Rationnel& operator=(const Rationnel& n);
             Rationnel* clone()const{return new Rationnel(*this);}
-            Entier getNum()const{return Entier(*num);}
-            Entier getDenom()const{return Entier(*denom);}
+            const NombreE* getNum()const{return num;}
+            const NombreE* getDenom()const{return denom;}
+            Entier getNumVal()const{return Entier(*num);}
+            Entier getDenomVal()const{return Entier(*denom);}
             NombreE* operation(){return NULL;}
     };
 
@@ -165,21 +193,25 @@ namespace expression{
         public:
             Operation(int _type=TYPE_OPERATION):Expression(_type){}
             virtual Expression* operation()=0;
+            virtual Operation* clone()const=0;
             void setRes(Expression* _res){delete res; res=_res;}
             Expression* getRes()const{return res;}
     };
 
     class OperationNonaire: public Operation{
 	public:
+        OperationNonaire(int _type=TYPE_OPERATION):Operation(_type){}
 	    Expression* operation()=0;
+        OperationNonaire* clone()const=0;
     };
 
     class OperationUnaire: public Operation{
         private:
             const Expression* exp;
         public:
-            OperationUnaire(const Expression* _exp):exp(_exp){}
+            OperationUnaire(const Expression* _exp, int _type=TYPE_OPERATION):Operation(_type),exp(_exp){}
             Expression* operation()=0;
+             virtual OperationUnaire* clone() const=0;
 	    void setExp(const Expression* _exp) { exp = _exp; }
             const Expression* getExp()const{return exp;}
     };
@@ -190,141 +222,176 @@ namespace expression{
             const Expression* expRight;
 
         public:
-            OperationBinaire(const Expression* _expLeft, const Expression* _expRight):expLeft(_expLeft),expRight(_expRight){}
+            OperationBinaire(const Expression* _expLeft, const Expression* _expRight, int _type=TYPE_OPERATION):Operation(_type),expLeft(_expLeft),expRight(_expRight){}
             virtual Expression* operation()=0;
-	    void setExp(const Expression* _expLeft, const Expression* _expRight) { expLeft = _expLeft; expRight = _expRight; }
-	    void setExpLeft(const Expression* _expLeft) { expLeft = _expLeft; }
-	    void setExpRight(const Expression* _expRight) { expRight = _expRight; }
-	    const Expression* getExpLeft()const{return expLeft;}
+            virtual OperationBinaire* clone() const=0;
+            void setExp(const Expression* _expLeft, const Expression* _expRight) { expLeft = _expLeft; expRight = _expRight; }
+            void setExpLeft(const Expression* _expLeft) { expLeft = _expLeft; }
+            void setExpRight(const Expression* _expRight) { expRight = _expRight; }
+            const Expression* getExpLeft()const{return expLeft;}
             const Expression* getExpRight()const{return expRight;}
 
     };
 
     class Somme: public OperationBinaire{
     public:
-	Somme(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight){}
+    Somme(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight,TYPE_SOMME){}
 	Expression* operation();
 	Somme* clone() const { return new Somme(*this); }
     };
 
     class Difference: public OperationBinaire{
     public:
-	Difference(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight){}
+    Difference(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight,TYPE_DIFFERENCE){}
         Expression* operation();
 	Difference* clone() const { return new Difference(*this); }
     };
 
     class Multiplication: public OperationBinaire{
     public:
-	Multiplication(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight){}
+    Multiplication(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight,TYPE_MULTIPLICATION){}
         Expression* operation();
-	Multiplication* clone() const { return new Multiplication(*this); }
+    Multiplication* clone() const { return new Multiplication(*this); }
     };
 
     class Division: public OperationBinaire{
     public:
-	Division(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight){}
+    Division(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight,TYPE_DIVISION){}
         Expression* operation();
 	Division* clone() const { return new Division(*this); }
     };
 
+    class Sum: public OperationUnaire{
+        int x;
+    public:
+        Sum(int _x, const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SUM),x(_x){}
+        Expression* operation();
+        int getX()const{return x;}
+        Sum* clone() const { return new Sum(*this); }
+    };
+
+    class Mean: public OperationUnaire{
+        int x;
+    public:
+        Mean(int _x, const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SUM),x(_x){}
+        Expression* operation();
+        int getX()const{return x;}
+        Mean* clone() const { return new Mean(*this); }
+    };
+
     class Sin: public OperationUnaire{
     public:
-	Sin(const Expression* _exp = NULL);
+        Sin(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SIN){}
         Expression* operation();
 	Sin* clone() const { return new Sin(*this); }
     };
 
     class Cos: public OperationUnaire{
     public:
-	Cos(const Expression* _exp = NULL);
+    Cos(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_COS){}
         Expression* operation();
 	Cos* clone() const { return new Cos(*this); }
     };
 
     class Tan: public OperationUnaire{
     public:
-	Tan(const Expression* _exp = NULL);
+    Tan(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_TAN){}
         Expression* operation();
 	Tan* clone() const { return new Tan(*this); }
     };
 
     class Sinh: public OperationUnaire{
     public:
-	Sinh(const Expression* _exp = NULL);
+    Sinh(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SINH){}
         Expression* operation();
 	Sinh* clone() const { return new Sinh(*this); }
     };
 
     class Cosh: public OperationUnaire{
     public:
-	Cosh(const Expression* _exp = NULL);
+    Cosh(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_COSH){}
         Expression* operation();
 	Cosh* clone() const { return new Cosh(*this); }
     };
 
     class Tanh: public OperationUnaire{
     public:
-	Tanh(const Expression* _exp = NULL);
+    Tanh(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_TANH){}
         Expression* operation();
 	Tanh* clone() const { return new Tanh(*this); }
     };
 
     class Ln: public OperationUnaire{
     public:
-	Ln(const Expression* _exp = NULL);
+    Ln(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_LN){}
         Expression* operation();
 	Ln* clone() const { return new Ln(*this); }
     };
 
     class Log: public OperationUnaire{
     public:
-	Log(const Expression* _exp = NULL);
+    Log(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_LOG){}
         Expression* operation();
 	Log* clone() const { return new Log(*this); }
     };
 
     class Inv: public OperationUnaire{
     public:
-	Inv(const Expression* _exp = NULL);
+    Inv(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_INV){}
         Expression* operation();
 	Inv* clone() const { return new Inv(*this); }
     };
 
     class Sqrt: public OperationUnaire{
     public:
-	Sqrt(const Expression* _exp = NULL);
+    Sqrt(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SQRT){}
         Expression* operation();
 	Sqrt* clone() const { return new Sqrt(*this); }
     };
 
     class Sqr: public OperationUnaire{
     public:
-	Sqr(const Expression* _exp = NULL);
+    Sqr(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SQR){}
         Expression* operation();
 	Sqr* clone() const { return new Sqr(*this); }
     };
 
     class Cube: public OperationUnaire{
     public:
-	Cube(const Expression* _exp = NULL);
+    Cube(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_CUBE){}
         Expression* operation();
 	Cube* clone() const { return new Cube(*this); }
     };
 
     class Factoriel: public OperationUnaire{
     public:
-	Factoriel(const Expression* _exp = NULL);
+    Factoriel(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_FACTORIEL){}
+    int fact(int n){return (n==1 || n==0)?1:fact(n-1)*n;}
         Expression* operation();
 	Factoriel* clone() const { return new Factoriel(*this); }
     };
+
     class Eval: public OperationUnaire{
     public:
-	Eval(const Expression* _exp = NULL);
+    Eval(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_EVAL){}
         Expression* operation();
 	Eval* clone() const { return new Eval(*this); }
     };
-}
+
+    class DegToRad: public OperationUnaire{
+    public:
+    DegToRad(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_DEGTORAD){}
+        Expression* operation();
+    DegToRad* clone() const { return new DegToRad(*this); }
+    };
+
+    class RadToDeg: public OperationUnaire{
+    public:
+    RadToDeg(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_RADTODEG){}
+        Expression* operation();
+    RadToDeg* clone() const { return new RadToDeg(*this); }
+    };
+};
 
 
 
