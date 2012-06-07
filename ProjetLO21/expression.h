@@ -27,6 +27,8 @@
     #define TYPE_OPERATION_NONAIRE_START 125
 	#define TYPE_CLEAR 135
 	#define TYPE_DUP 139
+    #define TYPE_DROP 143
+    #define TYPE_SWAP 147
     #define TYPE_OPERATION_NONAIRE_END 198
 
     #define TYPE_OPERATION_UNAIRE_START 200
@@ -65,7 +67,7 @@
 
 #include <iostream>
 #include <cmath>
-#include "pile.h"
+//#include "pile.h"
 
 class Pile;
 
@@ -393,7 +395,35 @@ namespace expression{
         Expression* operation();
     RadToDeg* clone() const { return new RadToDeg(*this); }
     };
-};
+
+    class Swap: public OperationNonaire{
+    public:
+        Swap():OperationNonaire(TYPE_SWAP){}
+        Expression* operation();
+        Swap* clone() const { return new Swap(*this); }
+    };
+
+    class Clear: public OperationNonaire{
+    public:
+        Clear():OperationNonaire(TYPE_CLEAR){}
+        Expression* operation();
+        Clear* clone() const { return new Clear(*this); }
+    };
+
+    class Dup: public OperationNonaire{
+    public:
+        Dup():OperationNonaire(TYPE_DUP){}
+        Expression* operation();
+        Dup* clone() const { return new Dup(*this); }
+    };
+
+    class Drop: public OperationNonaire{
+    public:
+        Drop():OperationNonaire(TYPE_DROP){}
+        Expression* operation();
+        Drop* clone() const { return new Drop(*this); }
+    };
+}
 
 
 

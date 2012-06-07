@@ -1,4 +1,5 @@
 #include "expression.h"
+#include "pile.h"
 
 using namespace expression;
 
@@ -1043,3 +1044,28 @@ Expression* expression::Mean::operation(){
 
     return getRes();
 }
+
+Expression* expression::Swap::operation(){
+    setRes(NULL);
+    Pile::get_curPile()->swap();
+    return getRes();
+}
+
+Expression* expression::Clear::operation(){
+    setRes(NULL);
+    Pile::get_curPile()->clear();
+    return getRes();
+}
+
+Expression* expression::Dup::operation(){
+    setRes(NULL);
+    Pile::get_curPile()->dup();
+    return getRes();
+}
+
+Expression* expression::Drop::operation(){
+    setRes(NULL);
+    Pile::get_curPile()->dup();
+    return getRes();
+}
+

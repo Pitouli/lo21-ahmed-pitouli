@@ -16,7 +16,7 @@ public:
     Pile();
 
     static Pile* get_curPile(); // Retourne le pointeur vers la pile courante
-    static void set_curPile(Pile* newCurPile) { _curPile = newCurPile; } // Change la pile courante
+    static void set_curPile(Pile* newCurPile); // Change la pile courante
 
     void push(expression::Expression* const expr) { this->append(expr); }
     expression::Expression* pop() { return this->takeLast(); }
