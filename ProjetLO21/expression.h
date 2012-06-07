@@ -32,29 +32,29 @@
     #define TYPE_OPERATION_UNAIRE_START 200
 	#define TYPE_SUM 210
 	#define TYPE_MEAN 212
-    #define TYPE_SIN 214
-    #define TYPE_COS 216
-    #define TYPE_TAN 218
-    #define TYPE_SINH 220
-    #define TYPE_COSH 222
-    #define TYPE_TANH 224
-    #define TYPE_LN 226
-    #define TYPE_LOG 228
-    #define TYPE_INV 230
-    #define TYPE_SQRT 232
-    #define TYPE_SQR 234
-    #define TYPE_CUBE 236
-    #define TYPE_FACTORIEL 238
-    #define TYPE_EVAL 240
-    #define TYPE_DEGTORAD 242
-    #define TYPE_RADTODEG 244
+	#define TYPE_SIN 214
+	#define TYPE_COS 216
+	#define TYPE_TAN 218
+	#define TYPE_SINH 220
+	#define TYPE_COSH 222
+	#define TYPE_TANH 224
+	#define TYPE_LN 226
+	#define TYPE_LOG 228
+	#define TYPE_INV 230
+	#define TYPE_SQRT 232
+	#define TYPE_SQR 234
+	#define TYPE_CUBE 236
+	#define TYPE_FACTORIEL 238
+	#define TYPE_EVAL 240
+	#define TYPE_DEGTORAD 242
+	#define TYPE_RADTODEG 244
     #define TYPE_OPERATION_UNAIRE_END 299
 
     #define TYPE_OPERATION_BINAIRE_START 300
 	#define TYPE_SOMME 305
-    #define TYPE_DIFFERENCE 310
-    #define TYPE_MULTIPLICATION 315
-    #define TYPE_DIVISION 320
+	#define TYPE_DIFFERENCE 310
+	#define TYPE_MULTIPLICATION 315
+	#define TYPE_DIVISION 320
     #define TYPE_OPERATION_BINAIRE_END 399
 
 #define TYPE_OPERATION_END 400
@@ -65,7 +65,9 @@
 
 #include <iostream>
 #include <cmath>
-//#include "pile.h"
+#include "pile.h"
+
+class Pile;
 
 using namespace std;
 

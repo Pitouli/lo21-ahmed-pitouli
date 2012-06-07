@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QKeyEvent>
 
 namespace Ui {
     class MainWindow;
@@ -14,8 +15,11 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
+public slots:
+    void spacePressed() {}
 private:
+    void keyReleaseEvent(QKeyEvent *e);
+    void keyPressEvent(QKeyEvent *e);
     Ui::MainWindow *ui;
 };
 
