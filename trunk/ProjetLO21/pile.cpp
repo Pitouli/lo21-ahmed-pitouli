@@ -1,6 +1,7 @@
 #include "pile.h"
 
 Pile* Pile::_curPile = NULL;
+Pile* Pile::get_curPile() { return _curPile; }
 
 void Pile::clear()
 {
@@ -11,8 +12,11 @@ void Pile::clear()
     }
 }
 
-void Pile::swap(expression::Expression* i, expression::Expression* j)
+void Pile::swap()
 {
+    expression::Expression* i = this->pop();
+    expression::Expression* j = this->pop();
+
     if(i->getType() == TYPE_ENTIER && j->getType() == TYPE_ENTIER)
     {
 	expression::Entier* entier_i = static_cast<expression::Entier*>(i);
@@ -27,9 +31,12 @@ void Pile::swap(expression::Expression* i, expression::Expression* j)
     }
     else
 	throw("SWAP impossible : les paramètres ne sont pas valides (ce ne sont pas des entiers)");
+
+    delete i;
+    delete j;
 }
 
-void Pile::sum(expression::Expression* x)
+expression::Expression* Pile::sum(expression::Expression* x)
 {
     if(x->getType() == TYPE_ENTIER)
     {
@@ -54,16 +61,16 @@ void Pile::sum(expression::Expression* x)
 
 	    delete somme;
 
-	    this->push(resultat);
+	    return resultat;
 	}
 	else // Si on somme 0 élément
-	    this->push(new expression::Entier(0)); // Si on ne somme rien, on empile 0
+	    return new expression::Entier(0); // Si on ne somme rien, on empile 0
     }
     else
 	throw("SUM impossible : le paramètre n'est pas valide (ce n'est pas un entier)");
 }
 
-void Pile::mean(expression::Expression* x)
+expression::Expression* Pile::mean(expression::Expression* x)
 {
     if(x->getType() == TYPE_ENTIER)
     {
@@ -85,10 +92,10 @@ void Pile::mean(expression::Expression* x)
 	    delete resSomme;
 	    delete division;
 
-	    this->push(resultat);
+	    return resultat;
 	}
 	else // Si on moyenne 0 élément
-	    this->push(new expression::Entier(0)); // Si on ne moyenne rien, on empile 0
+	    return new expression::Entier(0); // Si on ne moyenne rien, on empile 0
     }
     else
 	throw("MEAN impossible : le paramètre n'est pas valide (ce n'est pas un entier)");
