@@ -6,6 +6,13 @@
 #include <QRegExp>
 #include "expression.h"
 
+namespace expression{
+class Expression;
+class Nombre;
+class Operation;
+}
+
+
 class Factory
 {
 public:

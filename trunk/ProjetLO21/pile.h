@@ -3,6 +3,12 @@
 
 #include <QList>
 #include "expression.h"
+#include "factory.h"
+
+namespace expression{
+class Expression;
+}
+
 
 class Pile : public QList<expression::Expression*>
 {

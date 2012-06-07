@@ -7,23 +7,23 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>294</height>
+    <height>360</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Calculatrice à Notation Polonaise Inversée - Amhed &amp; JB</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="gridLayout_7">
     <item row="0" column="0">
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="lineSaisie">
       <property name="readOnly">
        <bool>true</bool>
       </property>
      </widget>
     </item>
-    <item row="0" column="1" rowspan="3">
-     <widget class="QTabWidget" name="tabWidget_2">
+    <item row="0" column="1" rowspan="4">
+     <widget class="QTabWidget" name="tabWidget_pile">
       <property name="minimumSize">
        <size>
         <width>250</width>
@@ -31,7 +31,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="tabsClosable">
        <bool>true</bool>
@@ -42,7 +42,7 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QListView" name="listView"/>
+         <widget class="QListView" name="listView_pile"/>
         </item>
        </layout>
       </widget>
@@ -59,9 +59,9 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QHBoxLayout" name="paramSaisie">
       <item>
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="checkBox_complexe">
         <property name="text">
          <string>Complexe</string>
         </property>
@@ -71,7 +71,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_2">
+       <widget class="QRadioButton" name="radioButton_reel">
         <property name="text">
          <string>Reel</string>
         </property>
@@ -84,7 +84,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_3">
+       <widget class="QRadioButton" name="radioButton_rationnel">
         <property name="text">
          <string>Rationnel</string>
         </property>
@@ -94,7 +94,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton">
+       <widget class="QRadioButton" name="radioButton_entier">
         <property name="text">
          <string>Entier</string>
         </property>
@@ -113,19 +113,19 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
-          <height>20</height>
+          <width>13</width>
+          <height>16</height>
          </size>
         </property>
        </spacer>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_2">
+       <widget class="QCheckBox" name="checkBox_calculAuto">
         <property name="text">
          <string>Calcul auto</string>
         </property>
         <property name="shortcut">
-         <string>F5</string>
+         <string>'</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -134,8 +134,21 @@
       </item>
      </layout>
     </item>
+    <item row="3" column="0">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>1000</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
     <item row="2" column="0">
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="tabWidget_saisie">
       <property name="toolTip">
        <string/>
       </property>
@@ -148,180 +161,144 @@
       <property name="tabsClosable">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="tab_basique">
+       <property name="accessibleName">
+        <string/>
+       </property>
        <attribute name="title">
-        <string>Basique</string>
+        <string>Basiq&amp;ue</string>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Pavé numérique et de calcul de base
+Raccourci : U
+NB: les boutons sont perpétuellement rattachés aux touches de clavier correspondantes</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
-         <widget class="QPushButton" name="pushButton_25">
+         <widget class="QPushButton" name="pushButton_7">
           <property name="text">
-           <string>7</string>
-          </property>
-          <property name="shortcut">
            <string>7</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QPushButton" name="pushButton_26">
+         <widget class="QPushButton" name="pushButton_8">
           <property name="text">
-           <string>8</string>
-          </property>
-          <property name="shortcut">
            <string>8</string>
           </property>
          </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QPushButton" name="pushButton_27">
+         <widget class="QPushButton" name="pushButton_9">
           <property name="text">
            <string>9</string>
-          </property>
-          <property name="shortcut">
-           <string>9</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <widget class="QPushButton" name="pushButton_28">
-          <property name="text">
-           <string>+</string>
-          </property>
-          <property name="shortcut">
-           <string>+</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton_29">
+         <widget class="QPushButton" name="pushButton_4">
           <property name="text">
-           <string>4</string>
-          </property>
-          <property name="shortcut">
            <string>4</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QPushButton" name="pushButton_30">
+         <widget class="QPushButton" name="pushButton_5">
           <property name="text">
-           <string>5</string>
-          </property>
-          <property name="shortcut">
            <string>5</string>
           </property>
          </widget>
         </item>
         <item row="1" column="2">
-         <widget class="QPushButton" name="pushButton_31">
+         <widget class="QPushButton" name="pushButton_6">
           <property name="text">
            <string>6</string>
-          </property>
-          <property name="shortcut">
-           <string>6</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QPushButton" name="pushButton_32">
-          <property name="text">
-           <string>-</string>
-          </property>
-          <property name="shortcut">
-           <string>-</string>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QPushButton" name="pushButton_33">
+         <widget class="QPushButton" name="pushButton_1">
           <property name="text">
-           <string>1</string>
-          </property>
-          <property name="shortcut">
            <string>1</string>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QPushButton" name="pushButton_34">
+         <widget class="QPushButton" name="pushButton_2">
           <property name="text">
-           <string>2</string>
-          </property>
-          <property name="shortcut">
            <string>2</string>
           </property>
          </widget>
         </item>
         <item row="2" column="2">
-         <widget class="QPushButton" name="pushButton_35">
+         <widget class="QPushButton" name="pushButton_3">
           <property name="text">
            <string>3</string>
-          </property>
-          <property name="shortcut">
-           <string>3</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="3">
-         <widget class="QPushButton" name="pushButton_36">
-          <property name="text">
-           <string>*</string>
-          </property>
-          <property name="shortcut">
-           <string>*</string>
           </property>
          </widget>
         </item>
         <item row="3" column="0">
-         <widget class="QPushButton" name="pushButton_37">
+         <widget class="QPushButton" name="pushButton_0">
           <property name="text">
-           <string>0</string>
-          </property>
-          <property name="shortcut">
            <string>0</string>
           </property>
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QPushButton" name="pushButton_38">
+         <widget class="QPushButton" name="pushButton_point">
           <property name="text">
            <string>.</string>
-          </property>
-          <property name="shortcut">
-           <string>., ,</string>
           </property>
          </widget>
         </item>
         <item row="3" column="2">
-         <widget class="QPushButton" name="pushButton_39">
+         <widget class="QPushButton" name="pushButton_space">
           <property name="text">
            <string>space</string>
           </property>
-          <property name="shortcut">
-           <string>Space</string>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QPushButton" name="pushButton_diviser">
+          <property name="text">
+           <string>/</string>
           </property>
          </widget>
         </item>
         <item row="3" column="3">
-         <widget class="QPushButton" name="pushButton_40">
+         <widget class="QPushButton" name="pushButton_plus">
           <property name="text">
-           <string>/</string>
+           <string>+</string>
           </property>
-          <property name="shortcut">
-           <string>/</string>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QPushButton" name="pushButton_moins">
+          <property name="text">
+           <string>-</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QPushButton" name="pushButton_fois">
+          <property name="text">
+           <string>*</string>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_6">
+      <widget class="QWidget" name="tab_divers">
        <attribute name="title">
-        <string>Divers</string>
+        <string>D&amp;ivers</string>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Diverses fonctions mathématiques
+Raccourci : I</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_6">
         <item row="0" column="0">
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="pushButton_pow">
           <property name="toolTip">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -341,7 +318,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QPushButton" name="pushButton_10">
+         <widget class="QPushButton" name="pushButton_inv">
           <property name="text">
            <string>INV</string>
           </property>
@@ -351,7 +328,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QPushButton" name="pushButton_6">
+         <widget class="QPushButton" name="pushButton_mod">
           <property name="text">
            <string>MOD</string>
           </property>
@@ -361,7 +338,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="pushButton_sqrt">
           <property name="toolTip">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -380,7 +357,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QPushButton" name="pushButton_7">
+         <widget class="QPushButton" name="pushButton_sign">
           <property name="text">
            <string>SIGN</string>
           </property>
@@ -390,7 +367,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="1" column="2">
-         <widget class="QPushButton" name="pushButton_11">
+         <widget class="QPushButton" name="pushButton_fact">
           <property name="text">
            <string>FACT (!)</string>
           </property>
@@ -400,7 +377,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="3" column="0">
-         <widget class="QPushButton" name="pushButton_4">
+         <widget class="QPushButton" name="pushButton_sqr">
           <property name="text">
            <string>SQR</string>
           </property>
@@ -410,14 +387,24 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QPushButton" name="pushButton_8">
+         <widget class="QPushButton" name="pushButton_ln">
           <property name="text">
            <string>LN</string>
           </property>
          </widget>
         </item>
+        <item row="3" column="2">
+         <widget class="QPushButton" name="pushButton_eval">
+          <property name="text">
+           <string>EVAL</string>
+          </property>
+          <property name="shortcut">
+           <string>=</string>
+          </property>
+         </widget>
+        </item>
         <item row="4" column="0">
-         <widget class="QPushButton" name="pushButton_5">
+         <widget class="QPushButton" name="pushButton_cube">
           <property name="text">
            <string>CUBE</string>
           </property>
@@ -427,7 +414,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QPushButton" name="pushButton_9">
+         <widget class="QPushButton" name="pushButton_log">
           <property name="text">
            <string>LOG</string>
           </property>
@@ -436,25 +423,19 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
-        <item row="3" column="2">
-         <widget class="QPushButton" name="pushButton_12">
-          <property name="text">
-           <string>EVAL</string>
-          </property>
-          <property name="shortcut">
-           <string>=</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_4">
+      <widget class="QWidget" name="tab_trigo">
        <attribute name="title">
-        <string>Trigo</string>
+        <string>Trig&amp;o</string>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Fonctions trigonométriques
+Raccourci : O</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="0" column="0">
-         <widget class="QPushButton" name="pushButton_65">
+         <widget class="QPushButton" name="pushButton_sin">
           <property name="text">
            <string>SIN</string>
           </property>
@@ -464,7 +445,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QRadioButton" name="radioButton_5">
+         <widget class="QRadioButton" name="radioButton_radian">
           <property name="text">
            <string>Radian</string>
           </property>
@@ -477,7 +458,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton_66">
+         <widget class="QPushButton" name="pushButton_cos">
           <property name="text">
            <string>COS</string>
           </property>
@@ -487,7 +468,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QRadioButton" name="radioButton_6">
+         <widget class="QRadioButton" name="radioButton_degre">
           <property name="text">
            <string>Degré</string>
           </property>
@@ -497,7 +478,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QPushButton" name="pushButton_67">
+         <widget class="QPushButton" name="pushButton_tan">
           <property name="text">
            <string>TAN</string>
           </property>
@@ -507,7 +488,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QCheckBox" name="checkBox_4">
+         <widget class="QCheckBox" name="checkBox_hyperbolic">
           <property name="text">
            <string>Hyperbolic</string>
           </property>
@@ -518,13 +499,17 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_5">
+      <widget class="QWidget" name="tab_pile">
        <attribute name="title">
-        <string>Pile</string>
+        <string>&amp;Pile</string>
+       </attribute>
+       <attribute name="toolTip">
+        <string>Fonctions pour agir sur la pile.
+Raccourci : P</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="pushButton_swap">
           <property name="text">
            <string>SWAP</string>
           </property>
@@ -534,7 +519,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QPushButton" name="pushButton_68">
+         <widget class="QPushButton" name="pushButton_clear">
           <property name="text">
            <string>CLEAR</string>
           </property>
@@ -544,7 +529,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton_72">
+         <widget class="QPushButton" name="pushButton_sum">
           <property name="text">
            <string>SUM</string>
           </property>
@@ -554,7 +539,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QPushButton" name="pushButton_69">
+         <widget class="QPushButton" name="pushButton_dup">
           <property name="text">
            <string>DUP</string>
           </property>
@@ -564,7 +549,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QPushButton" name="pushButton_71">
+         <widget class="QPushButton" name="pushButton_mean">
           <property name="text">
            <string>MEAN</string>
           </property>
@@ -574,7 +559,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QPushButton" name="pushButton_70">
+         <widget class="QPushButton" name="pushButton_drop">
           <property name="text">
            <string>DROP</string>
           </property>
@@ -593,5 +578,38 @@ p, li { white-space: pre-wrap; }
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_0</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget_pile</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>223</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>563</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_point</sender>
+   <signal>clicked()</signal>
+   <receiver>tabWidget_pile</receiver>
+   <slot>show()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>170</x>
+     <y>223</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>563</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
