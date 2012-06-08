@@ -6,7 +6,42 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->pushButton_space, SIGNAL(pressed()), this, SLOT(spacePressed()));
+
+    // On connecte les boutons
+    for (int i = 0; i < ui->gridLayout_tabBasique->count(); ++i)
+    {
+	QWidget* widget = ui->gridLayout_tabBasique->itemAt(i)->widget();
+	QPushButton* button = qobject_cast<QPushButton*>(widget);
+
+	if(button)
+	    connect(button, SIGNAL(clicked()), this, SLOT(buttonPressed()));
+    }
+    for (int i = 0; i < ui->gridLayout_tabDivers->count(); ++i)
+    {
+	QWidget* widget = ui->gridLayout_tabDivers->itemAt(i)->widget();
+	QPushButton* button = qobject_cast<QPushButton*>(widget);
+
+	if(button)
+	    connect(button, SIGNAL(clicked()), this, SLOT(buttonPressed()));
+    }
+    for (int i = 0; i < ui->gridLayout_tabTrigo->count(); ++i)
+    {
+	QWidget* widget = ui->gridLayout_tabTrigo->itemAt(i)->widget();
+	QPushButton* button = qobject_cast<QPushButton*>(widget);
+
+	if(button)
+	    connect(button, SIGNAL(clicked()), this, SLOT(buttonPressed()));
+    }
+    for (int i = 0; i < ui->gridLayout_tabPile->count(); ++i)
+    {
+	QWidget* widget = ui->gridLayout_tabPile->itemAt(i)->widget();
+	QPushButton* button = qobject_cast<QPushButton*>(widget);
+
+	if(button)
+	    connect(button, SIGNAL(clicked()), this, SLOT(buttonPressed()));
+    }
+
+    connect(ui->pushButton_space, SIGNAL(clicked()), this, SLOT(buttonPressed()));
 }
 
 MainWindow::~MainWindow()
@@ -14,151 +49,330 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::buttonPressed()
+{
+    QPushButton* button = qobject_cast<QPushButton*>( sender() );
+
+    if(button)
+    {
+	QString s = ui->lineSaisie->text();
+
+	if(button == ui->pushButton_space)
+	{
+	    bool nbWriting = false;
+	    bool nbWrited = false;
+
+	    if(s.contains(QRegExp("^(.* )?([0-9]+[0-9/\\$\\.]*)$"))) // Si on est en train d'écrire un nombre
+	    {
+		for (int i = 0; i < ui->paramSaisie->count(); ++i)
+		    if(qobject_cast<QRadioButton*>(ui->paramSaisie->itemAt(i)->widget()) || qobject_cast<QCheckBox*>(ui->paramSaisie->itemAt(i)->widget()))
+			ui->paramSaisie->itemAt(i)->widget()->setEnabled(false);
+		nbWriting = true;
+
+		// Ecriture d'un réel non complexe
+		if(ui->radioButton_reel->isChecked() && !ui->checkBox_complexe->isChecked())
+		{
+		    if(s.contains(QRegExp("^(.* )?([0-9]+)$"))) // Si la partie entière est ecrite
+			ui->lineSaisie->setText(s+"."); // On ajoute le point
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\.$"))) // Si la partie entière et le point sont écrits
+		    {
+			ui->lineSaisie->setText(s+"0"); // On ajoute un zéro en partie décimale
+			nbWrited = true;
+		    }
+		    else
+			nbWrited = true;
+		}
+		// Ecriture d'un rationnel non complexe
+		else if(ui->radioButton_rationnel->isChecked() && !ui->checkBox_complexe->isChecked())
+		{
+		    if(s.contains(QRegExp("^(.* )?([0-9]+)$"))) // Si le numérateur est écrit
+			ui->lineSaisie->setText(s+"/"); // On ajoute le slash
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)/$"))) // Si le numérateur et le slash sont écrits
+		    {
+			ui->lineSaisie->setText(s+"1"); // On ajoute un 1 au dénominateur
+			nbWrited = true;
+		    }
+		    else
+			nbWrited = true;
+		}
+		// Ecriture d'un entier complexe
+		else if(ui->radioButton_entier->isChecked() && ui->checkBox_complexe->isChecked())
+		{
+		    if(s.contains(QRegExp("^(.* )?([0-9]+)$"))) // Si la partie réelle est ecrite
+			ui->lineSaisie->setText(s+"$"); // On ajoute le dollars
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\$$"))) // Si la partie réelle et le dollar sont écrits
+		    {
+			ui->lineSaisie->setText(s+"0"); // On ajoute un zéro en partie imaginaire
+			nbWrited = true;
+		    }
+		    else
+			nbWrited = true;
+		}
+		// Ecriture d'un rationnel complexe
+		else if(ui->radioButton_rationnel->isChecked() && ui->checkBox_complexe->isChecked())
+		{
+		    if(s.contains(QRegExp("^(.* )?([0-9]+)$"))) // Si le numérateur réel est écrit
+			ui->lineSaisie->setText(s+"/"); // On ajoute le slash
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)/$"))) // Si le numérateur réel et le slash sont écrits
+			ui->lineSaisie->setText(s+"1$"); // On ajoute un 1 au dénominateur et un dollar pour la partie imaginaire
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)/([0-9]+)$"))) // Si le numérateur réel, le slash et le dénominateur réel sont écrits
+			ui->lineSaisie->setText(s+"$"); // On ajoute un dollar pour la partie imaginaire
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)/([0-9]+)\\$$"))) // Si la partie réelle est écrite mais pas la partie imaginaire
+		    {
+			ui->lineSaisie->setText(s+"0/1"); // On ajoute la partie imaginaire nulle
+			nbWrited = true;
+		    }
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)/([0-9]+)\\$([0-9]+)$"))) // Si la partie réelle et le numérateur imaginaire sont écrits
+			ui->lineSaisie->setText(s+"/"); // On ajoute le slash
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)/([0-9]+)\\$([0-9]+)/$"))) // s'il ne manque que le dénominateur imaginaire
+		    {
+			ui->lineSaisie->setText(s+"1"); // On ajoute 1 par défaut
+			nbWrited = true;
+		    }
+		    else
+			nbWrited = true;
+		}
+		// Ecriture d'un réel complexe
+		else if(ui->radioButton_reel->isChecked() && ui->checkBox_complexe->isChecked())
+		{
+		    if(s.contains(QRegExp("^(.* )?([0-9]+)$"))) // Si la partie entière réelle est écrite
+			ui->lineSaisie->setText(s+"."); // On ajoute le point
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\.$"))) // Si la partie entière réelle et le point sont écrits
+			ui->lineSaisie->setText(s+"0$"); // On ajoute un 0 au dénominateur et un dollar pour la partie imaginaire
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\.([0-9]+)$"))) // Si la partie entière réelle, le point et la partie décimale réelle sont écrits
+			ui->lineSaisie->setText(s+"$"); // On ajoute un dollar pour la partie imaginaire
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\.([0-9]+)\\$$"))) // Si la partie réelle est écrite mais pas la partie imaginaire
+		    {
+			ui->lineSaisie->setText(s+"0.0"); // On ajoute la partie imaginaire nulle
+			nbWrited = true;
+		    }
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\.([0-9]+)\\$([0-9]+)$"))) // Si la partie réelle et la partie entière imaginaire sont écrits
+			ui->lineSaisie->setText(s+"."); // On ajoute le point
+		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\.([0-9]+)\\$([0-9]+)\\.$"))) // s'il ne manque que la aprtie décimale imaginaire
+		    {
+			ui->lineSaisie->setText(s+"0"); // On ajoute 0 par défaut
+			nbWrited = true;
+		    }
+		    else
+			nbWrited = true;
+		}
+		else // Cas d'un entier non complexe
+		    nbWrited = true;
+	    }
+
+	    // On met à jour la nouvelle valeur de s
+	    s = ui->lineSaisie->text();
+
+	    if(nbWriting && nbWrited)
+	    {
+		for (int i = 0; i < ui->paramSaisie->count(); ++i)
+		    if(qobject_cast<QRadioButton*>(ui->paramSaisie->itemAt(i)->widget()) || qobject_cast<QCheckBox*>(ui->paramSaisie->itemAt(i)->widget()))
+			ui->paramSaisie->itemAt(i)->widget()->setEnabled(true);
+
+		if(ui->checkBox_calculAuto->isChecked())
+		    qDebug("empilement");
+		else
+		    ui->lineSaisie->setText(s+" "); // on l'ajoute
+
+		nbWriting = false;
+		nbWrited = false;
+	    }
+	    else if(!nbWriting)
+	    {
+		if(ui->checkBox_calculAuto->isChecked() && s.length() > 0)
+		    qDebug("empilement");
+		else
+		{
+		    if(!s.contains(QRegExp("(?: $)|(?:^$)"))) // S'il n'y a pas déjà des un espace
+			ui->lineSaisie->setText(s+" "); // on l'ajoute
+		}
+	    }
+
+	}
+	else if(button == ui->pushButton_0 || button == ui->pushButton_1 || button == ui->pushButton_2
+		|| button == ui->pushButton_3 || button == ui->pushButton_4 || button == ui->pushButton_5
+		|| button == ui->pushButton_6 || button == ui->pushButton_7 || button == ui->pushButton_8
+		|| button == ui->pushButton_9)
+	{
+	    ui->lineSaisie->setText(s+button->text());
+	}
+	else if(button == ui->pushButton_del)
+	{
+	    QRegExp regSentenceWithoutLastWord("^(.* )?(?:[\\S]+[ ]?)$");
+	    regSentenceWithoutLastWord.exactMatch(ui->lineSaisie->text());
+	    ui->lineSaisie->setText(regSentenceWithoutLastWord.cap(1));
+
+	    for (int i = 0; i < ui->paramSaisie->count(); ++i)
+		if(qobject_cast<QRadioButton*>(ui->paramSaisie->itemAt(i)->widget()) || qobject_cast<QCheckBox*>(ui->paramSaisie->itemAt(i)->widget()))
+		    ui->paramSaisie->itemAt(i)->widget()->setEnabled(true);
+	}
+	else // Si le bouton n'est ni un chiffre ni la barre espace
+	{
+	    if(!s.contains(QRegExp("(?: $)|(?:^$)"))) // S'il n'y a pas déjà un espace
+	    {
+		ui->lineSaisie->setText(s+" "); // on l'ajoute
+		s = ui->lineSaisie->text(); // On met à jour la nouvelle valeur de s
+	    }
+
+	    if(button == ui->pushButton_mod)
+		ui->lineSaisie->setText(ui->lineSaisie->text()+"%");
+	    else if(button == ui->pushButton_fact)
+		ui->lineSaisie->setText(ui->lineSaisie->text()+"!");
+	    else
+		ui->lineSaisie->setText(s+button->text());
+
+	    s = ui->lineSaisie->text(); // On met à jour la nouvelle valeur de s
+
+	    if(ui->checkBox_calculAuto->isChecked() && s.length() > 0)
+		qDebug("empilement");
+	    else
+	    {
+		if(!s.contains(QRegExp("(?: $)|(?:^$)"))) // S'il n'y a pas déjà des un espace
+		    ui->lineSaisie->setText(s+" "); // on l'ajoute
+	    }
+	}
+    }
+}
+
 void MainWindow::keyReleaseEvent(QKeyEvent *e)
 {
-    switch(e->key())
-    {
-    case Qt::Key_U:
+    if(e->key() == Qt::Key_U)
 	ui->tabWidget_saisie->setCurrentWidget(ui->tab_basique);
-	break;
-    case Qt::Key_I:
+    else if(e->key() == Qt::Key_I)
 	ui->tabWidget_saisie->setCurrentWidget(ui->tab_divers);
-	break;
-    case Qt::Key_O:
+    else if(e->key() == Qt::Key_O)
 	ui->tabWidget_saisie->setCurrentWidget(ui->tab_trigo);
-	break;
-    case Qt::Key_P:
+    else if(e->key() == Qt::Key_P)
 	ui->tabWidget_saisie->setCurrentWidget(ui->tab_pile);
-	break;
-    case Qt::Key_0:
+    else if(e->key() == Qt::Key_0)
+    {
 	ui->pushButton_0->setDown(false);
 	ui->pushButton_0->click();
-	break;
-    case Qt::Key_1:
+    }
+    else if(e->key() == Qt::Key_1)
+    {
 	ui->pushButton_1->setDown(false);
 	ui->pushButton_1->click();
-	break;
-    case Qt::Key_2:
+    }
+    else if(e->key() == Qt::Key_2)
+    {
 	ui->pushButton_2->setDown(false);
 	ui->pushButton_2->click();
-	break;
-    case Qt::Key_3:
+    }
+    else if(e->key() == Qt::Key_3)
+    {
 	ui->pushButton_3->setDown(false);
 	ui->pushButton_3->click();
-	break;
-    case Qt::Key_4:
+    }
+    else if(e->key() == Qt::Key_4)
+    {
 	ui->pushButton_4->setDown(false);
 	ui->pushButton_4->click();
-	break;
-    case Qt::Key_5:
+    }
+    else if(e->key() == Qt::Key_5)
+    {
 	ui->pushButton_5->setDown(false);
 	ui->pushButton_5->click();
-	break;
-    case Qt::Key_6:
+    }
+    else if(e->key() == Qt::Key_6)
+    {
 	ui->pushButton_6->setDown(false);
 	ui->pushButton_6->click();
-	break;
-    case Qt::Key_7:
+    }
+    else if(e->key() == Qt::Key_7)
+    {
 	ui->pushButton_7->setDown(false);
 	ui->pushButton_7->click();
-	break;
-    case Qt::Key_8:
+    }
+    else if(e->key() == Qt::Key_8)
+    {
 	ui->pushButton_8->setDown(false);
 	ui->pushButton_8->click();
-	break;
-    case Qt::Key_9:
+    }
+    else if(e->key() == Qt::Key_9)
+    {
 	ui->pushButton_9->setDown(false);
 	ui->pushButton_9->click();
-	break;
-    case Qt::Key_Plus:
+    }
+    else if(e->key() == Qt::Key_Plus)
+    {
 	ui->pushButton_plus->setDown(false);
 	ui->pushButton_plus->click();
-	break;
-    case Qt::Key_Minus:
+    }
+    else if(e->key() == Qt::Key_Minus)
+    {
 	ui->pushButton_moins->setDown(false);
 	ui->pushButton_moins->click();
-	break;
-    case Qt::Key_Slash:
-	ui->pushButton_diviser->setDown(false);
-	ui->pushButton_diviser->click();
-	break;
-    case Qt::Key_Asterisk:
+    }
+    else if(e->key() == Qt::Key_Asterisk)
+    {
 	ui->pushButton_fois->setDown(false);
 	ui->pushButton_fois->click();
-	break;
-    /*case Qt::Key_Space:
+    }
+    else if(e->key() == Qt::Key_Slash)
+    {
+	if(ui->radioButton_rationnel->isChecked() && ui->lineSaisie->text().contains(QRegExp("[0-9]$")))
+	{
+	    ui->pushButton_space->setDown(false);
+	    ui->pushButton_space->click();
+	}
+	else
+	{
+	    ui->pushButton_diviser->setDown(false);
+	    ui->pushButton_diviser->click();
+	}
+    }
+    else if(e->key() == Qt::Key_Backspace)
+    {
+	ui->pushButton_del->setDown(false);
+	ui->pushButton_del->click();
+    }
+    else if(e->key() == Qt::Key_Comma || e->key() == Qt::Key_Period || e->key() == Qt::Key_Dollar)
+    {
 	ui->pushButton_space->setDown(false);
 	ui->pushButton_space->click();
-	break;*/
-    case Qt::Key_Comma:
-	ui->pushButton_point->setDown(false);
-	ui->pushButton_point->click();
-	break;
-    case Qt::Key_Period:
-	ui->pushButton_point->setDown(false);
-	ui->pushButton_point->click();
-	break;
-    default:
-	QMainWindow::keyReleaseEvent(e);
     }
+    else
+	QMainWindow::keyReleaseEvent(e);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
-    switch(e->key())
-    {
-    case Qt::Key_0:
+    if(e->key() == Qt::Key_0)
 	ui->pushButton_0->setDown(true);
-	break;
-    case Qt::Key_1:
+    else if(e->key() == Qt::Key_1)
 	ui->pushButton_1->setDown(true);
-	break;
-    case Qt::Key_2:
+    else if(e->key() == Qt::Key_2)
 	ui->pushButton_2->setDown(true);
-	break;
-    case Qt::Key_3:
+    else if(e->key() == Qt::Key_3)
 	ui->pushButton_3->setDown(true);
-	break;
-    case Qt::Key_4:
+    else if(e->key() == Qt::Key_4)
 	ui->pushButton_4->setDown(true);
-	break;
-    case Qt::Key_5:
+    else if(e->key() == Qt::Key_5)
 	ui->pushButton_5->setDown(true);
-	break;
-    case Qt::Key_6:
+    else if(e->key() == Qt::Key_6)
 	ui->pushButton_6->setDown(true);
-	break;
-    case Qt::Key_7:
+    else if(e->key() == Qt::Key_7)
 	ui->pushButton_7->setDown(true);
-	break;
-    case Qt::Key_8:
+    else if(e->key() == Qt::Key_8)
 	ui->pushButton_8->setDown(true);
-	break;
-    case Qt::Key_9:
+    else if(e->key() == Qt::Key_9)
 	ui->pushButton_9->setDown(true);
-	break;
-    case Qt::Key_Plus:
+    else if(e->key() == Qt::Key_Plus)
 	ui->pushButton_plus->setDown(true);
-	break;
-    case Qt::Key_Minus:
+    else if(e->key() == Qt::Key_Minus)
 	ui->pushButton_moins->setDown(true);
-	break;
-    case Qt::Key_Slash:
-	ui->pushButton_diviser->setDown(true);
-	break;
-    case Qt::Key_Asterisk:
+    else if(e->key() == Qt::Key_Asterisk)
 	ui->pushButton_fois->setDown(true);
-	break;
-    /*case Qt::Key_Space:
+    else if(e->key() == Qt::Key_Slash)
+	if(ui->radioButton_rationnel->isChecked() && ui->lineSaisie->text().contains(QRegExp("[0-9]$")))
+	    ui->pushButton_space->setDown(true);
+	else
+	    ui->pushButton_diviser->setDown(true);
+    else if(e->key() == Qt::Key_Backspace)
+	ui->pushButton_del->setDown(true);
+    else if(e->key() == Qt::Key_Comma || e->key() == Qt::Key_Period || e->key() == Qt::Key_Dollar)
 	ui->pushButton_space->setDown(true);
-	break;*/
-    case Qt::Key_Comma:
-	ui->pushButton_point->setDown(true);
-	break;
-    case Qt::Key_Period:
-	ui->pushButton_point->setDown(true);
-	break;
-    default:
+    else
 	QMainWindow::keyPressEvent(e);
-    }
 }

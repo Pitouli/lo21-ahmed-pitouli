@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
+#include <QString>
+#include <QDebug>
 
 namespace Ui {
     class MainWindow;
@@ -16,11 +18,13 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 public slots:
-    void spacePressed() {}
+    void buttonPressed();
 private:
     void keyReleaseEvent(QKeyEvent *e);
     void keyPressEvent(QKeyEvent *e);
     Ui::MainWindow *ui;
 };
+
+
 
 #endif // MAINWINDOW_H

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed 6. Jun 14:46:37 2012
+** Created: Fri 8. Jun 03:20:03 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,6 +15,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QCheckBox>
+#include <QtGui/QFrame>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
@@ -54,24 +55,25 @@ public:
     QTabWidget *tabWidget_saisie;
     QWidget *tab_basique;
     QGridLayout *gridLayout_2;
+    QGridLayout *gridLayout_tabBasique;
     QPushButton *pushButton_7;
     QPushButton *pushButton_8;
     QPushButton *pushButton_9;
+    QPushButton *pushButton_diviser;
     QPushButton *pushButton_4;
     QPushButton *pushButton_5;
     QPushButton *pushButton_6;
+    QPushButton *pushButton_fois;
     QPushButton *pushButton_1;
     QPushButton *pushButton_2;
     QPushButton *pushButton_3;
-    QPushButton *pushButton_0;
-    QPushButton *pushButton_point;
-    QPushButton *pushButton_space;
-    QPushButton *pushButton_diviser;
-    QPushButton *pushButton_plus;
     QPushButton *pushButton_moins;
-    QPushButton *pushButton_fois;
+    QPushButton *pushButton_0;
+    QPushButton *pushButton_del;
+    QPushButton *pushButton_plus;
     QWidget *tab_divers;
-    QGridLayout *gridLayout_6;
+    QHBoxLayout *horizontalLayout_4;
+    QGridLayout *gridLayout_tabDivers;
     QPushButton *pushButton_pow;
     QPushButton *pushButton_inv;
     QPushButton *pushButton_mod;
@@ -80,32 +82,38 @@ public:
     QPushButton *pushButton_fact;
     QPushButton *pushButton_sqr;
     QPushButton *pushButton_ln;
-    QPushButton *pushButton_eval;
     QPushButton *pushButton_cube;
     QPushButton *pushButton_log;
+    QPushButton *pushButton_eval;
     QWidget *tab_trigo;
-    QGridLayout *gridLayout_3;
+    QHBoxLayout *horizontalLayout_5;
+    QGridLayout *gridLayout_tabTrigo;
     QPushButton *pushButton_sin;
     QRadioButton *radioButton_radian;
     QPushButton *pushButton_cos;
     QRadioButton *radioButton_degre;
     QPushButton *pushButton_tan;
     QCheckBox *checkBox_hyperbolic;
+    QFrame *line;
     QWidget *tab_pile;
-    QGridLayout *gridLayout_4;
+    QHBoxLayout *horizontalLayout_6;
+    QGridLayout *gridLayout_tabPile;
     QPushButton *pushButton_swap;
     QPushButton *pushButton_clear;
     QPushButton *pushButton_sum;
     QPushButton *pushButton_dup;
     QPushButton *pushButton_mean;
     QPushButton *pushButton_drop;
+    QPushButton *pushButton_space;
     QStatusBar *statusBar;
+    QButtonGroup *buttonGroup_type;
+    QButtonGroup *buttonGroup_2;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(700, 360);
+        MainWindow->resize(750, 360);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout_7 = new QGridLayout(centralWidget);
@@ -114,6 +122,9 @@ public:
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
         lineSaisie = new QLineEdit(centralWidget);
         lineSaisie->setObjectName(QString::fromUtf8("lineSaisie"));
+        lineSaisie->setMouseTracking(false);
+        lineSaisie->setAcceptDrops(false);
+        lineSaisie->setInputMethodHints(Qt::ImhUppercaseOnly);
         lineSaisie->setReadOnly(true);
 
         gridLayout_7->addWidget(lineSaisie, 0, 0, 1, 1);
@@ -147,7 +158,7 @@ public:
 
         tabWidget_pile->addTab(tab_8, QString());
 
-        gridLayout_7->addWidget(tabWidget_pile, 0, 1, 4, 1);
+        gridLayout_7->addWidget(tabWidget_pile, 0, 1, 5, 1);
 
         paramSaisie = new QHBoxLayout();
         paramSaisie->setSpacing(6);
@@ -158,19 +169,26 @@ public:
         paramSaisie->addWidget(checkBox_complexe);
 
         radioButton_reel = new QRadioButton(centralWidget);
+        buttonGroup_type = new QButtonGroup(MainWindow);
+        buttonGroup_type->setObjectName(QString::fromUtf8("buttonGroup_type"));
+        buttonGroup_type->addButton(radioButton_reel);
         radioButton_reel->setObjectName(QString::fromUtf8("radioButton_reel"));
+        radioButton_reel->setEnabled(true);
+        radioButton_reel->setCheckable(true);
         radioButton_reel->setChecked(true);
 
         paramSaisie->addWidget(radioButton_reel);
 
         radioButton_rationnel = new QRadioButton(centralWidget);
+        buttonGroup_type->addButton(radioButton_rationnel);
         radioButton_rationnel->setObjectName(QString::fromUtf8("radioButton_rationnel"));
+        radioButton_rationnel->setCheckable(true);
 
         paramSaisie->addWidget(radioButton_rationnel);
 
         radioButton_entier = new QRadioButton(centralWidget);
+        buttonGroup_type->addButton(radioButton_entier);
         radioButton_entier->setObjectName(QString::fromUtf8("radioButton_entier"));
-        radioButton_entier->setChecked(false);
 
         paramSaisie->addWidget(radioButton_entier);
 
@@ -189,248 +207,312 @@ public:
 
         verticalSpacer = new QSpacerItem(20, 1000, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout_7->addItem(verticalSpacer, 3, 0, 1, 1);
+        gridLayout_7->addItem(verticalSpacer, 4, 0, 1, 1);
 
         tabWidget_saisie = new QTabWidget(centralWidget);
         tabWidget_saisie->setObjectName(QString::fromUtf8("tabWidget_saisie"));
-        tabWidget_saisie->setTabsClosable(false);
         tab_basique = new QWidget();
         tab_basique->setObjectName(QString::fromUtf8("tab_basique"));
         gridLayout_2 = new QGridLayout(tab_basique);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        gridLayout_tabBasique = new QGridLayout();
+        gridLayout_tabBasique->setSpacing(6);
+        gridLayout_tabBasique->setObjectName(QString::fromUtf8("gridLayout_tabBasique"));
         pushButton_7 = new QPushButton(tab_basique);
         pushButton_7->setObjectName(QString::fromUtf8("pushButton_7"));
 
-        gridLayout_2->addWidget(pushButton_7, 0, 0, 1, 1);
+        gridLayout_tabBasique->addWidget(pushButton_7, 0, 0, 1, 1);
 
         pushButton_8 = new QPushButton(tab_basique);
         pushButton_8->setObjectName(QString::fromUtf8("pushButton_8"));
 
-        gridLayout_2->addWidget(pushButton_8, 0, 1, 1, 1);
+        gridLayout_tabBasique->addWidget(pushButton_8, 0, 1, 1, 1);
 
         pushButton_9 = new QPushButton(tab_basique);
         pushButton_9->setObjectName(QString::fromUtf8("pushButton_9"));
 
-        gridLayout_2->addWidget(pushButton_9, 0, 2, 1, 1);
-
-        pushButton_4 = new QPushButton(tab_basique);
-        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
-
-        gridLayout_2->addWidget(pushButton_4, 1, 0, 1, 1);
-
-        pushButton_5 = new QPushButton(tab_basique);
-        pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
-
-        gridLayout_2->addWidget(pushButton_5, 1, 1, 1, 1);
-
-        pushButton_6 = new QPushButton(tab_basique);
-        pushButton_6->setObjectName(QString::fromUtf8("pushButton_6"));
-
-        gridLayout_2->addWidget(pushButton_6, 1, 2, 1, 1);
-
-        pushButton_1 = new QPushButton(tab_basique);
-        pushButton_1->setObjectName(QString::fromUtf8("pushButton_1"));
-
-        gridLayout_2->addWidget(pushButton_1, 2, 0, 1, 1);
-
-        pushButton_2 = new QPushButton(tab_basique);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-
-        gridLayout_2->addWidget(pushButton_2, 2, 1, 1, 1);
-
-        pushButton_3 = new QPushButton(tab_basique);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-
-        gridLayout_2->addWidget(pushButton_3, 2, 2, 1, 1);
-
-        pushButton_0 = new QPushButton(tab_basique);
-        pushButton_0->setObjectName(QString::fromUtf8("pushButton_0"));
-
-        gridLayout_2->addWidget(pushButton_0, 3, 0, 1, 1);
-
-        pushButton_point = new QPushButton(tab_basique);
-        pushButton_point->setObjectName(QString::fromUtf8("pushButton_point"));
-
-        gridLayout_2->addWidget(pushButton_point, 3, 1, 1, 1);
-
-        pushButton_space = new QPushButton(tab_basique);
-        pushButton_space->setObjectName(QString::fromUtf8("pushButton_space"));
-
-        gridLayout_2->addWidget(pushButton_space, 3, 2, 1, 1);
+        gridLayout_tabBasique->addWidget(pushButton_9, 0, 3, 1, 1);
 
         pushButton_diviser = new QPushButton(tab_basique);
         pushButton_diviser->setObjectName(QString::fromUtf8("pushButton_diviser"));
 
-        gridLayout_2->addWidget(pushButton_diviser, 0, 3, 1, 1);
+        gridLayout_tabBasique->addWidget(pushButton_diviser, 0, 4, 1, 1);
 
-        pushButton_plus = new QPushButton(tab_basique);
-        pushButton_plus->setObjectName(QString::fromUtf8("pushButton_plus"));
+        pushButton_4 = new QPushButton(tab_basique);
+        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
 
-        gridLayout_2->addWidget(pushButton_plus, 3, 3, 1, 1);
+        gridLayout_tabBasique->addWidget(pushButton_4, 1, 0, 1, 1);
 
-        pushButton_moins = new QPushButton(tab_basique);
-        pushButton_moins->setObjectName(QString::fromUtf8("pushButton_moins"));
+        pushButton_5 = new QPushButton(tab_basique);
+        pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
 
-        gridLayout_2->addWidget(pushButton_moins, 2, 3, 1, 1);
+        gridLayout_tabBasique->addWidget(pushButton_5, 1, 1, 1, 1);
+
+        pushButton_6 = new QPushButton(tab_basique);
+        pushButton_6->setObjectName(QString::fromUtf8("pushButton_6"));
+
+        gridLayout_tabBasique->addWidget(pushButton_6, 1, 3, 1, 1);
 
         pushButton_fois = new QPushButton(tab_basique);
         pushButton_fois->setObjectName(QString::fromUtf8("pushButton_fois"));
 
-        gridLayout_2->addWidget(pushButton_fois, 1, 3, 1, 1);
+        gridLayout_tabBasique->addWidget(pushButton_fois, 1, 4, 1, 1);
+
+        pushButton_1 = new QPushButton(tab_basique);
+        pushButton_1->setObjectName(QString::fromUtf8("pushButton_1"));
+
+        gridLayout_tabBasique->addWidget(pushButton_1, 2, 0, 1, 1);
+
+        pushButton_2 = new QPushButton(tab_basique);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+
+        gridLayout_tabBasique->addWidget(pushButton_2, 2, 1, 1, 1);
+
+        pushButton_3 = new QPushButton(tab_basique);
+        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+
+        gridLayout_tabBasique->addWidget(pushButton_3, 2, 3, 1, 1);
+
+        pushButton_moins = new QPushButton(tab_basique);
+        pushButton_moins->setObjectName(QString::fromUtf8("pushButton_moins"));
+
+        gridLayout_tabBasique->addWidget(pushButton_moins, 2, 4, 1, 1);
+
+        pushButton_0 = new QPushButton(tab_basique);
+        pushButton_0->setObjectName(QString::fromUtf8("pushButton_0"));
+
+        gridLayout_tabBasique->addWidget(pushButton_0, 3, 0, 1, 2);
+
+        pushButton_del = new QPushButton(tab_basique);
+        pushButton_del->setObjectName(QString::fromUtf8("pushButton_del"));
+
+        gridLayout_tabBasique->addWidget(pushButton_del, 3, 3, 1, 1);
+
+        pushButton_plus = new QPushButton(tab_basique);
+        pushButton_plus->setObjectName(QString::fromUtf8("pushButton_plus"));
+
+        gridLayout_tabBasique->addWidget(pushButton_plus, 3, 4, 1, 1);
+
+
+        gridLayout_2->addLayout(gridLayout_tabBasique, 0, 0, 1, 1);
 
         tabWidget_saisie->addTab(tab_basique, QString());
         tab_divers = new QWidget();
         tab_divers->setObjectName(QString::fromUtf8("tab_divers"));
-        gridLayout_6 = new QGridLayout(tab_divers);
-        gridLayout_6->setSpacing(6);
-        gridLayout_6->setContentsMargins(11, 11, 11, 11);
-        gridLayout_6->setObjectName(QString::fromUtf8("gridLayout_6"));
+        horizontalLayout_4 = new QHBoxLayout(tab_divers);
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        gridLayout_tabDivers = new QGridLayout();
+        gridLayout_tabDivers->setSpacing(6);
+        gridLayout_tabDivers->setObjectName(QString::fromUtf8("gridLayout_tabDivers"));
         pushButton_pow = new QPushButton(tab_divers);
         pushButton_pow->setObjectName(QString::fromUtf8("pushButton_pow"));
 
-        gridLayout_6->addWidget(pushButton_pow, 0, 0, 1, 1);
+        gridLayout_tabDivers->addWidget(pushButton_pow, 0, 0, 1, 1);
 
         pushButton_inv = new QPushButton(tab_divers);
         pushButton_inv->setObjectName(QString::fromUtf8("pushButton_inv"));
 
-        gridLayout_6->addWidget(pushButton_inv, 0, 1, 1, 1);
+        gridLayout_tabDivers->addWidget(pushButton_inv, 0, 1, 1, 1);
 
         pushButton_mod = new QPushButton(tab_divers);
         pushButton_mod->setObjectName(QString::fromUtf8("pushButton_mod"));
 
-        gridLayout_6->addWidget(pushButton_mod, 0, 2, 1, 1);
+        gridLayout_tabDivers->addWidget(pushButton_mod, 0, 2, 1, 1);
 
         pushButton_sqrt = new QPushButton(tab_divers);
         pushButton_sqrt->setObjectName(QString::fromUtf8("pushButton_sqrt"));
 
-        gridLayout_6->addWidget(pushButton_sqrt, 1, 0, 1, 1);
+        gridLayout_tabDivers->addWidget(pushButton_sqrt, 1, 0, 1, 1);
 
         pushButton_sign = new QPushButton(tab_divers);
         pushButton_sign->setObjectName(QString::fromUtf8("pushButton_sign"));
 
-        gridLayout_6->addWidget(pushButton_sign, 1, 1, 1, 1);
+        gridLayout_tabDivers->addWidget(pushButton_sign, 1, 1, 1, 1);
 
         pushButton_fact = new QPushButton(tab_divers);
         pushButton_fact->setObjectName(QString::fromUtf8("pushButton_fact"));
 
-        gridLayout_6->addWidget(pushButton_fact, 1, 2, 1, 1);
+        gridLayout_tabDivers->addWidget(pushButton_fact, 1, 2, 1, 1);
 
         pushButton_sqr = new QPushButton(tab_divers);
         pushButton_sqr->setObjectName(QString::fromUtf8("pushButton_sqr"));
 
-        gridLayout_6->addWidget(pushButton_sqr, 3, 0, 1, 1);
+        gridLayout_tabDivers->addWidget(pushButton_sqr, 3, 0, 1, 1);
 
         pushButton_ln = new QPushButton(tab_divers);
         pushButton_ln->setObjectName(QString::fromUtf8("pushButton_ln"));
 
-        gridLayout_6->addWidget(pushButton_ln, 3, 1, 1, 1);
-
-        pushButton_eval = new QPushButton(tab_divers);
-        pushButton_eval->setObjectName(QString::fromUtf8("pushButton_eval"));
-
-        gridLayout_6->addWidget(pushButton_eval, 3, 2, 1, 1);
+        gridLayout_tabDivers->addWidget(pushButton_ln, 3, 1, 1, 1);
 
         pushButton_cube = new QPushButton(tab_divers);
         pushButton_cube->setObjectName(QString::fromUtf8("pushButton_cube"));
 
-        gridLayout_6->addWidget(pushButton_cube, 4, 0, 1, 1);
+        gridLayout_tabDivers->addWidget(pushButton_cube, 4, 0, 1, 1);
 
         pushButton_log = new QPushButton(tab_divers);
         pushButton_log->setObjectName(QString::fromUtf8("pushButton_log"));
 
-        gridLayout_6->addWidget(pushButton_log, 4, 1, 1, 1);
+        gridLayout_tabDivers->addWidget(pushButton_log, 4, 1, 1, 1);
+
+        pushButton_eval = new QPushButton(tab_divers);
+        pushButton_eval->setObjectName(QString::fromUtf8("pushButton_eval"));
+
+        gridLayout_tabDivers->addWidget(pushButton_eval, 3, 2, 1, 1);
+
+
+        horizontalLayout_4->addLayout(gridLayout_tabDivers);
 
         tabWidget_saisie->addTab(tab_divers, QString());
         tab_trigo = new QWidget();
         tab_trigo->setObjectName(QString::fromUtf8("tab_trigo"));
-        gridLayout_3 = new QGridLayout(tab_trigo);
-        gridLayout_3->setSpacing(6);
-        gridLayout_3->setContentsMargins(11, 11, 11, 11);
-        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
+        horizontalLayout_5 = new QHBoxLayout(tab_trigo);
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
+        gridLayout_tabTrigo = new QGridLayout();
+        gridLayout_tabTrigo->setSpacing(6);
+        gridLayout_tabTrigo->setObjectName(QString::fromUtf8("gridLayout_tabTrigo"));
         pushButton_sin = new QPushButton(tab_trigo);
         pushButton_sin->setObjectName(QString::fromUtf8("pushButton_sin"));
 
-        gridLayout_3->addWidget(pushButton_sin, 0, 0, 1, 1);
+        gridLayout_tabTrigo->addWidget(pushButton_sin, 0, 0, 1, 1);
 
         radioButton_radian = new QRadioButton(tab_trigo);
+        buttonGroup_2 = new QButtonGroup(MainWindow);
+        buttonGroup_2->setObjectName(QString::fromUtf8("buttonGroup_2"));
+        buttonGroup_2->addButton(radioButton_radian);
         radioButton_radian->setObjectName(QString::fromUtf8("radioButton_radian"));
         radioButton_radian->setChecked(true);
 
-        gridLayout_3->addWidget(radioButton_radian, 0, 1, 1, 1);
+        gridLayout_tabTrigo->addWidget(radioButton_radian, 0, 2, 1, 1);
 
         pushButton_cos = new QPushButton(tab_trigo);
         pushButton_cos->setObjectName(QString::fromUtf8("pushButton_cos"));
 
-        gridLayout_3->addWidget(pushButton_cos, 1, 0, 1, 1);
+        gridLayout_tabTrigo->addWidget(pushButton_cos, 1, 0, 1, 1);
 
         radioButton_degre = new QRadioButton(tab_trigo);
+        buttonGroup_2->addButton(radioButton_degre);
         radioButton_degre->setObjectName(QString::fromUtf8("radioButton_degre"));
 
-        gridLayout_3->addWidget(radioButton_degre, 1, 1, 1, 1);
+        gridLayout_tabTrigo->addWidget(radioButton_degre, 1, 2, 1, 1);
 
         pushButton_tan = new QPushButton(tab_trigo);
         pushButton_tan->setObjectName(QString::fromUtf8("pushButton_tan"));
 
-        gridLayout_3->addWidget(pushButton_tan, 2, 0, 1, 1);
+        gridLayout_tabTrigo->addWidget(pushButton_tan, 2, 0, 1, 1);
 
         checkBox_hyperbolic = new QCheckBox(tab_trigo);
         checkBox_hyperbolic->setObjectName(QString::fromUtf8("checkBox_hyperbolic"));
 
-        gridLayout_3->addWidget(checkBox_hyperbolic, 2, 1, 1, 1);
+        gridLayout_tabTrigo->addWidget(checkBox_hyperbolic, 2, 2, 1, 1);
+
+        line = new QFrame(tab_trigo);
+        line->setObjectName(QString::fromUtf8("line"));
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
+
+        gridLayout_tabTrigo->addWidget(line, 0, 1, 3, 1);
+
+
+        horizontalLayout_5->addLayout(gridLayout_tabTrigo);
 
         tabWidget_saisie->addTab(tab_trigo, QString());
         tab_pile = new QWidget();
         tab_pile->setObjectName(QString::fromUtf8("tab_pile"));
-        gridLayout_4 = new QGridLayout(tab_pile);
-        gridLayout_4->setSpacing(6);
-        gridLayout_4->setContentsMargins(11, 11, 11, 11);
-        gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
+        horizontalLayout_6 = new QHBoxLayout(tab_pile);
+        horizontalLayout_6->setSpacing(6);
+        horizontalLayout_6->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
+        gridLayout_tabPile = new QGridLayout();
+        gridLayout_tabPile->setSpacing(6);
+        gridLayout_tabPile->setObjectName(QString::fromUtf8("gridLayout_tabPile"));
         pushButton_swap = new QPushButton(tab_pile);
         pushButton_swap->setObjectName(QString::fromUtf8("pushButton_swap"));
 
-        gridLayout_4->addWidget(pushButton_swap, 0, 0, 1, 1);
+        gridLayout_tabPile->addWidget(pushButton_swap, 0, 0, 1, 1);
 
         pushButton_clear = new QPushButton(tab_pile);
         pushButton_clear->setObjectName(QString::fromUtf8("pushButton_clear"));
 
-        gridLayout_4->addWidget(pushButton_clear, 0, 1, 1, 1);
+        gridLayout_tabPile->addWidget(pushButton_clear, 0, 1, 1, 1);
 
         pushButton_sum = new QPushButton(tab_pile);
         pushButton_sum->setObjectName(QString::fromUtf8("pushButton_sum"));
 
-        gridLayout_4->addWidget(pushButton_sum, 1, 0, 1, 1);
+        gridLayout_tabPile->addWidget(pushButton_sum, 1, 0, 1, 1);
 
         pushButton_dup = new QPushButton(tab_pile);
         pushButton_dup->setObjectName(QString::fromUtf8("pushButton_dup"));
 
-        gridLayout_4->addWidget(pushButton_dup, 1, 1, 1, 1);
+        gridLayout_tabPile->addWidget(pushButton_dup, 1, 1, 1, 1);
 
         pushButton_mean = new QPushButton(tab_pile);
         pushButton_mean->setObjectName(QString::fromUtf8("pushButton_mean"));
 
-        gridLayout_4->addWidget(pushButton_mean, 2, 0, 1, 1);
+        gridLayout_tabPile->addWidget(pushButton_mean, 2, 0, 1, 1);
 
         pushButton_drop = new QPushButton(tab_pile);
         pushButton_drop->setObjectName(QString::fromUtf8("pushButton_drop"));
 
-        gridLayout_4->addWidget(pushButton_drop, 2, 1, 1, 1);
+        gridLayout_tabPile->addWidget(pushButton_drop, 2, 1, 1, 1);
+
+
+        horizontalLayout_6->addLayout(gridLayout_tabPile);
 
         tabWidget_saisie->addTab(tab_pile, QString());
 
         gridLayout_7->addWidget(tabWidget_saisie, 2, 0, 1, 1);
 
+        pushButton_space = new QPushButton(centralWidget);
+        pushButton_space->setObjectName(QString::fromUtf8("pushButton_space"));
+
+        gridLayout_7->addWidget(pushButton_space, 3, 0, 1, 1);
+
         MainWindow->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
+        QWidget::setTabOrder(tabWidget_saisie, checkBox_complexe);
+        QWidget::setTabOrder(checkBox_complexe, radioButton_reel);
+        QWidget::setTabOrder(radioButton_reel, radioButton_rationnel);
+        QWidget::setTabOrder(radioButton_rationnel, radioButton_entier);
+        QWidget::setTabOrder(radioButton_entier, checkBox_calculAuto);
+        QWidget::setTabOrder(checkBox_calculAuto, tabWidget_pile);
+        QWidget::setTabOrder(tabWidget_pile, pushButton_space);
+        QWidget::setTabOrder(pushButton_space, pushButton_pow);
+        QWidget::setTabOrder(pushButton_pow, pushButton_inv);
+        QWidget::setTabOrder(pushButton_inv, pushButton_mod);
+        QWidget::setTabOrder(pushButton_mod, pushButton_sqrt);
+        QWidget::setTabOrder(pushButton_sqrt, pushButton_sign);
+        QWidget::setTabOrder(pushButton_sign, pushButton_fact);
+        QWidget::setTabOrder(pushButton_fact, pushButton_sqr);
+        QWidget::setTabOrder(pushButton_sqr, pushButton_ln);
+        QWidget::setTabOrder(pushButton_ln, pushButton_cube);
+        QWidget::setTabOrder(pushButton_cube, pushButton_log);
+        QWidget::setTabOrder(pushButton_log, pushButton_sin);
+        QWidget::setTabOrder(pushButton_sin, pushButton_cos);
+        QWidget::setTabOrder(pushButton_cos, pushButton_tan);
+        QWidget::setTabOrder(pushButton_tan, radioButton_radian);
+        QWidget::setTabOrder(radioButton_radian, radioButton_degre);
+        QWidget::setTabOrder(radioButton_degre, checkBox_hyperbolic);
+        QWidget::setTabOrder(checkBox_hyperbolic, pushButton_swap);
+        QWidget::setTabOrder(pushButton_swap, pushButton_clear);
+        QWidget::setTabOrder(pushButton_clear, pushButton_sum);
+        QWidget::setTabOrder(pushButton_sum, pushButton_dup);
+        QWidget::setTabOrder(pushButton_dup, pushButton_mean);
+        QWidget::setTabOrder(pushButton_mean, pushButton_drop);
+        QWidget::setTabOrder(pushButton_drop, listView_pile);
+        QWidget::setTabOrder(listView_pile, listView_2);
+        QWidget::setTabOrder(listView_2, lineSaisie);
 
         retranslateUi(MainWindow);
-        QObject::connect(pushButton_0, SIGNAL(clicked()), tabWidget_pile, SLOT(hide()));
-        QObject::connect(pushButton_point, SIGNAL(clicked()), tabWidget_pile, SLOT(show()));
 
-        tabWidget_pile->setCurrentIndex(0);
+        tabWidget_pile->setCurrentIndex(1);
         tabWidget_saisie->setCurrentIndex(0);
 
 
@@ -464,19 +546,18 @@ public:
         pushButton_7->setText(QApplication::translate("MainWindow", "7", 0, QApplication::UnicodeUTF8));
         pushButton_8->setText(QApplication::translate("MainWindow", "8", 0, QApplication::UnicodeUTF8));
         pushButton_9->setText(QApplication::translate("MainWindow", "9", 0, QApplication::UnicodeUTF8));
+        pushButton_diviser->setText(QApplication::translate("MainWindow", "/", 0, QApplication::UnicodeUTF8));
         pushButton_4->setText(QApplication::translate("MainWindow", "4", 0, QApplication::UnicodeUTF8));
         pushButton_5->setText(QApplication::translate("MainWindow", "5", 0, QApplication::UnicodeUTF8));
         pushButton_6->setText(QApplication::translate("MainWindow", "6", 0, QApplication::UnicodeUTF8));
+        pushButton_fois->setText(QApplication::translate("MainWindow", "*", 0, QApplication::UnicodeUTF8));
         pushButton_1->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
         pushButton_2->setText(QApplication::translate("MainWindow", "2", 0, QApplication::UnicodeUTF8));
         pushButton_3->setText(QApplication::translate("MainWindow", "3", 0, QApplication::UnicodeUTF8));
-        pushButton_0->setText(QApplication::translate("MainWindow", "0", 0, QApplication::UnicodeUTF8));
-        pushButton_point->setText(QApplication::translate("MainWindow", ".", 0, QApplication::UnicodeUTF8));
-        pushButton_space->setText(QApplication::translate("MainWindow", "space", 0, QApplication::UnicodeUTF8));
-        pushButton_diviser->setText(QApplication::translate("MainWindow", "/", 0, QApplication::UnicodeUTF8));
-        pushButton_plus->setText(QApplication::translate("MainWindow", "+", 0, QApplication::UnicodeUTF8));
         pushButton_moins->setText(QApplication::translate("MainWindow", "-", 0, QApplication::UnicodeUTF8));
-        pushButton_fois->setText(QApplication::translate("MainWindow", "*", 0, QApplication::UnicodeUTF8));
+        pushButton_0->setText(QApplication::translate("MainWindow", "0", 0, QApplication::UnicodeUTF8));
+        pushButton_del->setText(QApplication::translate("MainWindow", "DEL", 0, QApplication::UnicodeUTF8));
+        pushButton_plus->setText(QApplication::translate("MainWindow", "+", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabText(tabWidget_saisie->indexOf(tab_basique), QApplication::translate("MainWindow", "Basiq&ue", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabToolTip(tabWidget_saisie->indexOf(tab_basique), QApplication::translate("MainWindow", "Pav\303\251 num\303\251rique et de calcul de base\n"
 "Raccourci : U\n"
@@ -493,9 +574,9 @@ public:
                         "e=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.: **</span></p></body></html>", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         pushButton_pow->setText(QApplication::translate("MainWindow", "POW", 0, QApplication::UnicodeUTF8));
-        pushButton_pow->setShortcut(QApplication::translate("MainWindow", "P", 0, QApplication::UnicodeUTF8));
+        pushButton_pow->setShortcut(QApplication::translate("MainWindow", "W", 0, QApplication::UnicodeUTF8));
         pushButton_inv->setText(QApplication::translate("MainWindow", "INV", 0, QApplication::UnicodeUTF8));
-        pushButton_inv->setShortcut(QApplication::translate("MainWindow", "I", 0, QApplication::UnicodeUTF8));
+        pushButton_inv->setShortcut(QApplication::translate("MainWindow", "V", 0, QApplication::UnicodeUTF8));
         pushButton_mod->setText(QApplication::translate("MainWindow", "MOD", 0, QApplication::UnicodeUTF8));
         pushButton_mod->setShortcut(QApplication::translate("MainWindow", "%", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
@@ -511,18 +592,19 @@ public:
         pushButton_sqrt->setText(QApplication::translate("MainWindow", "SQRT", 0, QApplication::UnicodeUTF8));
         pushButton_sqrt->setShortcut(QApplication::translate("MainWindow", "Q", 0, QApplication::UnicodeUTF8));
         pushButton_sign->setText(QApplication::translate("MainWindow", "SIGN", 0, QApplication::UnicodeUTF8));
-        pushButton_sign->setShortcut(QApplication::translate("MainWindow", "_", 0, QApplication::UnicodeUTF8));
-        pushButton_fact->setText(QApplication::translate("MainWindow", "FACT (!)", 0, QApplication::UnicodeUTF8));
+        pushButton_sign->setShortcut(QApplication::translate("MainWindow", "S", 0, QApplication::UnicodeUTF8));
+        pushButton_fact->setText(QApplication::translate("MainWindow", "FACT", 0, QApplication::UnicodeUTF8));
         pushButton_fact->setShortcut(QApplication::translate("MainWindow", "!", 0, QApplication::UnicodeUTF8));
         pushButton_sqr->setText(QApplication::translate("MainWindow", "SQR", 0, QApplication::UnicodeUTF8));
         pushButton_sqr->setShortcut(QApplication::translate("MainWindow", "\302\262", 0, QApplication::UnicodeUTF8));
         pushButton_ln->setText(QApplication::translate("MainWindow", "LN", 0, QApplication::UnicodeUTF8));
-        pushButton_eval->setText(QApplication::translate("MainWindow", "EVAL", 0, QApplication::UnicodeUTF8));
-        pushButton_eval->setShortcut(QApplication::translate("MainWindow", "=", 0, QApplication::UnicodeUTF8));
+        pushButton_ln->setShortcut(QApplication::translate("MainWindow", "L", 0, QApplication::UnicodeUTF8));
         pushButton_cube->setText(QApplication::translate("MainWindow", "CUBE", 0, QApplication::UnicodeUTF8));
-        pushButton_cube->setShortcut(QApplication::translate("MainWindow", "U", 0, QApplication::UnicodeUTF8));
+        pushButton_cube->setShortcut(QApplication::translate("MainWindow", "B", 0, QApplication::UnicodeUTF8));
         pushButton_log->setText(QApplication::translate("MainWindow", "LOG", 0, QApplication::UnicodeUTF8));
         pushButton_log->setShortcut(QApplication::translate("MainWindow", "O", 0, QApplication::UnicodeUTF8));
+        pushButton_eval->setText(QApplication::translate("MainWindow", "EVAL", 0, QApplication::UnicodeUTF8));
+        pushButton_eval->setShortcut(QApplication::translate("MainWindow", "=", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabText(tabWidget_saisie->indexOf(tab_divers), QApplication::translate("MainWindow", "D&ivers", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabToolTip(tabWidget_saisie->indexOf(tab_divers), QApplication::translate("MainWindow", "Diverses fonctions math\303\251matiques\n"
 "Raccourci : I", 0, QApplication::UnicodeUTF8));
@@ -542,7 +624,7 @@ public:
         tabWidget_saisie->setTabToolTip(tabWidget_saisie->indexOf(tab_trigo), QApplication::translate("MainWindow", "Fonctions trigonom\303\251triques\n"
 "Raccourci : O", 0, QApplication::UnicodeUTF8));
         pushButton_swap->setText(QApplication::translate("MainWindow", "SWAP", 0, QApplication::UnicodeUTF8));
-        pushButton_swap->setShortcut(QApplication::translate("MainWindow", "Ctrl+\\", 0, QApplication::UnicodeUTF8));
+        pushButton_swap->setShortcut(QApplication::translate("MainWindow", "<", 0, QApplication::UnicodeUTF8));
         pushButton_clear->setText(QApplication::translate("MainWindow", "CLEAR", 0, QApplication::UnicodeUTF8));
         pushButton_clear->setShortcut(QApplication::translate("MainWindow", "Ctrl+Del", 0, QApplication::UnicodeUTF8));
         pushButton_sum->setText(QApplication::translate("MainWindow", "SUM", 0, QApplication::UnicodeUTF8));
@@ -556,6 +638,8 @@ public:
         tabWidget_saisie->setTabText(tabWidget_saisie->indexOf(tab_pile), QApplication::translate("MainWindow", "&Pile", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabToolTip(tabWidget_saisie->indexOf(tab_pile), QApplication::translate("MainWindow", "Fonctions pour agir sur la pile.\n"
 "Raccourci : P", 0, QApplication::UnicodeUTF8));
+        pushButton_space->setText(QApplication::translate("MainWindow", "Espace / Valider / Point / Virgule / Dollar / Slash", 0, QApplication::UnicodeUTF8));
+        pushButton_space->setShortcut(QApplication::translate("MainWindow", "Space", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
