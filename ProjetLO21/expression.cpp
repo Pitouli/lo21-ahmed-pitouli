@@ -44,6 +44,13 @@ Reel expression::Reel::operator/(const Reel& n)const{
         return NULL;
 }
 
+string expression::Reel::toString()const{
+    stringstream ss;
+    ss<<val;
+    return ss.str();
+}
+
+
 expression::Complexe::Complexe(Nombre* _partieR, Nombre* _partieI):Nombre(TYPE_COMPLEXE){
     if(_partieR==0)
         partieR=new Reel(0);
@@ -140,6 +147,12 @@ Complexe& expression::Complexe::operator=(const Complexe& n){
     return *this;
 }
 
+string expression::Complexe::toString()const{
+    stringstream ss;
+    ss<<partieR->toString()<<"$"<<partieI->toString();
+    return ss.str();
+}
+
 expression::Entier::Entier(const Nombre& n){
     const Entier* tempE;
 
@@ -169,6 +182,12 @@ Entier expression::Entier::operator/(const Entier& n)const{
         return Entier(val/n.getVal());
     else
         return NULL;
+}
+
+string expression::Entier::toString()const{
+    stringstream ss;
+    ss<<val;
+    return ss.str();
 }
 
 expression::Rationnel::Rationnel(int _num, int _denom):NombreE(TYPE_RATIONNEL){
@@ -271,6 +290,12 @@ Rationnel& expression::Rationnel::operator=(const Rationnel& n){
     return *this;
 }
 
+string expression::Rationnel::toString()const{
+    stringstream ss;
+    ss<<num->toString()<<"/"<<denom->toString();
+    return ss.str();
+}
+
 expression::Rationnel::~Rationnel(){
     delete num;
     delete denom;
@@ -354,6 +379,12 @@ Expression* expression::Somme::operation(){
     return getRes();
 }
 
+string expression::Somme::toString()const{
+    stringstream ss;
+    ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" +";
+    return ss.str();
+}
+
 Expression* expression::Difference::operation(){
     const Nombre* expLeftTemp=static_cast<const Nombre*>(getExpLeft());
     const Nombre* expRightTemp=static_cast<const Nombre*>(getExpRight());
@@ -430,6 +461,12 @@ Expression* expression::Difference::operation(){
     delete tempRat2;
 
     return getRes();
+}
+
+string expression::Difference::toString()const{
+    stringstream ss;
+    ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" -";
+    return ss.str();
 }
 
 Expression* expression::Multiplication::operation(){
@@ -510,6 +547,12 @@ Expression* expression::Multiplication::operation(){
     return getRes();
 }
 
+string expression::Multiplication::toString()const{
+    stringstream ss;
+    ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" *";
+    return ss.str();
+}
+
 Expression* expression::Division::operation(){
     const Nombre* expLeftTemp=static_cast<const Nombre*>(getExpLeft());
     const Nombre* expRightTemp=static_cast<const Nombre*>(getExpRight());
@@ -588,6 +631,11 @@ Expression* expression::Division::operation(){
     return getRes();
 }
 
+string expression::Division::toString()const{
+    stringstream ss;
+    ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" /";
+    return ss.str();
+}
 
 Expression* expression::Sin::operation(){
 
@@ -615,6 +663,12 @@ Expression* expression::Sin::operation(){
     };
 
     return getRes();
+}
+
+string expression::Sin::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" SIN";
+    return ss.str();
 }
 
 Expression* expression::Cos::operation(){
@@ -645,6 +699,12 @@ Expression* expression::Cos::operation(){
     return getRes();
 }
 
+string expression::Cos::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" COS";
+    return ss.str();
+}
+
 Expression* expression::Tan::operation(){
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
@@ -671,6 +731,12 @@ Expression* expression::Tan::operation(){
     };
 
     return getRes();
+}
+
+string expression::Tan::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" TAN";
+    return ss.str();
 }
 
 Expression* expression::Sinh::operation(){
@@ -701,6 +767,12 @@ Expression* expression::Sinh::operation(){
     return getRes();
 }
 
+string expression::Sinh::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" SINH";
+    return ss.str();
+}
+
 Expression* expression::Cosh::operation(){
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
@@ -727,6 +799,12 @@ Expression* expression::Cosh::operation(){
     };
 
     return getRes();
+}
+
+string expression::Cosh::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" COSH";
+    return ss.str();
 }
 
 Expression* expression::Tanh::operation(){
@@ -757,6 +835,12 @@ Expression* expression::Tanh::operation(){
     return getRes();
 }
 
+string expression::Tanh::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" TANH";
+    return ss.str();
+}
+
 Expression* expression::Ln::operation(){
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
@@ -783,6 +867,12 @@ Expression* expression::Ln::operation(){
     };
 
     return getRes();
+}
+
+string expression::Ln::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" LN";
+    return ss.str();
 }
 
 Expression* expression::Log::operation(){
@@ -813,6 +903,12 @@ Expression* expression::Log::operation(){
     return getRes();
 }
 
+string expression::Log::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" LOG";
+    return ss.str();
+}
+
 Expression* expression::Inv::operation(){
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
@@ -840,6 +936,12 @@ Expression* expression::Inv::operation(){
     };
 
     return getRes();
+}
+
+string expression::Inv::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" INV";
+    return ss.str();
 }
 
 Expression* expression::Sqrt::operation(){
@@ -872,6 +974,8 @@ Expression* expression::Sqrt::operation(){
 
     return getRes();
 }
+
+
 
 Expression* expression::Sqr::operation(){
 
