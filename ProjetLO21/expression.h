@@ -435,7 +435,7 @@ namespace expression{
     public:
         Swap():OperationNonaire(TYPE_SWAP){}
         Expression* operation();
-        string toString()const;
+        string toString()const{return "";}
         Swap* clone() const { return new Swap(*this); }
     };
 
@@ -443,7 +443,7 @@ namespace expression{
     public:
         Clear():OperationNonaire(TYPE_CLEAR){}
         Expression* operation();
-        string toString()const;
+        string toString()const{return "";}
         Clear* clone() const { return new Clear(*this); }
     };
 
@@ -451,7 +451,7 @@ namespace expression{
     public:
         Dup():OperationNonaire(TYPE_DUP){}
         Expression* operation();
-        string toString()const;
+        string toString()const{return "";}
         Dup* clone() const { return new Dup(*this); }
     };
 
@@ -459,7 +459,7 @@ namespace expression{
     public:
         Drop():OperationNonaire(TYPE_DROP){}
         Expression* operation();
-        string toString()const;
+        string toString()const{return "";}
         Drop* clone() const { return new Drop(*this); }
     };
 }

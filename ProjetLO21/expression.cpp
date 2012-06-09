@@ -975,7 +975,11 @@ Expression* expression::Sqrt::operation(){
     return getRes();
 }
 
-
+string expression::Sqrt::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" SQRT";
+    return ss.str();
+}
 
 Expression* expression::Sqr::operation(){
 
@@ -1010,6 +1014,12 @@ Expression* expression::Sqr::operation(){
     return getRes();
 }
 
+string expression::Sqr::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" SQR";
+    return ss.str();
+}
+
 Expression* expression::Cube::operation(){
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
 
@@ -1042,6 +1052,12 @@ Expression* expression::Cube::operation(){
     return getRes();
 }
 
+string expression::Cube::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" CUBE";
+    return ss.str();
+}
+
 Expression* expression::Factoriel::operation(){
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
@@ -1071,6 +1087,12 @@ Expression* expression::Factoriel::operation(){
     };
 
     return getRes();
+}
+
+string expression::Factoriel::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" FACT";
+    return ss.str();
 }
 
 Expression* expression::Eval::operation(){
@@ -1106,6 +1128,12 @@ Expression* expression::DegToRad::operation(){
     return getRes();
 }
 
+string expression::DegToRad::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" DEGTORAD";
+    return ss.str();
+}
+
 Expression* expression::RadToDeg::operation(){
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
@@ -1135,17 +1163,21 @@ Expression* expression::RadToDeg::operation(){
     return getRes();
 }
 
+string expression::RadToDeg::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" RADTODEG";
+    return ss.str();
+}
+
 Expression* expression::Sum::operation(){
 
-    //setRes(Pile::get_curPile()->sum(new Entier(getX())));
-
+    setRes(Pile::get_curPile()->sum(new Entier(getX())));
     return getRes();
 }
 
 Expression* expression::Mean::operation(){
 
-    //setRes(Pile::get_curPile()->mean(new Entier(getX())));
-
+    setRes(Pile::get_curPile()->mean(new Entier(getX())));
     return getRes();
 }
 
