@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu 7. Jun 15:12:18 2012
+** Created: Sat 9. Jun 08:47:39 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -37,7 +37,7 @@ static const uint qt_meta_data_MainWindow[] = {
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0spacePressed()\0"
+    "MainWindow\0\0buttonPressed()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -46,7 +46,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
-        case 0: _t->spacePressed(); break;
+        case 0: _t->buttonPressed(); break;
         default: ;
         }
     }
