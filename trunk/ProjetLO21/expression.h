@@ -67,6 +67,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <sstream>
 //#include "pile.h"
 
 class Pile;
@@ -82,6 +83,7 @@ namespace expression{
             Expression(int _type=TYPE_EXPRESSION):type(_type){}
             virtual Expression* operation()=0;
             virtual Expression* clone()const=0;
+            virtual string toString()const=0;
             int getType()const {return type;}
     };
 
@@ -96,6 +98,7 @@ namespace expression{
         public:
             ExpressionConcrete(string _exp=""):Expression(TYPE_EXPRESSION_C),exp(_exp){}
             ExpressionConcrete* clone()const{return new ExpressionConcrete(*this);}
+            string toString()const{stringstream ss; ss<<"'"<<exp<<"'"; return ss.str();}
             ExpressionConcrete* operation(){return NULL;}
     };
 
@@ -103,6 +106,7 @@ namespace expression{
         public:
             Nombre(int _type=TYPE_NOMBRE):Expression(_type){}
             virtual Nombre* clone()const=0;
+            virtual string toString()const=0;
             Nombre* operation()=0;
     };
 
@@ -117,6 +121,7 @@ namespace expression{
             Reel operator-(const Reel& n)const;
             Reel operator/(const Reel& n)const;
             Reel* clone()const{return new Reel(*this);}
+            string toString()const;
             double getVal()const{return val;}
             Nombre* operation(){return NULL;}
     };
@@ -138,6 +143,7 @@ namespace expression{
             Complexe operator/(const Complexe& n)const;
             Complexe& operator=(const Complexe& n);
             Complexe* clone()const{return new Complexe(*this);}
+            string toString()const;
             const Nombre* getPartieR()const{return partieR;}
             const Nombre* getPartieI()const{return partieI;}
             Reel getPartieRVal()const{return Reel(*partieR);}
@@ -149,6 +155,7 @@ namespace expression{
         public:
             NombreE(int _type=20):Nombre(_type){}
             virtual NombreE* clone()const=0;
+            virtual string toString()const=0;
             NombreE* operation()=0;
     };
 
@@ -163,6 +170,7 @@ namespace expression{
             Entier operator-(const Entier& n)const;
             Entier operator/(const Entier& n)const;
             Entier* clone()const{return new Entier(*this);}
+            string toString()const;
             double getVal()const{return val;}
             NombreE* operation(){return NULL;}
     };
@@ -184,6 +192,7 @@ namespace expression{
             Rationnel operator/(const Rationnel& n)const;
             Rationnel& operator=(const Rationnel& n);
             Rationnel* clone()const{return new Rationnel(*this);}
+            string toString()const;
             const NombreE* getNum()const{return num;}
             const NombreE* getDenom()const{return denom;}
             Entier getNumVal()const{return Entier(*num);}
@@ -198,6 +207,7 @@ namespace expression{
             Operation(int _type=TYPE_OPERATION):Expression(_type){}
             virtual Expression* operation()=0;
             virtual Operation* clone()const=0;
+            virtual string toString()const=0;
             void setRes(Expression* _res){delete res; res=_res;}
             Expression* getRes()const{return res;}
     };
@@ -207,6 +217,7 @@ namespace expression{
         OperationNonaire(int _type=TYPE_OPERATION):Operation(_type){}
 	    Expression* operation()=0;
         OperationNonaire* clone()const=0;
+        virtual string toString()const=0;
     };
 
     class OperationUnaire: public Operation{
@@ -215,8 +226,9 @@ namespace expression{
         public:
             OperationUnaire(const Expression* _exp, int _type=TYPE_OPERATION):Operation(_type),exp(_exp){}
             Expression* operation()=0;
-             virtual OperationUnaire* clone() const=0;
-	    void setExp(const Expression* _exp) { exp = _exp; }
+            virtual OperationUnaire* clone() const=0;
+            virtual string toString()const=0;
+            void setExp(const Expression* _exp) { exp = _exp; }
             const Expression* getExp()const{return exp;}
     };
 
@@ -229,6 +241,7 @@ namespace expression{
             OperationBinaire(const Expression* _expLeft, const Expression* _expRight, int _type=TYPE_OPERATION):Operation(_type),expLeft(_expLeft),expRight(_expRight){}
             virtual Expression* operation()=0;
             virtual OperationBinaire* clone() const=0;
+            virtual string toString()const=0;
             void setExp(const Expression* _expLeft, const Expression* _expRight) { expLeft = _expLeft; expRight = _expRight; }
             void setExpLeft(const Expression* _expLeft) { expLeft = _expLeft; }
             void setExpRight(const Expression* _expRight) { expRight = _expRight; }
@@ -241,27 +254,31 @@ namespace expression{
     public:
     Somme(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight,TYPE_SOMME){}
 	Expression* operation();
+    string toString()const;
 	Somme* clone() const { return new Somme(*this); }
     };
 
     class Difference: public OperationBinaire{
     public:
     Difference(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight,TYPE_DIFFERENCE){}
-        Expression* operation();
+    Expression* operation();
+    string toString()const;
 	Difference* clone() const { return new Difference(*this); }
     };
 
     class Multiplication: public OperationBinaire{
     public:
     Multiplication(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight,TYPE_MULTIPLICATION){}
-        Expression* operation();
+    Expression* operation();
+    string toString()const;
     Multiplication* clone() const { return new Multiplication(*this); }
     };
 
     class Division: public OperationBinaire{
     public:
     Division(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight,TYPE_DIVISION){}
-        Expression* operation();
+    Expression* operation();
+    string toString()const;
 	Division* clone() const { return new Division(*this); }
     };
 
@@ -270,6 +287,7 @@ namespace expression{
     public:
         Sum(int _x, const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SUM),x(_x){}
         Expression* operation();
+        string toString()const;
         int getX()const{return x;}
         Sum* clone() const { return new Sum(*this); }
     };
@@ -279,6 +297,7 @@ namespace expression{
     public:
         Mean(int _x, const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SUM),x(_x){}
         Expression* operation();
+        string toString()const;
         int getX()const{return x;}
         Mean* clone() const { return new Mean(*this); }
     };
@@ -287,6 +306,7 @@ namespace expression{
     public:
         Sin(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SIN){}
         Expression* operation();
+        string toString()const;
 	Sin* clone() const { return new Sin(*this); }
     };
 
@@ -294,6 +314,7 @@ namespace expression{
     public:
     Cos(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_COS){}
         Expression* operation();
+        string toString()const;
 	Cos* clone() const { return new Cos(*this); }
     };
 
@@ -301,6 +322,7 @@ namespace expression{
     public:
     Tan(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_TAN){}
         Expression* operation();
+        string toString()const;
 	Tan* clone() const { return new Tan(*this); }
     };
 
@@ -308,6 +330,7 @@ namespace expression{
     public:
     Sinh(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SINH){}
         Expression* operation();
+        string toString()const;
 	Sinh* clone() const { return new Sinh(*this); }
     };
 
@@ -315,6 +338,7 @@ namespace expression{
     public:
     Cosh(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_COSH){}
         Expression* operation();
+        string toString()const;
 	Cosh* clone() const { return new Cosh(*this); }
     };
 
@@ -322,6 +346,7 @@ namespace expression{
     public:
     Tanh(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_TANH){}
         Expression* operation();
+        string toString()const;
 	Tanh* clone() const { return new Tanh(*this); }
     };
 
@@ -329,6 +354,7 @@ namespace expression{
     public:
     Ln(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_LN){}
         Expression* operation();
+        string toString()const;
 	Ln* clone() const { return new Ln(*this); }
     };
 
@@ -336,6 +362,7 @@ namespace expression{
     public:
     Log(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_LOG){}
         Expression* operation();
+        string toString()const;
 	Log* clone() const { return new Log(*this); }
     };
 
@@ -343,6 +370,7 @@ namespace expression{
     public:
     Inv(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_INV){}
         Expression* operation();
+        string toString()const;
 	Inv* clone() const { return new Inv(*this); }
     };
 
@@ -350,6 +378,7 @@ namespace expression{
     public:
     Sqrt(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SQRT){}
         Expression* operation();
+        string toString()const;
 	Sqrt* clone() const { return new Sqrt(*this); }
     };
 
@@ -357,6 +386,7 @@ namespace expression{
     public:
     Sqr(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SQR){}
         Expression* operation();
+        string toString()const;
 	Sqr* clone() const { return new Sqr(*this); }
     };
 
@@ -364,6 +394,7 @@ namespace expression{
     public:
     Cube(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_CUBE){}
         Expression* operation();
+        string toString()const;
 	Cube* clone() const { return new Cube(*this); }
     };
 
@@ -372,6 +403,7 @@ namespace expression{
     Factoriel(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_FACTORIEL){}
     int fact(int n){return (n==1 || n==0)?1:fact(n-1)*n;}
         Expression* operation();
+        string toString()const;
 	Factoriel* clone() const { return new Factoriel(*this); }
     };
 
@@ -379,6 +411,7 @@ namespace expression{
     public:
     Eval(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_EVAL){}
         Expression* operation();
+        string toString()const;
 	Eval* clone() const { return new Eval(*this); }
     };
 
@@ -386,6 +419,7 @@ namespace expression{
     public:
     DegToRad(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_DEGTORAD){}
         Expression* operation();
+        string toString()const;
     DegToRad* clone() const { return new DegToRad(*this); }
     };
 
@@ -393,6 +427,7 @@ namespace expression{
     public:
     RadToDeg(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_RADTODEG){}
         Expression* operation();
+        string toString()const;
     RadToDeg* clone() const { return new RadToDeg(*this); }
     };
 
@@ -400,6 +435,7 @@ namespace expression{
     public:
         Swap():OperationNonaire(TYPE_SWAP){}
         Expression* operation();
+        string toString()const;
         Swap* clone() const { return new Swap(*this); }
     };
 
@@ -407,6 +443,7 @@ namespace expression{
     public:
         Clear():OperationNonaire(TYPE_CLEAR){}
         Expression* operation();
+        string toString()const;
         Clear* clone() const { return new Clear(*this); }
     };
 
@@ -414,6 +451,7 @@ namespace expression{
     public:
         Dup():OperationNonaire(TYPE_DUP){}
         Expression* operation();
+        string toString()const;
         Dup* clone() const { return new Dup(*this); }
     };
 
@@ -421,6 +459,7 @@ namespace expression{
     public:
         Drop():OperationNonaire(TYPE_DROP){}
         Expression* operation();
+        string toString()const;
         Drop* clone() const { return new Drop(*this); }
     };
 }
