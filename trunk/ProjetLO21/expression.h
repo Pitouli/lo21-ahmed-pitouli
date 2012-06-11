@@ -287,7 +287,7 @@ namespace expression{
     public:
         Sum(int _x, const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SUM),x(_x){}
         Expression* operation();
-        string toString()const;
+        string toString()const{return "";}
         int getX()const{return x;}
         Sum* clone() const { return new Sum(*this); }
     };
@@ -297,7 +297,7 @@ namespace expression{
     public:
         Mean(int _x, const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SUM),x(_x){}
         Expression* operation();
-        string toString()const;
+        string toString()const{return "";}
         int getX()const{return x;}
         Mean* clone() const { return new Mean(*this); }
     };
@@ -411,7 +411,7 @@ namespace expression{
     public:
     Eval(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_EVAL){}
         Expression* operation();
-        string toString()const;
+        string toString()const{return "";}
 	Eval* clone() const { return new Eval(*this); }
     };
 
