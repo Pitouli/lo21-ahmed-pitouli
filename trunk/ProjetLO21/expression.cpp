@@ -30,7 +30,7 @@ Reel expression::Reel::operator+(const Reel& n)const{
 }
 
 Reel expression::Reel::operator*(const Reel& n)const{
-    return Reel(val+n.getVal());
+    return Reel(val*n.getVal());
 }
 
 Reel expression::Reel::operator-(const Reel& n)const{
@@ -170,7 +170,7 @@ Entier expression::Entier::operator+(const Entier& n)const{
 }
 
 Entier expression::Entier::operator*(const Entier& n)const{
-    return Entier(val+n.getVal());
+    return Entier(val*n.getVal());
 }
 
 Entier expression::Entier::operator-(const Entier& n)const{
@@ -367,15 +367,6 @@ Expression* expression::Somme::operation(){
         };
     }
 
-    delete tempC1;
-    delete tempC2;
-    delete tempR1;
-    delete tempR2;
-    delete tempE1;
-    delete tempE2;
-    delete tempRat1;
-    delete tempRat2;
-
     return getRes();
 }
 
@@ -451,14 +442,6 @@ Expression* expression::Difference::operation(){
         };
     }
 
-    delete tempC1;
-    delete tempC2;
-    delete tempR1;
-    delete tempR2;
-    delete tempE1;
-    delete tempE2;
-    delete tempRat1;
-    delete tempRat2;
 
     return getRes();
 }
@@ -535,14 +518,6 @@ Expression* expression::Multiplication::operation(){
         };
     }
 
-    delete tempC1;
-    delete tempC2;
-    delete tempR1;
-    delete tempR2;
-    delete tempE1;
-    delete tempE2;
-    delete tempRat1;
-    delete tempRat2;
 
     return getRes();
 }
