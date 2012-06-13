@@ -1176,7 +1176,7 @@ Expression* expression::Dup::operation(){
 
 Expression* expression::Drop::operation(){
     setRes(NULL);
-    Pile::get_curPile()->dup();
+    Pile::get_curPile()->drop();
     return getRes();
 }
 
