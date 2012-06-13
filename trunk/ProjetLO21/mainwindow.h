@@ -6,6 +6,9 @@
 #include <QString>
 #include <QDebug>
 
+#include "pile.h"
+#include "motor.h"
+
 namespace Ui {
     class MainWindow;
 }
@@ -19,6 +22,7 @@ public:
     ~MainWindow();
 public slots:
     void buttonPressed();
+    void updatePileView();
 private:
     void keyReleaseEvent(QKeyEvent *e);
     void keyPressEvent(QKeyEvent *e);

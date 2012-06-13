@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>750</width>
-    <height>360</height>
+    <width>702</width>
+    <height>334</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,18 +40,18 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="tabsClosable">
        <bool>true</bool>
       </property>
-      <widget class="QWidget" name="tab_7">
+      <widget class="QWidget" name="tab_pile_1">
        <attribute name="title">
         <string>Pile 1</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QListView" name="listView_pile"/>
+         <widget class="QListWidget" name="listWidget_pile_1"/>
         </item>
        </layout>
       </widget>
@@ -59,11 +59,7 @@
        <attribute name="title">
         <string>Pile 2</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QListView" name="listView_2"/>
-        </item>
-       </layout>
+       <layout class="QHBoxLayout" name="horizontalLayout_3"/>
       </widget>
      </widget>
     </item>
@@ -664,14 +660,12 @@ Raccourci : P</string>
   <tabstop>pushButton_dup</tabstop>
   <tabstop>pushButton_mean</tabstop>
   <tabstop>pushButton_drop</tabstop>
-  <tabstop>listView_pile</tabstop>
-  <tabstop>listView_2</tabstop>
   <tabstop>lineSaisie</tabstop>
  </tabstops>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_type"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup_type"/>
  </buttongroups>
 </ui>

@@ -16,13 +16,19 @@ class Operation;
 class Factory
 {
 public:
-    Factory(QString adn = NULL) { set_adn(adn); }
-    void set_adn(QString const adn) { _adn = adn; _adn = _adn.toUpper(); }
-    expression::Expression* analyze() const;
+    //void set_adn(QString const adn) { _adn = adn; _adn = _adn.toUpper(); }
+    expression::Expression* analyze(QString const adn) const;
+    static Factory* get_factory();
+    static void del_factory();
+protected:
+    Factory(){}
+    Factory(const Factory&);
+    virtual ~Factory();
 private:
-    expression::Nombre* analyzeNombre() const;
-    expression::Operation* analyzeOperation() const;
-    QString _adn; // La chaîne à analyser
+    static Factory* _factory;
+    expression::Nombre* analyzeNombre(QString const adn) const;
+    expression::Operation* analyzeOperation(QString const adn) const;
+    //QString _adn; // La chaîne à analyser
 };
 
 #endif // FACTORY_H

@@ -14,14 +14,18 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     expression.cpp \
     pile.cpp \
-    factory.cpp
+    factory.cpp \
+    motor.cpp
 
 HEADERS  += mainwindow.h \
     expression.h \
     pile.h \
-    factory.h
+    factory.h \
+    motor.h
 
 FORMS    += mainwindow.ui
+
+
 
 
 
