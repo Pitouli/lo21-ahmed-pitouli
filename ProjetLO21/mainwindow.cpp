@@ -42,6 +42,10 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     connect(ui->pushButton_space, SIGNAL(clicked()), this, SLOT(buttonPressed()));
+
+    // On connecte le motor à l'a pile'interface
+    connect(Motor::get_motor(), SIGNAL(updatePileView()), this, SLOT(updatePileView()));
+    connect(Motor::get_motor(), SIGNAL(emptyLineSaisie()), ui->lineSaisie, SLOT(clear()));
 }
 
 MainWindow::~MainWindow()
@@ -67,6 +71,7 @@ void MainWindow::buttonPressed()
 		for (int i = 0; i < ui->paramSaisie->count(); ++i)
 		    if(qobject_cast<QRadioButton*>(ui->paramSaisie->itemAt(i)->widget()) || qobject_cast<QCheckBox*>(ui->paramSaisie->itemAt(i)->widget()))
 			ui->paramSaisie->itemAt(i)->widget()->setEnabled(false);
+
 		nbWriting = true;
 
 		// Ecriture d'un réel non complexe
@@ -170,7 +175,10 @@ void MainWindow::buttonPressed()
 			ui->paramSaisie->itemAt(i)->widget()->setEnabled(true);
 
 		if(ui->checkBox_calculAuto->isChecked())
+		{
 		    qDebug("empilement");
+		    Motor::get_motor()->empile(ui->lineSaisie->text());
+		}
 		else
 		    ui->lineSaisie->setText(s+" "); // on l'ajoute
 
@@ -180,7 +188,10 @@ void MainWindow::buttonPressed()
 	    else if(!nbWriting)
 	    {
 		if(ui->checkBox_calculAuto->isChecked() && s.length() > 0)
+		{
 		    qDebug("empilement");
+		    Motor::get_motor()->empile(ui->lineSaisie->text());
+		}
 		else
 		{
 		    if(!s.contains(QRegExp("(?: $)|(?:^$)"))) // S'il n'y a pas déjà des un espace
@@ -224,7 +235,10 @@ void MainWindow::buttonPressed()
 	    s = ui->lineSaisie->text(); // On met à jour la nouvelle valeur de s
 
 	    if(ui->checkBox_calculAuto->isChecked() && s.length() > 0)
+	    {
 		qDebug("empilement");
+		Motor::get_motor()->empile(ui->lineSaisie->text());
+	    }
 	    else
 	    {
 		if(!s.contains(QRegExp("(?: $)|(?:^$)"))) // S'il n'y a pas déjà des un espace
@@ -375,4 +389,24 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 	ui->pushButton_space->setDown(true);
     else
 	QMainWindow::keyPressEvent(e);
+}
+
+void MainWindow::updatePileView()
+{
+    if(Pile::get_curPile()->length() > 0){
+	ui->listWidget_pile_1->clear();
+	for(int i = 0 ; i < Pile::get_curPile()->length() ; ++i)
+	{
+	    string item = Pile::get_curPile()->at(i)->toString();
+	    ui->listWidget_pile_1->addItem(item.c_str());
+	}
+	/*
+
+	QStringList items;
+	for(Pile::Iterator it = Pile::get_curPile()->begin(); it != Pile::get_curPile()->end(); ++it){
+	    items.append((*it)->toString());
+	}
+	qDebug() << items.at(0);
+	ui->listWidget_pile_1->addItems(items);*/
+    }
 }

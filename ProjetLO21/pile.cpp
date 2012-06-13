@@ -4,6 +4,11 @@ Pile* Pile::_curPile = NULL;
 Pile* Pile::get_curPile() { return _curPile; }
 void Pile::set_curPile(Pile* newCurPile) { _curPile = newCurPile; }
 
+Pile::Pile()
+{
+    _curPile = this;
+}
+
 void Pile::clear()
 {
     while(!this->isEmpty())
