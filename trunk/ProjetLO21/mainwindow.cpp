@@ -219,31 +219,36 @@ void MainWindow::buttonPressed()
 	}
 	else // Si le bouton n'est ni un chiffre ni la barre espace
 	{
-	    if(!s.contains(QRegExp("(?: $)|(?:^$)"))) // S'il n'y a pas déjà un espace
+	    if(!s.contains(QRegExp("^(.* )?([0-9]+[0-9/\\$\\.]*)$"))) // Si on est en train d'écrire un nombre
 	    {
-		ui->lineSaisie->setText(s+" "); // on l'ajoute
-		s = ui->lineSaisie->text(); // On met à jour la nouvelle valeur de s
-	    }
-
-	    if(button == ui->pushButton_mod)
-		ui->lineSaisie->setText(ui->lineSaisie->text()+"%");
-	    else if(button == ui->pushButton_fact)
-		ui->lineSaisie->setText(ui->lineSaisie->text()+"!");
-	    else
-		ui->lineSaisie->setText(s+button->text());
-
-	    s = ui->lineSaisie->text(); // On met à jour la nouvelle valeur de s
-
-	    if(ui->checkBox_calculAuto->isChecked() && s.length() > 0)
-	    {
-		qDebug("empilement");
-		Motor::get_motor()->empile(ui->lineSaisie->text());
-	    }
-	    else
-	    {
-		if(!s.contains(QRegExp("(?: $)|(?:^$)"))) // S'il n'y a pas déjà des un espace
+		if(!s.contains(QRegExp("(?: $)|(?:^$)"))) // S'il n'y a pas déjà un espace
+		{
 		    ui->lineSaisie->setText(s+" "); // on l'ajoute
+		    s = ui->lineSaisie->text(); // On met à jour la nouvelle valeur de s
+		}
+
+		if(button == ui->pushButton_mod)
+		    ui->lineSaisie->setText(ui->lineSaisie->text()+"%");
+		else if(button == ui->pushButton_fact)
+		    ui->lineSaisie->setText(ui->lineSaisie->text()+"!");
+		else
+		    ui->lineSaisie->setText(s+button->text());
+
+		s = ui->lineSaisie->text(); // On met à jour la nouvelle valeur de s
+
+		if(ui->checkBox_calculAuto->isChecked() && s.length() > 0)
+		{
+		    qDebug("empilement");
+		    Motor::get_motor()->empile(ui->lineSaisie->text());
+		}
+		else
+		{
+		    if(!s.contains(QRegExp("(?: $)|(?:^$)"))) // S'il n'y a pas déjà des un espace
+			ui->lineSaisie->setText(s+" "); // on l'ajoute
+		}
 	    }
+	    else
+		ui->statusBar->showMessage("Finissez d'écrire votre nombre !", 3000);
 	}
     }
 }
@@ -409,4 +414,6 @@ void MainWindow::updatePileView()
 	qDebug() << items.at(0);
 	ui->listWidget_pile_1->addItems(items);*/
     }
+    else
+	ui->listWidget_pile_1->clear();
 }
