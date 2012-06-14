@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed 13. Jun 00:30:16 2012
+** Created: Wed 13. Jun 23:17:32 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -112,7 +112,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(702, 334);
+        MainWindow->resize(702, 351);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout_7 = new QGridLayout(centralWidget);
@@ -121,6 +121,9 @@ public:
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
         lineSaisie = new QLineEdit(centralWidget);
         lineSaisie->setObjectName(QString::fromUtf8("lineSaisie"));
+        QFont font;
+        font.setPointSize(16);
+        lineSaisie->setFont(font);
         lineSaisie->setMouseTracking(false);
         lineSaisie->setAcceptDrops(false);
         lineSaisie->setInputMethodHints(Qt::ImhUppercaseOnly);
@@ -140,6 +143,8 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         listWidget_pile_1 = new QListWidget(tab_pile_1);
         listWidget_pile_1->setObjectName(QString::fromUtf8("listWidget_pile_1"));
+        listWidget_pile_1->setFont(font);
+        listWidget_pile_1->setProperty("showDropIndicator", QVariant(false));
 
         horizontalLayout->addWidget(listWidget_pile_1);
 

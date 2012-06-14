@@ -31,15 +31,24 @@ void Pile::swap()
 	int int_j = entier_j->getVal()-1;
 
 	if(int_i >= 0 && int_j >= 0 && int_i <= this->size() && int_j <= this->size())
+	{
 	    this->QList<expression::Expression*>::swap(int_i,int_j);
+	    delete i;
+	    delete j;
+	}
 	else
+	{
+	    this->push(j);
+	    this->push(i);
 	    throw("SWAP impossible : les paramètres ne sont pas valides (au delà des bornes de la pile)");
+	}
     }
     else
+    {
+	this->push(j);
+	this->push(i);
 	throw("SWAP impossible : les paramètres ne sont pas valides (ce ne sont pas des entiers)");
-
-    delete i;
-    delete j;
+    }
 }
 
 expression::Expression* Pile::sum(expression::Expression* x)

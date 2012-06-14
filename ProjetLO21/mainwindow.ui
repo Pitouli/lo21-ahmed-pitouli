@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>702</width>
-    <height>334</height>
+    <height>351</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,6 +17,11 @@
    <layout class="QGridLayout" name="gridLayout_7">
     <item row="0" column="0">
      <widget class="QLineEdit" name="lineSaisie">
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
       <property name="mouseTracking">
        <bool>false</bool>
       </property>
@@ -51,7 +56,16 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QListWidget" name="listWidget_pile_1"/>
+         <widget class="QListWidget" name="listWidget_pile_1">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="showDropIndicator" stdset="0">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
