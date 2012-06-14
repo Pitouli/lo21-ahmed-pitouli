@@ -46,6 +46,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // On connecte le motor à l'a pile'interface
     connect(Motor::get_motor(), SIGNAL(updatePileView()), this, SLOT(updatePileView()));
     connect(Motor::get_motor(), SIGNAL(emptyLineSaisie()), ui->lineSaisie, SLOT(clear()));
+
+    ui->lineSaisie->setFocus();
 }
 
 MainWindow::~MainWindow()
@@ -251,6 +253,10 @@ void MainWindow::buttonPressed()
 		ui->statusBar->showMessage("Finissez d'écrire votre nombre !", 3000);
 	}
     }
+
+    // On rend le focus à la barre de saisie
+    ui->lineSaisie->setFocus();
+    ui->listWidget_pile_1->scrollToBottom();
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *e)
