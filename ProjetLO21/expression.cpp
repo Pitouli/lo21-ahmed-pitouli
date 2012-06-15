@@ -1194,13 +1194,13 @@ string expression::RadToDeg::toString()const{
 
 Expression* expression::Sum::operation(){
 
-    setRes(Pile::get_curPile()->sum(new Entier(getX())));
+    setRes(Pile::get_curPile()->sum(getExp()));
     return getRes();
 }
 
 Expression* expression::Mean::operation(){
 
-    setRes(Pile::get_curPile()->mean(new Entier(getX())));
+    setRes(Pile::get_curPile()->mean(getExp()));
     return getRes();
 }
 
