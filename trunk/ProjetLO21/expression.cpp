@@ -325,21 +325,25 @@ Expression* expression::Somme::operation(){
         case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
                                 setRes(new Complexe((*tempC1)+(*tempC2)));
+                                delete tempC2;
                                 break;
 
         case TYPE_REEL:         tempR1 = static_cast <const Reel*> (expLeftTemp);
                                 tempR2 = new Reel(*expRightTemp);
                                 setRes(new Reel((*tempR1)+(*tempR2)));
+                                delete tempR2;
                                 break;
 
         case TYPE_RATIONNEL:        tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
                                     tempRat2 = new Rationnel(*expRightTemp);
                                     setRes(new Rationnel((*tempRat1)+(*tempRat2)));
+                                    delete tempRat2;
                                     break;
 
         case TYPE_ENTIER:       tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
                                 setRes(new Entier((*tempE1)+(*tempE2)));
+                                delete tempE2;
                                 break;
 
         default:    throw "Operation impossible";
@@ -351,32 +355,31 @@ Expression* expression::Somme::operation(){
             case TYPE_COMPLEXE: tempC2 = new Complexe(*expLeftTemp);
                                 tempC1 = static_cast <const Complexe*> (expRightTemp);
                                 setRes(new Complexe((*tempC1)+(*tempC2)));
+                                delete tempC2;
                                 break;
 
             case TYPE_REEL:     tempR2 = new Reel(*expLeftTemp);
                                 tempR1 = static_cast <const Reel*> (expRightTemp);
                                 setRes(new Reel((*tempR1)+(*tempR2)));
+                                delete tempR2;
                                 break;
 
             case TYPE_RATIONNEL:    tempRat2 = new Rationnel(*expLeftTemp);
                                     tempRat1 = static_cast <const Rationnel*> (expRightTemp);
                                     setRes(new Rationnel((*tempRat1)+(*tempRat2)));
+                                    delete tempRat2;
                                     break;
 
             case TYPE_ENTIER:   tempE2 = new Entier(*expLeftTemp);
                                 tempE1 = static_cast <const Entier*> (expRightTemp);
                                 setRes(new Entier((*tempE1)+(*tempE2)));
+                                delete tempE2;
                                 break;
 
             default:    throw "Operation impossible";
                         break;
         };
     }
-
-    delete tempC2;
-    delete tempR2;
-    delete tempE2;
-    delete tempRat2;
 
     return getRes();
 }
@@ -407,21 +410,25 @@ Expression* expression::Difference::operation(){
         case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
                                 setRes(new Complexe((*tempC1)-(*tempC2)));
+                                delete tempC2;
                                 break;
 
         case TYPE_REEL:         tempR1 = static_cast <const Reel*> (expLeftTemp);
                                 tempR2 = new Reel(*expRightTemp);
                                 setRes(new Reel((*tempR1)-(*tempR2)));
+                                delete tempR2;
                                 break;
 
         case TYPE_RATIONNEL:        tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
                                     tempRat2 = new Rationnel(*expRightTemp);
                                     setRes(new Rationnel((*tempRat1)-(*tempRat2)));
+                                    delete tempRat2;
                                     break;
 
         case TYPE_ENTIER:       tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
                                 setRes(new Entier((*tempE1)-(*tempE2)));
+                                delete tempE2;
                                 break;
 
         default:    throw "Operation impossible";
@@ -433,32 +440,31 @@ Expression* expression::Difference::operation(){
             case TYPE_COMPLEXE: tempC2 = new Complexe(*expLeftTemp);
                                 tempC1 = static_cast <const Complexe*> (expRightTemp);
                                 setRes(new Complexe((*tempC2)-(*tempC1)));
+                                delete tempC2;
                                 break;
 
             case TYPE_REEL:     tempR2 = new Reel(*expLeftTemp);
                                 tempR1 = static_cast <const Reel*> (expRightTemp);
                                 setRes(new Reel((*tempR2)-(*tempR1)));
+                                delete tempR2;
                                 break;
 
             case TYPE_RATIONNEL:    tempRat2 = new Rationnel(*expLeftTemp);
                                     tempRat1 = static_cast <const Rationnel*> (expRightTemp);
                                     setRes(new Rationnel((*tempRat2)-(*tempRat1)));
+                                    delete tempRat2;
                                     break;
 
             case TYPE_ENTIER:   tempE2 = new Entier(*expLeftTemp);
                                 tempE1 = static_cast <const Entier*> (expRightTemp);
                                 setRes(new Entier((*tempE2)-(*tempE1)));
+                                delete tempE2;
                                 break;
 
             default:    throw "Operation impossible";
                         break;
         };
     }
-
-    delete tempC2;
-    delete tempR2;
-    delete tempE2;
-    delete tempRat2;
 
     return getRes();
 }
@@ -489,21 +495,25 @@ Expression* expression::Multiplication::operation(){
         case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
                                 setRes(new Complexe((*tempC1)*(*tempC2)));
+                                delete tempC2;
                                 break;
 
         case TYPE_REEL:         tempR1 = static_cast <const Reel*> (expLeftTemp);
                                 tempR2 = new Reel(*expRightTemp);
                                 setRes(new Reel((*tempR1)*(*tempR2)));
+                                delete tempR2;
                                 break;
 
         case TYPE_RATIONNEL:        tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
                                     tempRat2 = new Rationnel(*expRightTemp);
                                     setRes(new Rationnel((*tempRat1)*(*tempRat2)));
+                                    delete tempRat2;
                                     break;
 
         case TYPE_ENTIER:       tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
                                 setRes(new Entier((*tempE1)*(*tempE2)));
+                                delete tempE2;
                                 break;
 
         default:    throw "Operation impossible";
@@ -515,32 +525,31 @@ Expression* expression::Multiplication::operation(){
             case TYPE_COMPLEXE: tempC2 = new Complexe(*expLeftTemp);
                                 tempC1 = static_cast <const Complexe*> (expRightTemp);
                                 setRes(new Complexe((*tempC1)*(*tempC2)));
+                                delete tempC2;
                                 break;
 
             case TYPE_REEL:     tempR2 = new Reel(*expLeftTemp);
                                 tempR1 = static_cast <const Reel*> (expRightTemp);
                                 setRes(new Reel((*tempR1)*(*tempR2)));
+                                delete tempR2;
                                 break;
 
             case TYPE_RATIONNEL:    tempRat2 = new Rationnel(*expLeftTemp);
                                     tempRat1 = static_cast <const Rationnel*> (expRightTemp);
                                     setRes(new Rationnel((*tempRat1)*(*tempRat2)));
+                                    delete tempRat2;
                                     break;
 
             case TYPE_ENTIER:   tempE2 = new Entier(*expLeftTemp);
                                 tempE1 = static_cast <const Entier*> (expRightTemp);
                                 setRes(new Entier((*tempE1)*(*tempE2)));
+                                delete tempE2;
                                 break;
 
             default:    throw "Operation impossible";
                         break;
         };
     }
-
-    delete tempC2;
-    delete tempR2;
-    delete tempE2;
-    delete tempRat2;
 
     return getRes();
 }
@@ -571,21 +580,25 @@ Expression* expression::Division::operation(){
         case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
                                 setRes(new Complexe((*tempC1)/(*tempC2)));
+                                delete tempC2;
                                 break;
 
         case TYPE_REEL:         tempR1 = static_cast <const Reel*> (expLeftTemp);
                                 tempR2 = new Reel(*expRightTemp);
                                 setRes(new Reel((*tempR1)/(*tempR2)));
+                                delete tempR2;
                                 break;
 
         case TYPE_RATIONNEL:        tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
                                     tempRat2 = new Rationnel(*expRightTemp);
                                     setRes(new Rationnel((*tempRat1)/(*tempRat2)));
+                                    delete tempRat2;
                                     break;
 
         case TYPE_ENTIER:       tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
                                 setRes(new Entier((*tempE1)/(*tempE2)));
+                                delete tempE2;
                                 break;
 
         default:    throw "Operation impossible";
@@ -597,33 +610,31 @@ Expression* expression::Division::operation(){
             case TYPE_COMPLEXE: tempC2 = new Complexe(*expLeftTemp);
                                 tempC1 = static_cast <const Complexe*> (expRightTemp);
                                 setRes(new Complexe((*tempC2)/(*tempC1)));
+                                delete tempC2;
                                 break;
 
             case TYPE_REEL:     tempR2 = new Reel(*expLeftTemp);
                                 tempR1 = static_cast <const Reel*> (expRightTemp);
                                 setRes(new Reel((*tempR2)/(*tempR1)));
+                                delete tempR2;
                                 break;
 
             case TYPE_RATIONNEL:    tempRat2 = new Rationnel(*expLeftTemp);
                                     tempRat1 = static_cast <const Rationnel*> (expRightTemp);
                                     setRes(new Rationnel((*tempRat2)/(*tempRat1)));
+                                    delete tempRat2;
                                     break;
 
             case TYPE_ENTIER:   tempE2 = new Entier(*expLeftTemp);
                                 tempE1 = static_cast <const Entier*> (expRightTemp);
                                 setRes(new Entier((*tempE2)/(*tempE1)));
+                                delete tempE2;
                                 break;
 
             default:    throw "Operation impossible";
                         break;
         };
     }
-
-
-    delete tempC2;
-    delete tempR2;
-    delete tempE2;
-    delete tempRat2;
 
     return getRes();
 }
