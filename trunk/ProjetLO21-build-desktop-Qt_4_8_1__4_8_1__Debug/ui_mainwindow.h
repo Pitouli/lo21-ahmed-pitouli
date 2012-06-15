@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri 15. Jun 15:37:12 2012
+** Created: Fri 15. Jun 15:46:39 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -512,7 +512,7 @@ public:
         retranslateUi(MainWindow);
 
         tabWidget_pile->setCurrentIndex(0);
-        tabWidget_saisie->setCurrentIndex(0);
+        tabWidget_saisie->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -601,7 +601,7 @@ public:
         pushButton_cube->setText(QApplication::translate("MainWindow", "CUBE", 0, QApplication::UnicodeUTF8));
         pushButton_cube->setShortcut(QApplication::translate("MainWindow", "B", 0, QApplication::UnicodeUTF8));
         pushButton_log->setText(QApplication::translate("MainWindow", "LOG", 0, QApplication::UnicodeUTF8));
-        pushButton_log->setShortcut(QApplication::translate("MainWindow", "O", 0, QApplication::UnicodeUTF8));
+        pushButton_log->setShortcut(QApplication::translate("MainWindow", "G", 0, QApplication::UnicodeUTF8));
         pushButton_eval->setText(QApplication::translate("MainWindow", "EVAL", 0, QApplication::UnicodeUTF8));
         pushButton_eval->setShortcut(QApplication::translate("MainWindow", "=", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabText(tabWidget_saisie->indexOf(tab_divers), QApplication::translate("MainWindow", "D&ivers", 0, QApplication::UnicodeUTF8));
