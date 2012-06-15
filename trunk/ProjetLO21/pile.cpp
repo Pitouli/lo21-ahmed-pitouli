@@ -70,7 +70,7 @@ expression::Expression* Pile::sum(const expression::Expression* x)
 {
     if(x->getType() == TYPE_ENTIER)
     {
-	expression::Entier* entier_x = static_cast<expression::Entier*>(x);
+	const expression::Entier* entier_x = static_cast<const expression::Entier*>(x);
 	int int_x = entier_x->getVal();
 
 	if(int_x > this->size()) int_x = this->size(); // Si on essaie de sommer plus que la hauteur de la pile, on somme toute la pile.
@@ -104,7 +104,7 @@ expression::Expression* Pile::mean(const expression::Expression* x)
 {
     if(x->getType() == TYPE_ENTIER)
     {
-	expression::Entier* entier_x = static_cast<expression::Entier*>(x);
+	const expression::Entier* entier_x = static_cast<const expression::Entier*>(x);
 	int int_x = entier_x->getVal();
 
 	if(int_x > this->size()) int_x = this->size(); // Si on essaie de moyenner plus que la hauteur de la pile, on somme toute la pile.
