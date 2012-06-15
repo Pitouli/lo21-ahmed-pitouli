@@ -16,7 +16,7 @@ class Expression;
 class Pile : public QList<expression::Expression*>
 {
 public:
-    Pile(){}
+    Pile();
 
     static Pile* get_curPile(); // Retourne le pointeur vers la pile courante
     static void set_curPile(Pile* newCurPile); // Change la pile courante
