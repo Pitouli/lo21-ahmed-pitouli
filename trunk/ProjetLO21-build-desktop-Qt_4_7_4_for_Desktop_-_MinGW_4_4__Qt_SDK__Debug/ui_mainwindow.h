@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu 14. Jun 18:38:44 2012
+** Created: Fri 15. Jun 17:28:41 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -512,7 +512,7 @@ public:
         retranslateUi(MainWindow);
 
         tabWidget_pile->setCurrentIndex(0);
-        tabWidget_saisie->setCurrentIndex(0);
+        tabWidget_saisie->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -520,7 +520,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Calculatrice \303\240 Notation Polonaise Invers\303\251e - Amhed & JB", 0, QApplication::UnicodeUTF8));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Calculatrice \303\240 Notation Polonaise Invers\303\251e - Ahmed & JB", 0, QApplication::UnicodeUTF8));
         tabWidget_pile->setTabText(tabWidget_pile->indexOf(tab_pile_1), QApplication::translate("MainWindow", "Pile 1", 0, QApplication::UnicodeUTF8));
         tabWidget_pile->setTabText(tabWidget_pile->indexOf(tab_8), QApplication::translate("MainWindow", "Pile 2", 0, QApplication::UnicodeUTF8));
         checkBox_complexe->setText(QApplication::translate("MainWindow", "Complexe", 0, QApplication::UnicodeUTF8));
@@ -532,7 +532,6 @@ public:
         radioButton_entier->setText(QApplication::translate("MainWindow", "Entier", 0, QApplication::UnicodeUTF8));
         radioButton_entier->setShortcut(QApplication::translate("MainWindow", "F4", 0, QApplication::UnicodeUTF8));
         checkBox_calculAuto->setText(QApplication::translate("MainWindow", "Calcul auto", 0, QApplication::UnicodeUTF8));
-        checkBox_calculAuto->setShortcut(QApplication::translate("MainWindow", "'", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         tabWidget_saisie->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
@@ -601,7 +600,7 @@ public:
         pushButton_cube->setText(QApplication::translate("MainWindow", "CUBE", 0, QApplication::UnicodeUTF8));
         pushButton_cube->setShortcut(QApplication::translate("MainWindow", "B", 0, QApplication::UnicodeUTF8));
         pushButton_log->setText(QApplication::translate("MainWindow", "LOG", 0, QApplication::UnicodeUTF8));
-        pushButton_log->setShortcut(QApplication::translate("MainWindow", "O", 0, QApplication::UnicodeUTF8));
+        pushButton_log->setShortcut(QApplication::translate("MainWindow", "G", 0, QApplication::UnicodeUTF8));
         pushButton_eval->setText(QApplication::translate("MainWindow", "EVAL", 0, QApplication::UnicodeUTF8));
         pushButton_eval->setShortcut(QApplication::translate("MainWindow", "=", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabText(tabWidget_saisie->indexOf(tab_divers), QApplication::translate("MainWindow", "D&ivers", 0, QApplication::UnicodeUTF8));
