@@ -245,18 +245,18 @@ expression::Rationnel::Rationnel(const Rationnel& c):NombreE(TYPE_RATIONNEL){
 }
 
 expression::Rationnel::Rationnel(const Nombre& n):NombreE(TYPE_RATIONNEL){
-    const Rationnel* tempRat;
+    const Rationnel& tempRat;
     const Entier* tempE;
 
     switch(n.getType()){
-	case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (&n);
-                                num=tempRat->getNumVal().clone();
-                                denom=tempRat->getDenomVal().clone();
+    case TYPE_RATIONNEL:        tempRat = static_cast <const Rationnel&> (n);
+                                num=tempRat.getNumVal().clone();
+                                denom=tempRat.getDenomVal().clone();
                                 break;
 
 	case TYPE_ENTIER:   tempE = static_cast <const Entier*> (&n);
                             num=new Entier(tempE->getVal());
-                            denom=new Entier(0);
+                            denom=new Entier(1);
                             break;
 
     default:   throw "Conversion impossible";
