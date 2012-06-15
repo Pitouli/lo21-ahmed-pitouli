@@ -87,19 +87,19 @@ expression::Complexe::Complexe(const Nombre& n):Nombre(TYPE_COMPLEXE){
 
     switch(n.getType()){
 	case TYPE_COMPLEXE: tempC = static_cast <const Complexe*> (&n);
-                            partieI=tempC->getPartieIVal().clone();
-                            partieR=tempC->getPartieRVal().clone();
-                            break;
+                        partieI=tempC->getPartieIVal().clone();
+                        partieR=tempC->getPartieRVal().clone();
+                        break;
 
 	case TYPE_REEL:     tempR = static_cast <const Reel*> (&n);
-                            partieI=new Reel(0);
-                            partieR=new Reel(tempR->getVal());
-                            break;
+                        partieI=new Reel(0);
+                        partieR=new Reel(tempR->getVal());
+                        break;
 
 	case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (&n);
-                                partieI=new Reel(0);
-                                partieR=new Reel(tempRat->getNumVal()/tempRat->getDenomVal());
-                                break;
+                            partieI=new Reel(0);
+                            partieR=new Reel(tempRat->getNumVal()/tempRat->getDenomVal());
+                            break;
 
 	case TYPE_ENTIER:   tempE = static_cast <const Entier*> (&n);
                             partieI=new Reel(0);
@@ -163,7 +163,7 @@ expression::Entier::Entier(const Nombre& n){
                             val=tempE->getVal();
                             break;
 
-    default:    throw "Conversion impossible";
+    default:    throw "La conversion en Entier n'est possible que pour les entiers";
                 break;
     };
 }
@@ -193,12 +193,7 @@ string expression::Entier::toString()const{
     return ss.str();
 }
 
-expression::Rationnel::Rationnel(int _num, int _denom):NombreE(TYPE_RATIONNEL){
-    num=new Entier(_num);
-    denom=new Entier(_denom);
-}
-
-expression::Rationnel::Rationnel(NombreE* _num, NombreE* _denom):NombreE(TYPE_RATIONNEL){
+expression::Rationnel::Rationnel(Entier* _num, Entier* _denom):NombreE(TYPE_RATIONNEL){
     if(_num==0)
         num=new Entier(0);
     else
@@ -259,14 +254,13 @@ expression::Rationnel::Rationnel(const Nombre& n):NombreE(TYPE_RATIONNEL){
                             denom=new Entier(1);
                             break;
 
-    default:   throw "Conversion impossible";
+    default:   throw "La conversion en Rationnel n'est possible que pour les entiers";
                break;
     };
 }
 
 Rationnel expression::Rationnel::operator+(const Rationnel& c)const{
-    //return Rationnel((getNumVal()*c.getDenomVal())+(c.getNumVal()*getDenomVal()),getDenomVal()*c.getDenomVal());
-    return new Rationnel(0,1);
+    return Rationnel((getNumVal()*c.getDenomVal())+(c.getNumVal()*getDenomVal()),getDenomVal()*c.getDenomVal());
 }
 
 Rationnel expression::Rationnel::operator*(const Rationnel& c)const{
@@ -347,7 +341,7 @@ Expression* expression::Somme::operation(){
                                 delete tempE2;
                                 break;
 
-        default:    throw "Operation impossible";
+        default:    throw "Somme impossible: premier operande invalide";
                     break;
         };
     }
@@ -377,7 +371,7 @@ Expression* expression::Somme::operation(){
                                 delete tempE2;
                                 break;
 
-            default:    throw "Operation impossible";
+            default:    throw "Somme impossible: deuxieme operande invalide";
                         break;
         };
     }
