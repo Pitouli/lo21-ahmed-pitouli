@@ -66,7 +66,7 @@ void Pile::swap()
     }
 }
 
-expression::Expression* Pile::sum(expression::Expression* x)
+expression::Expression* Pile::sum(const expression::Expression* x)
 {
     if(x->getType() == TYPE_ENTIER)
     {
@@ -100,7 +100,7 @@ expression::Expression* Pile::sum(expression::Expression* x)
 	throw("SUM impossible : le paramètre n'est pas valide (ce n'est pas un entier)");
 }
 
-expression::Expression* Pile::mean(expression::Expression* x)
+expression::Expression* Pile::mean(const expression::Expression* x)
 {
     if(x->getType() == TYPE_ENTIER)
     {
