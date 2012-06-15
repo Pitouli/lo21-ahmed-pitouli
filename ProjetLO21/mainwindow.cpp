@@ -178,11 +178,14 @@ void MainWindow::buttonPressed()
 
 		if(ui->checkBox_calculAuto->isChecked())
 		{
-		    qDebug("empilement");
+		    qDebug("empilement nombre");
 		    Motor::get_motor()->empile(ui->lineSaisie->text());
 		}
 		else
+		{
+		    qDebug("non empilement nombre");
 		    ui->lineSaisie->setText(s+" "); // on l'ajoute
+		}
 
 		nbWriting = false;
 		nbWrited = false;
@@ -191,11 +194,12 @@ void MainWindow::buttonPressed()
 	    {
 		if(ui->checkBox_calculAuto->isChecked() && s.length() > 0)
 		{
-		    qDebug("empilement");
+		    qDebug("empilement non nombre");
 		    Motor::get_motor()->empile(ui->lineSaisie->text());
 		}
 		else
 		{
+		    qDebug("non empilement non nombre");
 		    if(!s.contains(QRegExp("(?: $)|(?:^$)"))) // S'il n'y a pas déjà des un espace
 			ui->lineSaisie->setText(s+" "); // on l'ajoute
 		}
@@ -240,11 +244,12 @@ void MainWindow::buttonPressed()
 
 		if(ui->checkBox_calculAuto->isChecked() && s.length() > 0)
 		{
-		    qDebug("empilement");
+		    qDebug("empilement operation");
 		    Motor::get_motor()->empile(ui->lineSaisie->text());
 		}
 		else
 		{
+		    qDebug("non empilement operation");
 		    if(!s.contains(QRegExp("(?: $)|(?:^$)"))) // S'il n'y a pas déjà des un espace
 			ui->lineSaisie->setText(s+" "); // on l'ajoute
 		}

@@ -2,6 +2,7 @@
 #define PILE_H
 
 #include <QList>
+#include <QDebug>
 #include "expression.h"
 #include <fstream>
 #include "factory.h"
