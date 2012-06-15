@@ -283,22 +283,18 @@ namespace expression{
     };
 
     class Sum: public OperationUnaire{
-        int x;
     public:
-        Sum(int _x, const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SUM),x(_x){}
+        Sum(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SUM){}
         Expression* operation();
         string toString()const{return "";}
-        int getX()const{return x;}
         Sum* clone() const { return new Sum(*this); }
     };
 
     class Mean: public OperationUnaire{
-        int x;
     public:
-        Mean(int _x, const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SUM),x(_x){}
+        Mean(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SUM){}
         Expression* operation();
         string toString()const{return "";}
-        int getX()const{return x;}
         Mean* clone() const { return new Mean(*this); }
     };
 
