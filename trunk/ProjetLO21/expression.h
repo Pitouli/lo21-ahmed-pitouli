@@ -177,11 +177,11 @@ namespace expression{
 
     class Rationnel: public NombreE{
         private:
-            NombreE* num;
-            NombreE* denom;
+            Entier* num;
+            Entier* denom;
         public:
-            Rationnel(NombreE* _num=0, NombreE* _denom=0);
-            Rationnel(int _num, int _denom);
+            Rationnel(Entier* _num=0, Entier* _denom=0);
+            //Rationnel(int _num, int _denom);
             Rationnel(const Nombre& _num, const Nombre& _denom);
             Rationnel(const Rationnel& c);
             Rationnel(const Nombre& n);
@@ -193,10 +193,10 @@ namespace expression{
             Rationnel& operator=(const Rationnel& n);
             Rationnel* clone()const{return new Rationnel(*this);}
             string toString()const;
-            const NombreE* getNum()const{return num;}
-            const NombreE* getDenom()const{return denom;}
-            Entier getNumVal()const{return Entier(*num);}
-            Entier getDenomVal()const{return Entier(*denom);}
+            const Entier* getNum()const{return num;}
+            const Entier* getDenom()const{return denom;}
+            Entier getNumVal()const{return *num;}
+            Entier getDenomVal()const{return *denom;}
             NombreE* operation(){return NULL;}
     };
 

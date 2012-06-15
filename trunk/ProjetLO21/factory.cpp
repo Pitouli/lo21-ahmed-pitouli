@@ -56,7 +56,8 @@ expression::Nombre* Factory::analyzeNombre(QString const adn) const
     QRegExp regComplexe("(.+)\\$(.+)");
 
     if(regRelationnel.exactMatch(adn))
-	return new expression::Rationnel(regRelationnel.cap(1).toInt(),regRelationnel.cap(2).toInt());
+    return new expression::Rationnel(new expression::Entier(regRelationnel.cap(1).toInt()),
+                                     new expression::Entier(regRelationnel.cap(2).toInt()));
     else if(regEntier.exactMatch(adn))
 	return new expression::Entier(regEntier.cap(1).toInt());
     else if(regReel.exactMatch(adn))
