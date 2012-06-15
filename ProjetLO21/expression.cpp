@@ -11,18 +11,18 @@ expression::Reel::Reel(const Nombre& n):Nombre(TYPE_REEL){
 
     switch(n.getType()){
 	case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (&n);
-                                val=(tempRat->getNumVal()/tempRat->getDenomVal()).getVal();
-                                break;
+                            val=(tempRat->getNumVal()/tempRat->getDenomVal()).getVal();
+                            break;
 
 	case TYPE_ENTIER:   tempE = static_cast <const Entier*> (&n);
-                            val=tempE->getVal();
-                            break;
+                        val=tempE->getVal();
+                        break;
 
 	case TYPE_REEL:     tempR = static_cast <const Reel*> (&n);
-                            val=tempR->getVal();
-                            break;
-    default:            throw "Conversion impossible";
-                            break;
+                        val=tempR->getVal();
+                        break;
+    default:            throw "La conversion en Reel n'est possible que pour les entiers et les rationnels";
+                        break;
     };
 }
 
@@ -106,7 +106,7 @@ expression::Complexe::Complexe(const Nombre& n):Nombre(TYPE_COMPLEXE){
                             partieR=new Reel(tempE->getVal());
                             break;
 
-    default:            throw "Conversion impossible";
+    default:            throw "La conversion en Complexe n'est possible que pour les reels, les entiers et les rationnels";
                         break;
     };
 }
@@ -245,13 +245,13 @@ expression::Rationnel::Rationnel(const Rationnel& c):NombreE(TYPE_RATIONNEL){
 }
 
 expression::Rationnel::Rationnel(const Nombre& n):NombreE(TYPE_RATIONNEL){
-    const Rationnel& tempRat;
+    const Rationnel* tempRat;
     const Entier* tempE;
 
     switch(n.getType()){
-    case TYPE_RATIONNEL:        tempRat = static_cast <const Rationnel&> (n);
-                                num=tempRat.getNumVal().clone();
-                                denom=tempRat.getDenomVal().clone();
+    case TYPE_RATIONNEL:        tempRat = static_cast <const Rationnel*> (&n);
+                                num=tempRat->getNumVal().clone();
+                                denom=tempRat->getDenomVal().clone();
                                 break;
 
 	case TYPE_ENTIER:   tempE = static_cast <const Entier*> (&n);
@@ -265,7 +265,8 @@ expression::Rationnel::Rationnel(const Nombre& n):NombreE(TYPE_RATIONNEL){
 }
 
 Rationnel expression::Rationnel::operator+(const Rationnel& c)const{
-    return Rationnel((getNumVal()*c.getDenomVal())+(c.getNumVal()*getDenomVal()),getDenomVal()*c.getDenomVal());
+    //return Rationnel((getNumVal()*c.getDenomVal())+(c.getNumVal()*getDenomVal()),getDenomVal()*c.getDenomVal());
+    return new Rationnel(0,1);
 }
 
 Rationnel expression::Rationnel::operator*(const Rationnel& c)const{
@@ -320,7 +321,7 @@ Expression* expression::Somme::operation(){
 
     setRes(NULL);
 
-    if(expLeftTemp->getType()<expRightTemp->getType()){
+    if(expLeftTemp->getType()<=expRightTemp->getType()){
         switch(expLeftTemp->getType()){
         case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
