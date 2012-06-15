@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    Motor::init(ui);
+
     // On connecte les boutons
     for (int i = 0; i < ui->gridLayout_tabBasique->count(); ++i)
     {
@@ -44,8 +46,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButton_space, SIGNAL(clicked()), this, SLOT(buttonPressed()));
 
     // On connecte le motor à l'a pile'interface
-    connect(Motor::get_motor(), SIGNAL(updatePileView()), this, SLOT(updatePileView()));
-    connect(Motor::get_motor(), SIGNAL(emptyLineSaisie()), ui->lineSaisie, SLOT(clear()));
+    //connect(Motor::get_motor(), SIGNAL(updatePileView()), this, SLOT(updatePileView()));
+    //connect(Motor::get_motor(), SIGNAL(emptyLineSaisie()), ui->lineSaisie, SLOT(clear()));
 
     ui->lineSaisie->setFocus();
 }
