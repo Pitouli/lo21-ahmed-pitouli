@@ -1,12 +1,27 @@
 #include "pile.h"
 
 Pile* Pile::_curPile = NULL;
+string Pile::sauv = "";
 Pile* Pile::get_curPile() { return _curPile; }
 void Pile::set_curPile(Pile* newCurPile) { _curPile = newCurPile; }
 
 Pile::Pile()
 {
     _curPile = this;
+}
+
+void Pile::sauv_piles(){
+    string filename = "sauvegarde.txt";
+
+    // ouverture en écriture avec effacement du fichier ouvert
+    ofstream fichier(filename.c_str(), ios::out | ios::trunc);
+
+    if(!fichier.fail()){
+
+        fichier.close();
+    }
+    else
+        cerr << "Impossible d'ouvrir le fichier !" << endl;
 }
 
 void Pile::clear()
