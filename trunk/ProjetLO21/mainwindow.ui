@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Calculatrice à Notation Polonaise Inversée - Amhed &amp; JB</string>
+   <string>Calculatrice à Notation Polonaise Inversée - Ahmed &amp; JB</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_7">

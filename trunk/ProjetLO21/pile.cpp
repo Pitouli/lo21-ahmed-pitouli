@@ -78,6 +78,8 @@ expression::Expression* Pile::sum(const expression::Expression* x)
 
 	if(int_x != 0) // Si on somme plus d'1 élément
 	{
+	    qDebug() << "Le int_x vaut : " << int_x;
+
 	    expression::Expression* resultat = this->pop();
 	    expression::Somme* somme = new expression::Somme; // On initialise la somme avec les deux 1er éléments
 
@@ -112,6 +114,8 @@ expression::Expression* Pile::mean(const expression::Expression* x)
 
 	if(int_x != 0) // Si on moyenne plus d'1 élément
 	{
+	    qDebug() << "Le int_x vaut : " << int_x;
+
 	    this->sum(x); // On fait faire la somme par sum()
 	    expression::Expression* resSomme = this->pop(); // On récupère le résultat de la somme
 
