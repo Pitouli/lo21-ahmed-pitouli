@@ -21,7 +21,8 @@ expression::Reel::Reel(const Nombre& n):Nombre(TYPE_REEL){
 	case TYPE_REEL:     tempR = static_cast <const Reel*> (&n);
                             val=tempR->getVal();
                             break;
-        default:    break; //erreur
+    default:            throw "Conversion impossible";
+                            break;
     };
 }
 
@@ -105,7 +106,8 @@ expression::Complexe::Complexe(const Nombre& n):Nombre(TYPE_COMPLEXE){
                             partieR=new Reel(tempE->getVal());
                             break;
 
-        default:    break; //erreur
+    default:            throw "Conversion impossible";
+                        break;
     };
 }
 
@@ -161,7 +163,8 @@ expression::Entier::Entier(const Nombre& n){
                             val=tempE->getVal();
                             break;
 
-        default:    break; //erreur
+    default:    throw "Conversion impossible";
+                break;
     };
 }
 
@@ -256,7 +259,8 @@ expression::Rationnel::Rationnel(const Nombre& n):NombreE(TYPE_RATIONNEL){
                             denom=new Entier(0);
                             break;
 
-        default:    break; //erreur
+    default:   throw "Conversion impossible";
+               break;
     };
 }
 
@@ -318,54 +322,61 @@ Expression* expression::Somme::operation(){
 
     if(expLeftTemp->getType()<expRightTemp->getType()){
         switch(expLeftTemp->getType()){
-	    case TYPE_COMPLEXE: tempC1 = static_cast <const Complexe*> (expLeftTemp);
+        case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
                                 setRes(new Complexe((*tempC1)+(*tempC2)));
                                 break;
 
-	    case TYPE_REEL:     tempR1 = static_cast <const Reel*> (expLeftTemp);
+        case TYPE_REEL:         tempR1 = static_cast <const Reel*> (expLeftTemp);
                                 tempR2 = new Reel(*expRightTemp);
                                 setRes(new Reel((*tempR1)+(*tempR2)));
                                 break;
 
-	    case TYPE_RATIONNEL:    tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
+        case TYPE_RATIONNEL:        tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
                                     tempRat2 = new Rationnel(*expRightTemp);
                                     setRes(new Rationnel((*tempRat1)+(*tempRat2)));
                                     break;
 
-	    case TYPE_ENTIER:   tempE1 = static_cast <const Entier*> (expLeftTemp);
+        case TYPE_ENTIER:       tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
                                 setRes(new Entier((*tempE1)+(*tempE2)));
                                 break;
 
-            default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
         };
     }
     else{
         switch(expRightTemp->getType()){
-            case TYPE_COMPLEXE: tempC1 = new Complexe(*expLeftTemp);
-				tempC2 = static_cast <const Complexe*> (expRightTemp);
+            case TYPE_COMPLEXE: tempC2 = new Complexe(*expLeftTemp);
+                                tempC1 = static_cast <const Complexe*> (expRightTemp);
                                 setRes(new Complexe((*tempC1)+(*tempC2)));
                                 break;
 
-            case TYPE_REEL:     tempR1 = new Reel(*expLeftTemp);
-				tempR2 = static_cast <const Reel*> (expRightTemp);
+            case TYPE_REEL:     tempR2 = new Reel(*expLeftTemp);
+                                tempR1 = static_cast <const Reel*> (expRightTemp);
                                 setRes(new Reel((*tempR1)+(*tempR2)));
                                 break;
 
-            case TYPE_RATIONNEL:    tempRat1 = new Rationnel(*expLeftTemp);
-				    tempRat2 = static_cast <const Rationnel*> (expRightTemp);
+            case TYPE_RATIONNEL:    tempRat2 = new Rationnel(*expLeftTemp);
+                                    tempRat1 = static_cast <const Rationnel*> (expRightTemp);
                                     setRes(new Rationnel((*tempRat1)+(*tempRat2)));
                                     break;
 
-            case TYPE_ENTIER:   tempE1 = new Entier(*expLeftTemp);
-				tempE2 = static_cast <const Entier*> (expRightTemp);
+            case TYPE_ENTIER:   tempE2 = new Entier(*expLeftTemp);
+                                tempE1 = static_cast <const Entier*> (expRightTemp);
                                 setRes(new Entier((*tempE1)+(*tempE2)));
                                 break;
 
-            default:    break; //erreur
+            default:    throw "Operation impossible";
+                        break;
         };
     }
+
+    delete tempC2;
+    delete tempR2;
+    delete tempE2;
+    delete tempRat2;
 
     return getRes();
 }
@@ -393,55 +404,61 @@ Expression* expression::Difference::operation(){
 
     if(expLeftTemp->getType()<expRightTemp->getType()){
         switch(expLeftTemp->getType()){
-	    case TYPE_COMPLEXE: tempC1 = static_cast <const Complexe*> (expLeftTemp);
+        case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
                                 setRes(new Complexe((*tempC1)-(*tempC2)));
                                 break;
 
-	    case TYPE_REEL:     tempR1 = static_cast <const Reel*> (expLeftTemp);
+        case TYPE_REEL:         tempR1 = static_cast <const Reel*> (expLeftTemp);
                                 tempR2 = new Reel(*expRightTemp);
                                 setRes(new Reel((*tempR1)-(*tempR2)));
                                 break;
 
-	    case TYPE_RATIONNEL:    tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
+        case TYPE_RATIONNEL:        tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
                                     tempRat2 = new Rationnel(*expRightTemp);
                                     setRes(new Rationnel((*tempRat1)-(*tempRat2)));
                                     break;
 
-	    case TYPE_ENTIER:   tempE1 = static_cast <const Entier*> (expLeftTemp);
+        case TYPE_ENTIER:       tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
                                 setRes(new Entier((*tempE1)-(*tempE2)));
                                 break;
 
-            default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
         };
     }
     else{
         switch(expRightTemp->getType()){
-            case TYPE_COMPLEXE: tempC1 = new Complexe(*expLeftTemp);
-				tempC2 = static_cast <const Complexe*> (expRightTemp);
-                                setRes(new Complexe((*tempC1)-(*tempC2)));
+            case TYPE_COMPLEXE: tempC2 = new Complexe(*expLeftTemp);
+                                tempC1 = static_cast <const Complexe*> (expRightTemp);
+                                setRes(new Complexe((*tempC2)-(*tempC1)));
                                 break;
 
-            case TYPE_REEL:     tempR1 = new Reel(*expLeftTemp);
-				tempR2 = static_cast <const Reel*> (expRightTemp);
-                                setRes(new Reel((*tempR1)-(*tempR2)));
+            case TYPE_REEL:     tempR2 = new Reel(*expLeftTemp);
+                                tempR1 = static_cast <const Reel*> (expRightTemp);
+                                setRes(new Reel((*tempR2)-(*tempR1)));
                                 break;
 
-            case TYPE_RATIONNEL:    tempRat1 = new Rationnel(*expLeftTemp);
-				    tempRat2 = static_cast <const Rationnel*> (expRightTemp);
-                                    setRes(new Rationnel((*tempRat1)-(*tempRat2)));
+            case TYPE_RATIONNEL:    tempRat2 = new Rationnel(*expLeftTemp);
+                                    tempRat1 = static_cast <const Rationnel*> (expRightTemp);
+                                    setRes(new Rationnel((*tempRat2)-(*tempRat1)));
                                     break;
 
-            case TYPE_ENTIER:   tempE1 = new Entier(*expLeftTemp);
-				tempE2 = static_cast <const Entier*> (expRightTemp);
-                                setRes(new Entier((*tempE1)-(*tempE2)));
+            case TYPE_ENTIER:   tempE2 = new Entier(*expLeftTemp);
+                                tempE1 = static_cast <const Entier*> (expRightTemp);
+                                setRes(new Entier((*tempE2)-(*tempE1)));
                                 break;
 
-            default:    break; //erreur
+            default:    throw "Operation impossible";
+                        break;
         };
     }
 
+    delete tempC2;
+    delete tempR2;
+    delete tempE2;
+    delete tempRat2;
 
     return getRes();
 }
@@ -469,55 +486,61 @@ Expression* expression::Multiplication::operation(){
 
     if(expLeftTemp->getType()<expRightTemp->getType()){
         switch(expLeftTemp->getType()){
-	    case TYPE_COMPLEXE: tempC1 = static_cast <const Complexe*> (expLeftTemp);
+        case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
                                 setRes(new Complexe((*tempC1)*(*tempC2)));
                                 break;
 
-	    case TYPE_REEL:     tempR1 = static_cast <const Reel*> (expLeftTemp);
+        case TYPE_REEL:         tempR1 = static_cast <const Reel*> (expLeftTemp);
                                 tempR2 = new Reel(*expRightTemp);
                                 setRes(new Reel((*tempR1)*(*tempR2)));
                                 break;
 
-	    case TYPE_RATIONNEL:    tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
+        case TYPE_RATIONNEL:        tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
                                     tempRat2 = new Rationnel(*expRightTemp);
                                     setRes(new Rationnel((*tempRat1)*(*tempRat2)));
                                     break;
 
-	    case TYPE_ENTIER:   tempE1 = static_cast <const Entier*> (expLeftTemp);
+        case TYPE_ENTIER:       tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
                                 setRes(new Entier((*tempE1)*(*tempE2)));
                                 break;
 
-            default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
         };
     }
     else{
         switch(expRightTemp->getType()){
-            case TYPE_COMPLEXE: tempC1 = new Complexe(*expLeftTemp);
-				tempC2 = static_cast <const Complexe*> (expRightTemp);
+            case TYPE_COMPLEXE: tempC2 = new Complexe(*expLeftTemp);
+                                tempC1 = static_cast <const Complexe*> (expRightTemp);
                                 setRes(new Complexe((*tempC1)*(*tempC2)));
                                 break;
 
-            case TYPE_REEL:     tempR1 = new Reel(*expLeftTemp);
-				tempR2 = static_cast <const Reel*> (expRightTemp);
+            case TYPE_REEL:     tempR2 = new Reel(*expLeftTemp);
+                                tempR1 = static_cast <const Reel*> (expRightTemp);
                                 setRes(new Reel((*tempR1)*(*tempR2)));
                                 break;
 
-            case TYPE_RATIONNEL:    tempRat1 = new Rationnel(*expLeftTemp);
-				    tempRat2 = static_cast <const Rationnel*> (expRightTemp);
+            case TYPE_RATIONNEL:    tempRat2 = new Rationnel(*expLeftTemp);
+                                    tempRat1 = static_cast <const Rationnel*> (expRightTemp);
                                     setRes(new Rationnel((*tempRat1)*(*tempRat2)));
                                     break;
 
-            case TYPE_ENTIER:   tempE1 = new Entier(*expLeftTemp);
-				tempE2 = static_cast <const Entier*> (expRightTemp);
+            case TYPE_ENTIER:   tempE2 = new Entier(*expLeftTemp);
+                                tempE1 = static_cast <const Entier*> (expRightTemp);
                                 setRes(new Entier((*tempE1)*(*tempE2)));
                                 break;
 
-            default:    break; //erreur
+            default:    throw "Operation impossible";
+                        break;
         };
     }
 
+    delete tempC2;
+    delete tempR2;
+    delete tempE2;
+    delete tempRat2;
 
     return getRes();
 }
@@ -545,62 +568,61 @@ Expression* expression::Division::operation(){
 
     if(expLeftTemp->getType()<expRightTemp->getType()){
         switch(expLeftTemp->getType()){
-	    case TYPE_COMPLEXE: tempC1 = static_cast <const Complexe*> (expLeftTemp);
+        case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
                                 setRes(new Complexe((*tempC1)/(*tempC2)));
                                 break;
 
-	    case TYPE_REEL:     tempR1 = static_cast <const Reel*> (expLeftTemp);
+        case TYPE_REEL:         tempR1 = static_cast <const Reel*> (expLeftTemp);
                                 tempR2 = new Reel(*expRightTemp);
                                 setRes(new Reel((*tempR1)/(*tempR2)));
                                 break;
 
-	    case TYPE_RATIONNEL:    tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
+        case TYPE_RATIONNEL:        tempRat1 = static_cast <const Rationnel*> (expLeftTemp);
                                     tempRat2 = new Rationnel(*expRightTemp);
                                     setRes(new Rationnel((*tempRat1)/(*tempRat2)));
                                     break;
 
-	    case TYPE_ENTIER:   tempE1 = static_cast <const Entier*> (expLeftTemp);
+        case TYPE_ENTIER:       tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
                                 setRes(new Entier((*tempE1)/(*tempE2)));
                                 break;
 
-            default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
         };
     }
     else{
         switch(expRightTemp->getType()){
-            case TYPE_COMPLEXE: tempC1 = new Complexe(*expLeftTemp);
-				tempC2 = static_cast <const Complexe*> (expRightTemp);
-                                setRes(new Complexe((*tempC1)/(*tempC2)));
+            case TYPE_COMPLEXE: tempC2 = new Complexe(*expLeftTemp);
+                                tempC1 = static_cast <const Complexe*> (expRightTemp);
+                                setRes(new Complexe((*tempC2)/(*tempC1)));
                                 break;
 
-            case TYPE_REEL:     tempR1 = new Reel(*expLeftTemp);
-				tempR2 = static_cast <const Reel*> (expRightTemp);
-                                setRes(new Reel((*tempR1)/(*tempR2)));
+            case TYPE_REEL:     tempR2 = new Reel(*expLeftTemp);
+                                tempR1 = static_cast <const Reel*> (expRightTemp);
+                                setRes(new Reel((*tempR2)/(*tempR1)));
                                 break;
 
-            case TYPE_RATIONNEL:    tempRat1 = new Rationnel(*expLeftTemp);
-				    tempRat2 = static_cast <const Rationnel*> (expRightTemp);
-                                    setRes(new Rationnel((*tempRat1)/(*tempRat2)));
+            case TYPE_RATIONNEL:    tempRat2 = new Rationnel(*expLeftTemp);
+                                    tempRat1 = static_cast <const Rationnel*> (expRightTemp);
+                                    setRes(new Rationnel((*tempRat2)/(*tempRat1)));
                                     break;
 
-            case TYPE_ENTIER:   tempE1 = new Entier(*expLeftTemp);
-				tempE2 = static_cast <const Entier*> (expRightTemp);
-                                setRes(new Entier((*tempE1)/(*tempE2)));
+            case TYPE_ENTIER:   tempE2 = new Entier(*expLeftTemp);
+                                tempE1 = static_cast <const Entier*> (expRightTemp);
+                                setRes(new Entier((*tempE2)/(*tempE1)));
                                 break;
 
-            default:    break; //erreur
+            default:    throw "Operation impossible";
+                        break;
         };
     }
 
-    delete tempC1;
+
     delete tempC2;
-    delete tempR1;
     delete tempR2;
-    delete tempE1;
     delete tempE2;
-    delete tempRat1;
     delete tempRat2;
 
     return getRes();
@@ -634,7 +656,8 @@ Expression* expression::Sin::operation(){
                             setRes(new Reel(sin(tempE->getVal())));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -668,7 +691,8 @@ Expression* expression::Cos::operation(){
                             setRes(new Reel(cos(tempE->getVal())));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -702,7 +726,8 @@ Expression* expression::Tan::operation(){
                             setRes(new Reel(tan(tempE->getVal())));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -736,7 +761,8 @@ Expression* expression::Sinh::operation(){
                             setRes(new Reel(sinh(tempE->getVal())));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -770,7 +796,8 @@ Expression* expression::Cosh::operation(){
                             setRes(new Reel(cosh(tempE->getVal())));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -804,7 +831,8 @@ Expression* expression::Tanh::operation(){
                             setRes(new Reel(tanh(tempE->getVal())));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -838,7 +866,8 @@ Expression* expression::Ln::operation(){
                             setRes(new Reel(log(tempE->getVal())));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -872,7 +901,8 @@ Expression* expression::Log::operation(){
                             setRes(new Reel(log10(tempE->getVal())));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -907,7 +937,8 @@ Expression* expression::Inv::operation(){
                             setRes(new Entier((*tempE)*temp));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -944,7 +975,8 @@ Expression* expression::Sqrt::operation(){
                                 setRes(new Reel(sqrt(tempE->getVal())));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -983,7 +1015,8 @@ Expression* expression::Sqr::operation(){
                             setRes(new Entier((*tempE)*(*tempE)));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -1021,7 +1054,8 @@ Expression* expression::Cube::operation(){
                             setRes(new Entier((*tempE)*(*tempE)*(*tempE)));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -1058,7 +1092,8 @@ Expression* expression::Factoriel::operation(){
                                 setRes(new Entier(fact(tempE->getVal())));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -1097,7 +1132,8 @@ Expression* expression::DegToRad::operation(){
                             setRes(new Reel(temp*(*tempE)));
                             break;
 
-        default:    break; //erreur
+        default:    throw "Operation impossible";
+                    break;
     };
 
     return getRes();
@@ -1132,7 +1168,8 @@ Expression* expression::RadToDeg::operation(){
                             setRes(new Reel(temp*(*tempE)));
                             break;
 
-        default:    break; //erreur
+    default:    throw "Operation impossible";
+                break;
     };
 
     return getRes();
