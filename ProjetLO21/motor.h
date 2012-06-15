@@ -15,8 +15,9 @@ public:
     static void del_motor();
     void empile(QString lineSaisie);
 signals:
-    void updatePileView();
-    void emptyLineSaisie();
+    void sig_updatePileView();
+    void sig_emptyLineSaisie();
+    void sig_updateUiStatusBar(QString text);
 protected:
     Motor(){}
     Motor(const Motor&);

@@ -7,8 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    Motor::init(ui);
-
     // On connecte les boutons
     for (int i = 0; i < ui->gridLayout_tabBasique->count(); ++i)
     {
@@ -46,8 +44,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->pushButton_space, SIGNAL(clicked()), this, SLOT(buttonPressed()));
 
     // On connecte le motor à l'a pile'interface
-    //connect(Motor::get_motor(), SIGNAL(updatePileView()), this, SLOT(updatePileView()));
-    //connect(Motor::get_motor(), SIGNAL(emptyLineSaisie()), ui->lineSaisie, SLOT(clear()));
+    connect(Motor::get_motor(), SIGNAL(sig_updatePileView()), this, SLOT(slot_updatePileView()));
+    connect(Motor::get_motor(), SIGNAL(sig_emptyLineSaisie()), ui->lineSaisie, SLOT(clear()));
+    connect(Motor::get_motor(), SIGNAL(sig_updateUiStatusBar(QString text)), ui->statusBar, SLOT(showMessage(QString text)));
 
     ui->lineSaisie->setFocus();
 }
@@ -57,7 +56,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::buttonPressed()
+void MainWindow::slot_buttonPressed()
 {
     QPushButton* button = qobject_cast<QPushButton*>( sender() );
 
@@ -411,7 +410,7 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 	QMainWindow::keyPressEvent(e);
 }
 
-void MainWindow::updatePileView()
+void MainWindow::slot_updatePileView()
 {
     if(Pile::get_curPile()->length() > 0){
 	ui->listWidget_pile_1->clear();
