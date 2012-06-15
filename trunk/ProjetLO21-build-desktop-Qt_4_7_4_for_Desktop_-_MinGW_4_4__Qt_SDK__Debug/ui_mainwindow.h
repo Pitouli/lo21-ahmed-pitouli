@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed 13. Jun 23:17:32 2012
+** Created: Thu 14. Jun 18:38:44 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -143,7 +143,9 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         listWidget_pile_1 = new QListWidget(tab_pile_1);
         listWidget_pile_1->setObjectName(QString::fromUtf8("listWidget_pile_1"));
-        listWidget_pile_1->setFont(font);
+        QFont font1;
+        font1.setPointSize(14);
+        listWidget_pile_1->setFont(font1);
         listWidget_pile_1->setProperty("showDropIndicator", QVariant(false));
 
         horizontalLayout->addWidget(listWidget_pile_1);

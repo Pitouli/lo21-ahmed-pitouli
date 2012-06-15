@@ -59,7 +59,7 @@
          <widget class="QListWidget" name="listWidget_pile_1">
           <property name="font">
            <font>
-            <pointsize>16</pointsize>
+            <pointsize>14</pointsize>
            </font>
           </property>
           <property name="showDropIndicator" stdset="0">
