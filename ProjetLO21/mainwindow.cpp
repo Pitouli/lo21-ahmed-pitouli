@@ -274,6 +274,8 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
 	ui->tabWidget_saisie->setCurrentWidget(ui->tab_trigo);
     else if(e->key() == Qt::Key_P)
 	ui->tabWidget_saisie->setCurrentWidget(ui->tab_pile);
+    else if(e->key() == Qt::Key_Apostrophe)
+	ui->checkBox_calculAuto->toggle();
     else if(e->key() == Qt::Key_0)
     {
 	ui->pushButton_0->setDown(false);

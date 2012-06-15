@@ -158,9 +158,6 @@
         <property name="text">
          <string>Calcul auto</string>
         </property>
-        <property name="shortcut">
-         <string>'</string>
-        </property>
         <property name="checked">
          <bool>true</bool>
         </property>
