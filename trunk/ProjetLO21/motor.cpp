@@ -33,7 +33,7 @@ void Motor::empile(QString lineSaisie)
 	if(expr->getType() > TYPE_NOMBRE_START && expr->getType() < TYPE_NOMBRE_END)
 	{
 	    Pile::get_curPile()->push(expr);
-	    emit emptyLineSaisie();
+	    emit sig_emptyLineSaisie();
 	}
 	else if(expr->getType() > TYPE_OPERATION_NONAIRE_START && expr->getType() < TYPE_OPERATION_NONAIRE_END)
 	{
@@ -42,34 +42,45 @@ void Motor::empile(QString lineSaisie)
 	    try
 	    {
 		opNonaire->operation();
-		emit emptyLineSaisie();
+		emit sig_emptyLineSaisie();
 	    }
 	    catch(char const* e)
 	    {
 		qDebug("Erreur détectée en opération nonaire : ");
 		qDebug(e);
+		emit sig_updateUiStatusBar(e);
 	    }
 
 	    delete opNonaire;
 	}
 	else if(expr->getType() > TYPE_OPERATION_UNAIRE_START && expr->getType() < TYPE_OPERATION_UNAIRE_END)
 	{
-	    expression::OperationUnaire* opUnaire = static_cast<expression::OperationUnaire*>(expr);
-	    expression::Expression* param = Pile::get_curPile()->pop();
-	    opUnaire->setExp(param);
-	    try
+	    if(Pile::get_curPile()->size() >= 1)
 	    {
-		Pile::get_curPile()->push(opUnaire->operation());
-		emit emptyLineSaisie();
-		delete param;
+		expression::OperationUnaire* opUnaire = static_cast<expression::OperationUnaire*>(expr);
+		expression::Expression* param = Pile::get_curPile()->pop();
+		opUnaire->setExp(param);
+		try
+		{
+		    Pile::get_curPile()->push(opUnaire->operation());
+		    emit sig_emptyLineSaisie();
+		    delete param;
+		}
+		catch(char const* e)
+		{
+		    qDebug("Erreur détectée en opération unaire : ");
+		    qDebug(e);
+		    Pile::get_curPile()->push(param);
+		    emit sig_updateUiStatusBar(e);
+		}
+		delete opUnaire;
 	    }
-	    catch(char const* e)
+	    else
 	    {
 		qDebug("Erreur détectée en opération unaire : ");
-		qDebug(e);
-		Pile::get_curPile()->push(param);
+		qDebug("Il y a moins d'un opérande dans la pile.");
+		emit sig_updateUiStatusBar("Erreur : il y a moins d'un opérande dans la pile.");
 	    }
-	    delete opUnaire;
 	}
 	else if(expr->getType() > TYPE_OPERATION_BINAIRE_START && expr->getType() < TYPE_OPERATION_BINAIRE_END)
 	{
@@ -80,8 +91,10 @@ void Motor::empile(QString lineSaisie)
 
 	    try
 	    {
-		Pile::get_curPile()->push(opBinaire->operation());
-		emit emptyLineSaisie();
+		expression::Expression* resultat = opBinaire->operation();
+		qDebug("type resultat : "+resultat->getType());
+		Pile::get_curPile()->push(resultat);
+		emit sig_emptyLineSaisie();
 		delete param1;
 		delete param2;
 	    }
@@ -102,5 +115,5 @@ void Motor::empile(QString lineSaisie)
 	qDebug(e);
     }
 
-    emit updatePileView();
+    emit sig_updatePileView();
 }

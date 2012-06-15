@@ -21,8 +21,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 public slots:
-    void buttonPressed();
-    void updatePileView();
+    void slot_buttonPressed();
+    void slot_updatePileView();
 private:
     void keyReleaseEvent(QKeyEvent *e);
     void keyPressEvent(QKeyEvent *e);
