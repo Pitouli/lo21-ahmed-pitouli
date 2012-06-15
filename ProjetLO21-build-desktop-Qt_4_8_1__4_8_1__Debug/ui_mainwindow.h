@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat 9. Jun 08:47:19 2012
+** Created: Fri 15. Jun 15:37:12 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,7 +20,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLineEdit>
-#include <QtGui/QListView>
+#include <QtGui/QListWidget>
 #include <QtGui/QMainWindow>
 #include <QtGui/QPushButton>
 #include <QtGui/QRadioButton>
@@ -38,12 +38,11 @@ public:
     QGridLayout *gridLayout_7;
     QLineEdit *lineSaisie;
     QTabWidget *tabWidget_pile;
-    QWidget *tab_7;
+    QWidget *tab_pile_1;
     QHBoxLayout *horizontalLayout;
-    QListView *listView_pile;
+    QListWidget *listWidget_pile_1;
     QWidget *tab_8;
     QHBoxLayout *horizontalLayout_3;
-    QListView *listView_2;
     QHBoxLayout *paramSaisie;
     QCheckBox *checkBox_complexe;
     QRadioButton *radioButton_reel;
@@ -106,14 +105,14 @@ public:
     QPushButton *pushButton_drop;
     QPushButton *pushButton_space;
     QStatusBar *statusBar;
-    QButtonGroup *buttonGroup_type;
     QButtonGroup *buttonGroup_2;
+    QButtonGroup *buttonGroup_type;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(750, 360);
+        MainWindow->resize(702, 351);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout_7 = new QGridLayout(centralWidget);
@@ -122,6 +121,9 @@ public:
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
         lineSaisie = new QLineEdit(centralWidget);
         lineSaisie->setObjectName(QString::fromUtf8("lineSaisie"));
+        QFont font;
+        font.setPointSize(16);
+        lineSaisie->setFont(font);
         lineSaisie->setMouseTracking(false);
         lineSaisie->setAcceptDrops(false);
         lineSaisie->setInputMethodHints(Qt::ImhUppercaseOnly);
@@ -133,29 +135,28 @@ public:
         tabWidget_pile->setObjectName(QString::fromUtf8("tabWidget_pile"));
         tabWidget_pile->setMinimumSize(QSize(250, 0));
         tabWidget_pile->setTabsClosable(true);
-        tab_7 = new QWidget();
-        tab_7->setObjectName(QString::fromUtf8("tab_7"));
-        horizontalLayout = new QHBoxLayout(tab_7);
+        tab_pile_1 = new QWidget();
+        tab_pile_1->setObjectName(QString::fromUtf8("tab_pile_1"));
+        horizontalLayout = new QHBoxLayout(tab_pile_1);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        listView_pile = new QListView(tab_7);
-        listView_pile->setObjectName(QString::fromUtf8("listView_pile"));
+        listWidget_pile_1 = new QListWidget(tab_pile_1);
+        listWidget_pile_1->setObjectName(QString::fromUtf8("listWidget_pile_1"));
+        QFont font1;
+        font1.setPointSize(14);
+        listWidget_pile_1->setFont(font1);
+        listWidget_pile_1->setProperty("showDropIndicator", QVariant(false));
 
-        horizontalLayout->addWidget(listView_pile);
+        horizontalLayout->addWidget(listWidget_pile_1);
 
-        tabWidget_pile->addTab(tab_7, QString());
+        tabWidget_pile->addTab(tab_pile_1, QString());
         tab_8 = new QWidget();
         tab_8->setObjectName(QString::fromUtf8("tab_8"));
         horizontalLayout_3 = new QHBoxLayout(tab_8);
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        listView_2 = new QListView(tab_8);
-        listView_2->setObjectName(QString::fromUtf8("listView_2"));
-
-        horizontalLayout_3->addWidget(listView_2);
-
         tabWidget_pile->addTab(tab_8, QString());
 
         gridLayout_7->addWidget(tabWidget_pile, 0, 1, 5, 1);
@@ -506,13 +507,11 @@ public:
         QWidget::setTabOrder(pushButton_sum, pushButton_dup);
         QWidget::setTabOrder(pushButton_dup, pushButton_mean);
         QWidget::setTabOrder(pushButton_mean, pushButton_drop);
-        QWidget::setTabOrder(pushButton_drop, listView_pile);
-        QWidget::setTabOrder(listView_pile, listView_2);
-        QWidget::setTabOrder(listView_2, lineSaisie);
+        QWidget::setTabOrder(pushButton_drop, lineSaisie);
 
         retranslateUi(MainWindow);
 
-        tabWidget_pile->setCurrentIndex(1);
+        tabWidget_pile->setCurrentIndex(0);
         tabWidget_saisie->setCurrentIndex(0);
 
 
@@ -522,7 +521,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Calculatrice \303\240 Notation Polonaise Invers\303\251e - Amhed & JB", 0, QApplication::UnicodeUTF8));
-        tabWidget_pile->setTabText(tabWidget_pile->indexOf(tab_7), QApplication::translate("MainWindow", "Pile 1", 0, QApplication::UnicodeUTF8));
+        tabWidget_pile->setTabText(tabWidget_pile->indexOf(tab_pile_1), QApplication::translate("MainWindow", "Pile 1", 0, QApplication::UnicodeUTF8));
         tabWidget_pile->setTabText(tabWidget_pile->indexOf(tab_8), QApplication::translate("MainWindow", "Pile 2", 0, QApplication::UnicodeUTF8));
         checkBox_complexe->setText(QApplication::translate("MainWindow", "Complexe", 0, QApplication::UnicodeUTF8));
         checkBox_complexe->setShortcut(QApplication::translate("MainWindow", "F1", 0, QApplication::UnicodeUTF8));
