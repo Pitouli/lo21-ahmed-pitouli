@@ -190,7 +190,7 @@
        <string/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_basique">
        <property name="accessibleName">
@@ -442,7 +442,7 @@ p, li { white-space: pre-wrap; }
              <string>LOG</string>
             </property>
             <property name="shortcut">
-             <string>O</string>
+             <string>G</string>
             </property>
            </widget>
           </item>

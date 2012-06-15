@@ -91,10 +91,10 @@ expression::Operation* Factory::analyzeOperation(QString const adn) const
 	return new expression::Sqr;
     else if(adn == "CUBE")
 	return new expression::Cube;
-    else if(adn == "INV")
+    /*else if(adn == "INV")
 	return new expression::Inv;
-    //else if(adn == "SIGN")
-	//return new expression::Sign;
+    else if(adn == "SIGN")
+	return new expression::Sign;*/
     else if(adn == "LN")
 	return new expression::Ln;
     else if(adn == "LOG")
@@ -119,10 +119,10 @@ expression::Operation* Factory::analyzeOperation(QString const adn) const
 	return new expression::Tanh;
     else if(adn == "SWAP")
 	return new expression::Swap;
-    //else if(adn == "SUM")
-	//return new expression::Sum;
-    //else if(adn == "MEAN")
-	//return new expression::Mean;
+    else if(adn == "SUM")
+	return new expression::Sum;
+    else if(adn == "MEAN")
+	return new expression::Mean;
     else if(adn == "CLEAR")
 	return new expression::Clear;
     else if(adn == "DUP")
