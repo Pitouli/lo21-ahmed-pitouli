@@ -56,7 +56,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::slot_buttonPressed()
+void MainWindow::buttonPressed()
 {
     QPushButton* button = qobject_cast<QPushButton*>( sender() );
 
