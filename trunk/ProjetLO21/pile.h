@@ -26,8 +26,8 @@ public:
 
     void clear();
     void swap();
-    expression::Expression* sum(expression::Expression* x);
-    expression::Expression* mean(expression::Expression* x);
+    expression::Expression* sum(const expression::Expression* x);
+    expression::Expression* mean(const expression::Expression* x);
     void dup();
     void drop();
     static void addSauv(expression::Expression* exp){(sauv=="")?sauv+=exp->toString():sauv+=("#"+exp->toString());}
