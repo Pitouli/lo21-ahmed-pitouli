@@ -64,12 +64,7 @@ expression::Complexe::Complexe(Nombre* _partieR, Nombre* _partieI):Nombre(TYPE_C
        partieI=_partieI->clone();
 }
 
-expression::Complexe::Complexe(double _partieR, double _partieI):Nombre(TYPE_COMPLEXE){
-    partieR=new Reel(_partieR);
-    partieI=new Reel(_partieI);
-}
-
-expression::Complexe::Complexe(const Nombre& _partieR, const Nombre& _partieI){
+expression::Complexe::Complexe(const Nombre& _partieR, const Nombre& _partieI):Nombre(TYPE_COMPLEXE){
     partieR=_partieR.clone();
     partieI=_partieI.clone();
 }
@@ -155,7 +150,7 @@ string expression::Complexe::toString()const{
     return ss.str();
 }
 
-expression::Entier::Entier(const Nombre& n){
+expression::Entier::Entier(const Nombre& n):NombreE(TYPE_ENTIER){
     const Entier* tempE;
 
     switch(n.getType()){
@@ -204,7 +199,7 @@ expression::Rationnel::Rationnel(Entier* _num, Entier* _denom):NombreE(TYPE_RATI
        denom=_denom;
 }
 
-expression::Rationnel::Rationnel(const Nombre& _num, const Nombre& _denom){
+expression::Rationnel::Rationnel(const Nombre& _num, const Nombre& _denom):NombreE(TYPE_RATIONNEL){
     const Reel* tempR;
     const Rationnel* tempRat1;
     const Rationnel* tempRat2;
@@ -920,7 +915,7 @@ string expression::Log::toString()const{
     return ss.str();
 }
 
-Expression* expression::Inv::operation(){
+Expression* expression::Sign::operation(){
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
 
@@ -950,7 +945,7 @@ Expression* expression::Inv::operation(){
     return getRes();
 }
 
-string expression::Inv::toString()const{
+string expression::Sign::toString()const{
     stringstream ss;
     ss<<getExp()->toString()<<" INV";
     return ss.str();

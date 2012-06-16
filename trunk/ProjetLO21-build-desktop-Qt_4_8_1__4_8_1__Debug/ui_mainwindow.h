@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri 15. Jun 16:37:56 2012
+** Created: Fri 15. Jun 18:37:48 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -532,7 +532,6 @@ public:
         radioButton_entier->setText(QApplication::translate("MainWindow", "Entier", 0, QApplication::UnicodeUTF8));
         radioButton_entier->setShortcut(QApplication::translate("MainWindow", "F4", 0, QApplication::UnicodeUTF8));
         checkBox_calculAuto->setText(QApplication::translate("MainWindow", "Calcul auto", 0, QApplication::UnicodeUTF8));
-        checkBox_calculAuto->setShortcut(QApplication::translate("MainWindow", "'", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         tabWidget_saisie->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
