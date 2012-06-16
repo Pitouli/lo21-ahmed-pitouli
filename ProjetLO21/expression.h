@@ -50,6 +50,7 @@
 	#define TYPE_EVAL 240
 	#define TYPE_DEGTORAD 242
 	#define TYPE_RADTODEG 244
+    #define TYPE_SIGN 246
     #define TYPE_OPERATION_UNAIRE_END 299
 
     #define TYPE_OPERATION_BINAIRE_START 300
@@ -132,7 +133,6 @@ namespace expression{
             Nombre* partieI;
         public:
             Complexe(Nombre* _partieR=0, Nombre* _partieI=0);
-            Complexe(double _partieR, double _partieI);
             Complexe(const Nombre& _partieR, const Nombre& _partieI);
             Complexe(const Complexe& c);
             Complexe(const Nombre& n);
@@ -362,12 +362,20 @@ namespace expression{
 	Log* clone() const { return new Log(*this); }
     };
 
-    class Inv: public OperationUnaire{
+    class Sign: public OperationUnaire{
     public:
-    Inv(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_INV){}
+        Sign(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SIGN){}
         Expression* operation();
         string toString()const;
-	Inv* clone() const { return new Inv(*this); }
+        Sign* clone() const { return new Sign(*this); }
+    };
+
+    class Inv: public OperationUnaire{
+    public:
+        Inv(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_INV){}
+        Expression* operation();
+        string toString()const;
+        Inv* clone() const { return new Inv(*this); }
     };
 
     class Sqrt: public OperationUnaire{
