@@ -57,7 +57,9 @@
 	#define TYPE_SOMME 305
 	#define TYPE_DIFFERENCE 310
 	#define TYPE_MULTIPLICATION 315
-	#define TYPE_DIVISION 320
+    #define TYPE_DIVISION 320
+    #define TYPE_MOD 325
+    #define TYPE_POW 330
     #define TYPE_OPERATION_BINAIRE_END 399
 
 #define TYPE_OPERATION_END 400
@@ -168,7 +170,7 @@ namespace expression{
             Entier operator+(const Entier& n)const;
             Entier operator*(const Entier& n)const;
             Entier operator-(const Entier& n)const;
-            Entier operator/(const Entier& n)const;
+            Reel operator/(const Entier& n)const;
             Entier* clone()const{return new Entier(*this);}
             string toString()const;
             double getVal()const{return val;}
@@ -280,6 +282,22 @@ namespace expression{
     Expression* operation();
     string toString()const;
 	Division* clone() const { return new Division(*this); }
+    };
+
+    class Mod: public OperationBinaire{
+        public:
+            Mod(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight,TYPE_MOD){}
+            Expression* operation();
+            string toString()const;
+            Mod* clone() const { return new Mod(*this); }
+    };
+
+    class Pow: public OperationBinaire{
+        public:
+            Pow(const Expression* _expLeft = NULL, const Expression* _expRight = NULL):OperationBinaire(_expLeft,_expRight,TYPE_POW){}
+            Expression* operation();
+            string toString()const;
+            Pow* clone() const { return new Pow(*this); }
     };
 
     class Sum: public OperationUnaire{

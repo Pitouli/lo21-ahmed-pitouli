@@ -175,9 +175,9 @@ Entier expression::Entier::operator-(const Entier& n)const{
     return Entier(val-n.getVal());
 }
 
-Entier expression::Entier::operator/(const Entier& n)const{
+Reel expression::Entier::operator/(const Entier& n)const{
     if(n.getVal()!=0)
-        return Entier(val/n.getVal());
+        return Reel(val/n.getVal());
     else
         return NULL;
 }
@@ -635,6 +635,67 @@ string expression::Division::toString()const{
     return ss.str();
 }
 
+Expression* expression::Mod::operation(){
+
+    setRes(NULL);
+
+    if((getExpLeft()->getType()==getExpRight()->getType())==TYPE_ENTIER){
+        const Entier* expLeftTemp=static_cast<const Entier*>(getExpLeft());
+        const Entier* expRightTemp=static_cast<const Entier*>(getExpRight());
+        setRes(new Entier(((int)expLeftTemp->getVal())%((int)expRightTemp->getVal())));
+    }
+    else
+        throw "L'operation modulo n'est possible que pour les entiers";
+
+    return getRes();
+}
+
+string expression::Mod::toString()const{
+    stringstream ss;
+    ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" %";
+    return ss.str();
+}
+
+Expression* expression::Pow::operation(){
+
+    setRes(NULL);
+    const Nombre* expTemp=static_cast<const Nombre*>(getExpLeft());
+    const Nombre* base=static_cast<const Nombre*>(getExpRight());
+
+    const Reel* tempR;
+    const Entier* tempE;
+    const Rationnel* tempRat;
+
+    switch(expTemp->getType()){
+
+        case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
+                            setRes(new Reel(pow(tempR->getVal(),(new Reel(*base))->getVal())));
+                            break;
+
+        case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (expTemp);
+                                if((tempRat->getNumVal()/tempRat->getDenomVal()).getVal()>=0)
+                                    setRes(new Reel(pow((tempRat->getNumVal()/tempRat->getDenomVal()).getVal(),(new Reel(*base))->getVal())));
+                                break;
+
+        case TYPE_ENTIER:   tempE = static_cast <const Entier*> (expTemp);
+                            setRes(new Reel(pow(tempE->getVal(),(new Reel(*base))->getVal())));
+                            break;
+
+        default:    throw "L'operation puissance n'est possible que pour les reels, les rationnels et les entiers";
+                    break;
+    };
+
+    return getRes();
+
+    return getRes();
+}
+
+string expression::Pow::toString()const{
+    stringstream ss;
+    ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" ^";
+    return ss.str();
+}
+
 Expression* expression::Sin::operation(){
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
@@ -918,13 +979,16 @@ string expression::Log::toString()const{
 Expression* expression::Sign::operation(){
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
-
+    const Complexe* tempC;
     const Reel* tempR;
     const Entier* tempE;
     const Rationnel* tempRat;
     Entier temp(-1);
 
     switch(expTemp->getType()){
+        case TYPE_COMPLEXE: tempC = static_cast <const Complexe*> (expTemp);
+                            setRes(new Complexe(tempC->getPartieRVal()*temp,tempC->getPartieIVal()*temp));
+                            break;
 
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
                             setRes(new Reel((*tempR)*temp));
@@ -946,6 +1010,40 @@ Expression* expression::Sign::operation(){
 }
 
 string expression::Sign::toString()const{
+    stringstream ss;
+    ss<<getExp()->toString()<<" SIGN";
+    return ss.str();
+}
+
+Expression* expression::Inv::operation(){
+
+    const Nombre* expTemp=static_cast<const Nombre*>(getExp());
+    const Reel* tempR;
+    const Entier* tempE;
+    const Rationnel* tempRat;
+
+    switch(expTemp->getType()){
+
+        case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
+                            setRes(new Rationnel(new Entier(1),new Entier(tempR->getVal())));
+                            break;
+
+        case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (expTemp);
+                                setRes(new Rationnel(tempRat->getDenomVal(),tempRat->getNumVal()));
+                                break;
+
+        case TYPE_ENTIER:   tempE = static_cast <const Entier*> (expTemp);
+                            setRes(new Rationnel(new Entier(1),new Entier(*tempE)));
+                            break;
+
+        default:    throw "Operation impossible";
+                    break;
+    };
+
+    return getRes();
+}
+
+string expression::Inv::toString()const{
     stringstream ss;
     ss<<getExp()->toString()<<" INV";
     return ss.str();
