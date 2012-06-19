@@ -4,7 +4,10 @@ using namespace std;
 Pile* Pile::_curPile = NULL;
 Pile* Pile::get_curPile() {
     if(_curPile == NULL)
+    {
 	_curPile = new Pile();
+	//this->recharger_pile();
+    }
     return _curPile;
 }
 void Pile::set_curPile(Pile* newCurPile) { _curPile = newCurPile; }

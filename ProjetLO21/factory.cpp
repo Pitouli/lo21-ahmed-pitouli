@@ -130,6 +130,10 @@ expression::Operation* Factory::analyzeOperation(QString const adn) const
 	return new expression::Dup;
     else if(adn == "DROP")
 	return new expression::Drop;
+    else if(adn == "RADTODEG")
+	return new expression::RadToDeg;
+    else if(adn == "DEGTORAD")
+	return new expression::DegToRad;
     else
 	throw("Echec de l'analyse : L'expression n'est pas un élément connu");
 }

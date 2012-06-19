@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue 19. Jun 14:36:24 2012
+** Created: Tue 19. Jun 19:15:39 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -89,6 +89,9 @@ public:
     QPushButton *pushButton_tan;
     QCheckBox *checkBox_hyperbolic;
     QFrame *line;
+    QPushButton *pushButton_radToDeg;
+    QPushButton *pushButton_degToRad;
+    QPushButton *pushButton_pi;
     QWidget *tab_pile;
     QHBoxLayout *horizontalLayout_6;
     QGridLayout *gridLayout_tabPile;
@@ -102,8 +105,8 @@ public:
     QSpacerItem *verticalSpacer;
     QListWidget *listWidget_pile;
     QStatusBar *statusBar;
-    QButtonGroup *buttonGroup_trigo;
     QButtonGroup *buttonGroup_type;
+    QButtonGroup *buttonGroup_trigo;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -389,6 +392,21 @@ public:
 
         gridLayout_tabTrigo->addWidget(line, 0, 1, 3, 1);
 
+        pushButton_radToDeg = new QPushButton(tab_trigo);
+        pushButton_radToDeg->setObjectName(QString::fromUtf8("pushButton_radToDeg"));
+
+        gridLayout_tabTrigo->addWidget(pushButton_radToDeg, 0, 3, 1, 1);
+
+        pushButton_degToRad = new QPushButton(tab_trigo);
+        pushButton_degToRad->setObjectName(QString::fromUtf8("pushButton_degToRad"));
+
+        gridLayout_tabTrigo->addWidget(pushButton_degToRad, 1, 3, 1, 1);
+
+        pushButton_pi = new QPushButton(tab_trigo);
+        pushButton_pi->setObjectName(QString::fromUtf8("pushButton_pi"));
+
+        gridLayout_tabTrigo->addWidget(pushButton_pi, 2, 3, 1, 1);
+
 
         horizontalLayout_5->addLayout(gridLayout_tabTrigo);
 
@@ -493,7 +511,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget_saisie->setCurrentIndex(3);
+        tabWidget_saisie->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -511,8 +529,14 @@ public:
         radioButton_entier->setText(QApplication::translate("MainWindow", "Entier", 0, QApplication::UnicodeUTF8));
         radioButton_entier->setShortcut(QApplication::translate("MainWindow", "F4", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        checkBox_calculAuto->setToolTip(QApplication::translate("MainWindow", "En calcul auto, le calcul est effectu\303\251 au fur et \303\240 mesure de la saisie.\n"
-"En d\303\251cochant la case, vous pouvez entrer des expressions compl\303\250tes qui seront \303\251valu\303\251esgr\303\242ce \303\240 l'op\303\251rateur EVAL", 0, QApplication::UnicodeUTF8));
+        checkBox_calculAuto->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">En calcul auto, le calcul est effectu\303\251 au fur et \303\240 mesure de la saisie.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">En d\303\251cochant la case, vous pouvez entrer des expressions compl\303\250tes qui seront \303\251valu\303\251es gr\303\242ce \303\240 l'op\303\251rateur EVAL</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -"
+                        "qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">rac : </span><span style=\" font-size:8pt; font-weight:600;\">'</span></p></body></html>", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         checkBox_calculAuto->setText(QApplication::translate("MainWindow", "Calcul auto", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
@@ -746,6 +770,32 @@ public:
 #endif // QT_NO_TOOLTIP
         checkBox_hyperbolic->setText(QApplication::translate("MainWindow", "Hyperbolic", 0, QApplication::UnicodeUTF8));
         checkBox_hyperbolic->setShortcut(QApplication::translate("MainWindow", "H", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_radToDeg->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X en radian puis rempile X en degr\303\251</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        pushButton_radToDeg->setText(QApplication::translate("MainWindow", "RAD to DEG", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_degToRad->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X en degr\303\251 puis rempile X en radian</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        pushButton_degToRad->setText(QApplication::translate("MainWindow", "DEG to RAD", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_pi->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Ins\303\250re une valeure pr\303\251cise de PI (l'affichage sera tronqu\303\251 dans la pile)</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        pushButton_pi->setText(QApplication::translate("MainWindow", "PI", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabText(tabWidget_saisie->indexOf(tab_trigo), QApplication::translate("MainWindow", "Trig&o", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabToolTip(tabWidget_saisie->indexOf(tab_trigo), QApplication::translate("MainWindow", "Fonctions trigonom\303\251triques\n"
 "Raccourci : O", 0, QApplication::UnicodeUTF8));
