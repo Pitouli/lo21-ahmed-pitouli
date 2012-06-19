@@ -65,34 +65,43 @@ void Pile::clear()
 
 void Pile::swap()
 {
-    expression::Expression* i = this->pop();
-    expression::Expression* j = this->pop();
-
-    if(i->getType() == TYPE_ENTIER && j->getType() == TYPE_ENTIER)
+    if(this->length() >= 2)
     {
-	expression::Entier* entier_i = static_cast<expression::Entier*>(i);
-	expression::Entier* entier_j = static_cast<expression::Entier*>(j);
-	int int_i = entier_i->getVal()-1;
-	int int_j = entier_j->getVal()-1;
+	expression::Expression* i = this->pop();
+	expression::Expression* j = this->pop();
 
-	if(int_i >= 0 && int_j >= 0 && int_i <= this->size() && int_j <= this->size())
+	if(i->getType() == TYPE_ENTIER && j->getType() == TYPE_ENTIER)
 	{
-	    this->QList<expression::Expression*>::swap(int_i,int_j);
-	    delete i;
-	    delete j;
+	    expression::Entier* entier_i = static_cast<expression::Entier*>(i);
+	    expression::Entier* entier_j = static_cast<expression::Entier*>(j);
+	    int int_i = entier_i->getVal()-1;
+	    int int_j = entier_j->getVal()-1;
+
+	    if(int_i >= 0 && int_j >= 0 && int_i <= this->size() && int_j <= this->size())
+	    {
+		this->QList<expression::Expression*>::swap(int_i,int_j);
+		delete i;
+		delete j;
+	    }
+	    else
+	    {
+		this->push(j);
+		this->push(i);
+		throw("SWAP impossible : les paramètres ne sont pas valides (au delà des bornes de la pile)");
+	    }
 	}
 	else
 	{
 	    this->push(j);
 	    this->push(i);
-	    throw("SWAP impossible : les paramètres ne sont pas valides (au delà des bornes de la pile)");
+	    throw("SWAP impossible : les paramètres ne sont pas valides (ce ne sont pas des entiers)");
 	}
     }
     else
     {
-	this->push(j);
-	this->push(i);
-	throw("SWAP impossible : les paramètres ne sont pas valides (ce ne sont pas des entiers)");
+	qDebug("Erreur détectée chez swap : ");
+	qDebug("Il y a moins de deux opérandes dans la pile.");
+	throw("Erreur : il y a moins de deux opérandes dans la pile.");
     }
 }
 
