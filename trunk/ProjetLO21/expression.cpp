@@ -126,6 +126,10 @@ Complexe expression::Complexe::operator-(const Complexe& n)const{
 }
 
 Complexe expression::Complexe::operator/(const Complexe& n)const{
+    if(((n.getPartieRVal()*n.getPartieRVal())+(n.getPartieIVal()*n.getPartieIVal())).getVal()==0
+        ||((n.getPartieRVal()*n.getPartieRVal())+(n.getPartieIVal()*n.getPartieIVal())).getVal()==0)
+       throw "La division par zero est interdite";
+
     Complexe temp(n.getPartieRVal()/((n.getPartieRVal()*n.getPartieRVal())+(n.getPartieIVal()*n.getPartieIVal())),
                   n.getPartieRVal()/((n.getPartieRVal()*n.getPartieRVal())+(n.getPartieIVal()*n.getPartieIVal())));
 
@@ -180,7 +184,7 @@ Reel expression::Entier::operator/(const Entier& n)const{
     if(n.getVal()!=0)
         return Reel(val/n.getVal());
     else
-        return NULL;
+        throw "La division par zero est interdite";
 }
 
 string expression::Entier::toString()const{
@@ -196,8 +200,12 @@ expression::Rationnel::Rationnel(Entier* _num, Entier* _denom):NombreE(TYPE_RATI
        num=_num;
     if(_denom==0)
         denom=new Entier(1);
-    else
+    else{
+        if(_denom->getVal()==0)
+            throw "Le denominateur ne peut pas etre nul";
        denom=_denom;
+    }
+    simplification();
 }
 
 expression::Rationnel::Rationnel(const Nombre& _num, const Nombre& _denom):NombreE(TYPE_RATIONNEL){
@@ -209,30 +217,38 @@ expression::Rationnel::Rationnel(const Nombre& _num, const Nombre& _denom):Nombr
 
     switch(_num.getType()+_denom.getType()){
 	case TYPE_RATIONNEL*2:  tempRat1 = static_cast <const Rationnel*> (&_num);
-				tempRat2 = static_cast <const Rationnel*> (&_denom);
-                                num=new Entier(tempRat1->getNumVal()/tempRat2->getDenomVal());
-                                denom=new Entier(tempRat2->getNumVal()/tempRat2->getDenomVal());
-                                break;
+                            tempRat2 = static_cast <const Rationnel*> (&_denom);
+                            if(tempRat2->getDenomVal().getVal()==0)
+                                throw "Le denominateur ne peut pas etre nul";
+                            num=new Entier(tempRat1->getNumVal()/tempRat2->getDenomVal());
+                            denom=new Entier(tempRat2->getNumVal()/tempRat2->getDenomVal());
+                            break;
 
 	case TYPE_ENTIER*2: tempE1 = static_cast <const Entier*> (&_num);
-			    tempE2 = static_cast <const Entier*> (&_denom);
-                            num=new Entier(tempE1->getVal());
-                            denom=new Entier(tempE2->getVal());
-                            break;
+                        tempE2 = static_cast <const Entier*> (&_denom);
+                        if(tempE2->getVal()==0)
+                            throw "Le denominateur ne peut pas etre nul";
+                        num=new Entier(tempE1->getVal());
+                        denom=new Entier(tempE2->getVal());
+                        break;
 
     default:                tempR = new Reel(_num);
                             num=new Entier((int)tempR->getVal());
                             delete tempR;
                             tempR = new Reel(_denom);
+                            if(tempR->getVal()==0)
+                                throw "Le denominateur ne peut pas etre nul";
                             denom=new Entier((int)tempR->getVal());
                             delete tempR;
                             break;
     };
+    simplification();
 }
 
 expression::Rationnel::Rationnel(const Rationnel& c):NombreE(TYPE_RATIONNEL){
     num=c.num->clone();
     denom=c.denom->clone();
+    simplification();
 }
 
 expression::Rationnel::Rationnel(const Nombre& n):NombreE(TYPE_RATIONNEL){
@@ -253,6 +269,29 @@ expression::Rationnel::Rationnel(const Nombre& n):NombreE(TYPE_RATIONNEL){
     default:   throw "La conversion en Rationnel n'est possible que pour les entiers";
                break;
     };
+    simplification();
+}
+
+int expression::Rationnel::pgcd(int a, int b) const {
+    if (a==0||b==0) return 0;
+    if (a<0) a=-a;
+    if (b<0) b=-b;
+    while(a!=b){
+        if (a>b) a=a-b; else b=b-a;
+    }
+    return a;
+}
+
+void expression::Rationnel::simplification(){
+    if (getNumVal().getVal()==0) { setDenom(1); return; }
+    if (getDenomVal().getVal()==0) return;
+    int p=pgcd(getNumVal().getVal(),getDenomVal().getVal());
+    setNum(getNumVal().getVal()/p);
+    setDenom(getDenomVal().getVal()/p);
+    if (getDenomVal().getVal()<0){
+        setDenom(-getDenomVal().getVal());
+        setNum(-getNumVal().getVal());
+    }
 }
 
 Rationnel expression::Rationnel::operator+(const Rationnel& c)const{
@@ -271,7 +310,7 @@ Rationnel expression::Rationnel::operator/(const Rationnel& c)const{
     if(c.getNumVal().getVal()!=0)
         return Rationnel(getNumVal()*c.getDenomVal(),getDenomVal()*c.getNumVal());
     else
-        return NULL;
+        throw "La division par zero est interdite";
 }
 
 Rationnel& expression::Rationnel::operator=(const Rationnel& n){
@@ -281,7 +320,7 @@ Rationnel& expression::Rationnel::operator=(const Rationnel& n){
         num=n.num->clone();
         denom=n.denom->clone();
     }
-
+    simplification();
     return *this;
 }
 
@@ -422,7 +461,7 @@ Expression* expression::Difference::operation(){
                                 delete tempE2;
                                 break;
 
-        default:    throw "Operation impossible";
+        default:    throw "Difference impossible: premier operande invalide";
                     break;
         };
     }
@@ -452,8 +491,8 @@ Expression* expression::Difference::operation(){
                                 delete tempE2;
                                 break;
 
-            default:    throw "Operation impossible";
-                        break;
+        default:    throw "Difference impossible: deuxieme operande invalide";
+                    break;
         };
     }
 
@@ -507,7 +546,7 @@ Expression* expression::Multiplication::operation(){
                                 delete tempE2;
                                 break;
 
-        default:    throw "Operation impossible";
+        default:    throw "Multiplication impossible: premier operande invalide";
                     break;
         };
     }
@@ -537,8 +576,8 @@ Expression* expression::Multiplication::operation(){
                                 delete tempE2;
                                 break;
 
-            default:    throw "Operation impossible";
-                        break;
+        default:    throw "Multiplication impossible: deuxieme operande invalide";
+                    break;
         };
     }
 
@@ -588,11 +627,11 @@ Expression* expression::Division::operation(){
 
         case TYPE_ENTIER:       tempE1 = static_cast <const Entier*> (expLeftTemp);
                                 tempE2 = new Entier(*expRightTemp);
-                                setRes(new Entier((*tempE1)/(*tempE2)));
+                                setRes(new Reel((*tempE1)/(*tempE2)));
                                 delete tempE2;
                                 break;
 
-        default:    throw "Operation impossible";
+        default:    throw "Division impossible: premier operande invalide";
                     break;
         };
     }
@@ -618,12 +657,12 @@ Expression* expression::Division::operation(){
 
             case TYPE_ENTIER:   tempE2 = new Entier(*expLeftTemp);
                                 tempE1 = static_cast <const Entier*> (expRightTemp);
-                                setRes(new Entier((*tempE2)/(*tempE1)));
+                                setRes(new Reel((*tempE2)/(*tempE1)));
                                 delete tempE2;
                                 break;
 
-            default:    throw "Operation impossible";
-                        break;
+        default:    throw "Division impossible: deuxieme operande invalide";
+                    break;
         };
     }
 
@@ -643,7 +682,7 @@ Expression* expression::Mod::operation(){
     if((getExpLeft()->getType()==getExpRight()->getType())==TYPE_ENTIER){
         const Entier* expLeftTemp=static_cast<const Entier*>(getExpLeft());
         const Entier* expRightTemp=static_cast<const Entier*>(getExpRight());
-        setRes(new Entier(((int)expLeftTemp->getVal())%((int)expRightTemp->getVal())));
+        setRes(new Entier(expLeftTemp->getVal()%expRightTemp->getVal()));
     }
     else
         throw "L'operation modulo n'est possible que pour les entiers";
@@ -719,7 +758,7 @@ Expression* expression::Sin::operation(){
                             setRes(new Reel(sin(tempE->getVal())));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "L'operation Sin n'est possible que pour les reels, les rationnels et les entiers";
                     break;
     };
 
@@ -754,7 +793,7 @@ Expression* expression::Cos::operation(){
                             setRes(new Reel(cos(tempE->getVal())));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "L'operation Cos n'est possible que pour les reels, les rationnels et les entiers";
                     break;
     };
 
@@ -789,7 +828,7 @@ Expression* expression::Tan::operation(){
                             setRes(new Reel(tan(tempE->getVal())));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "L'operation Tan n'est possible que pour les reels, les rationnels et les entiers";
                     break;
     };
 
@@ -824,7 +863,7 @@ Expression* expression::Sinh::operation(){
                             setRes(new Reel(sinh(tempE->getVal())));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "L'operation Sinh n'est possible que pour les reels, les rationnels et les entiers";
                     break;
     };
 
@@ -859,7 +898,7 @@ Expression* expression::Cosh::operation(){
                             setRes(new Reel(cosh(tempE->getVal())));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "L'operation Cosh n'est possible que pour les reels, les rationnels et les entiers";
                     break;
     };
 
@@ -894,7 +933,7 @@ Expression* expression::Tanh::operation(){
                             setRes(new Reel(tanh(tempE->getVal())));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "L'operation Tanh n'est possible que pour les reels, les rationnels et les entiers";
                     break;
     };
 
@@ -929,7 +968,7 @@ Expression* expression::Ln::operation(){
                             setRes(new Reel(log(tempE->getVal())));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "L'operation Ln n'est possible que pour les reels, les rationnels et les entiers";
                     break;
     };
 
@@ -964,7 +1003,7 @@ Expression* expression::Log::operation(){
                             setRes(new Reel(log10(tempE->getVal())));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "L'operation Log n'est possible que pour les reels, les rationnels et les entiers";
                     break;
     };
 
@@ -1003,7 +1042,7 @@ Expression* expression::Sign::operation(){
                             setRes(new Entier((*tempE)*temp));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "Operation Sign impossible: operande invalide(disponible pour complexes, reels, rationnels, entiers)";
                     break;
     };
 
@@ -1037,7 +1076,7 @@ Expression* expression::Inv::operation(){
                             setRes(new Rationnel(new Entier(1),new Entier(*tempE)));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "Operation Inv impossible: operande invalide(disponible pour reels, rationnels, entiers)";
                     break;
     };
 
@@ -1075,7 +1114,7 @@ Expression* expression::Sqrt::operation(){
                                 setRes(new Reel(sqrt(tempE->getVal())));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "Operation Sqrt impossible: operande invalide(disponible pour reels, rationnels, entiers)";
                     break;
     };
 
@@ -1115,7 +1154,7 @@ Expression* expression::Sqr::operation(){
                             setRes(new Entier((*tempE)*(*tempE)));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "Operation Sqr impossible: operande invalide(disponible pour complexes, reels, rationnels, entiers)";
                     break;
     };
 
@@ -1154,7 +1193,7 @@ Expression* expression::Cube::operation(){
                             setRes(new Entier((*tempE)*(*tempE)*(*tempE)));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "Operation Cube impossible: operande invalide(disponible pour complexes, reels, rationnels, entiers)";
                     break;
     };
 
@@ -1180,19 +1219,22 @@ Expression* expression::Factoriel::operation(){
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
                             if(tempR->getVal()>=0)
                                 setRes(new Entier(fact(tempR->getVal())));
+                            else throw "Le factoriel est possible que pour les nombres positifs";
                             break;
 
         case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (expTemp);
                                 if((tempRat->getNumVal()/tempRat->getDenomVal()).getVal()>=0)
                                     setRes(new Entier(fact((tempRat->getNumVal()/tempRat->getDenomVal()).getVal())));
+                                else throw "Le factoriel est possible que pour les nombres positifs";
                                 break;
 
         case TYPE_ENTIER:   tempE = static_cast <const Entier*> (expTemp);
                              if(tempE->getVal()>=0)
                                 setRes(new Entier(fact(tempE->getVal())));
+                             else throw "Le factoriel est possible que pour les nombres positifs";
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "Le factoriel est disponible que pour les reels, les rationnels et les entiers";
                     break;
     };
 
@@ -1228,7 +1270,7 @@ Expression* expression::DegToRad::operation(){
                             setRes(new Reel(temp*(*tempE)));
                             break;
 
-        default:    throw "Operation impossible";
+        default:    throw "Operation DegToRad impossible: operande invalide(disponible pour reels, rationnels, entiers)";
                     break;
     };
 
@@ -1264,7 +1306,7 @@ Expression* expression::RadToDeg::operation(){
                             setRes(new Reel(temp*(*tempE)));
                             break;
 
-    default:    throw "Operation impossible";
+    default:    throw "Operation RadToDeg impossible: operande invalide(disponible pour reels, rationnels, entiers)";
                 break;
     };
 

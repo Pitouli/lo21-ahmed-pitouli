@@ -176,7 +176,8 @@ namespace expression{
             Reel operator/(const Entier& n)const;
             Entier* clone()const{return new Entier(*this);}
             string toString()const;
-            double getVal()const{return val;}
+            int getVal()const{return val;}
+            void setVal(int _val){val=_val;}
             NombreE* operation(){return NULL;}
     };
 
@@ -191,6 +192,8 @@ namespace expression{
             Rationnel(const Rationnel& c);
             Rationnel(const Nombre& n);
             ~Rationnel();
+            int pgcd(int a, int b)const;
+            void simplification();
             Rationnel operator+(const Rationnel& n)const;
             Rationnel operator*(const Rationnel& n)const;
             Rationnel operator-(const Rationnel& n)const;
@@ -202,6 +205,8 @@ namespace expression{
             const Entier* getDenom()const{return denom;}
             Entier getNumVal()const{return *num;}
             Entier getDenomVal()const{return *denom;}
+            void setNum(int _val){num->setVal(_val);}
+            void setDenom(int _val){denom->setVal(_val);}
             NombreE* operation(){return NULL;}
     };
 
