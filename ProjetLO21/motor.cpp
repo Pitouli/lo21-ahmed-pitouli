@@ -94,7 +94,6 @@ void Motor::empile(QString lineSaisie)
 		try
 		{
 		    expression::Expression* resultat = opBinaire->operation();
-		    qDebug("type resultat : "+resultat->getType());
 		    Pile::get_curPile()->push(resultat);
 		    emit sig_emptyLineSaisie();
 		    delete param1;
@@ -102,7 +101,7 @@ void Motor::empile(QString lineSaisie)
 		}
 		catch(char const* e)
 		{
-		    qDebug("Erreur détectée en opération binaire : ");
+		    qDebug("Erreur détectée en opération binaire 1 : ");
 		    qDebug(e);
 		    Pile::get_curPile()->push(param1);
 		    Pile::get_curPile()->push(param2);
@@ -113,8 +112,8 @@ void Motor::empile(QString lineSaisie)
 	    }
 	    else
 	    {
-		qDebug("Erreur détectée en opération unaire : ");
-		qDebug("Il y a moins d'un opérande dans la pile.");
+		qDebug("Erreur détectée en opération binaire 2 : ");
+		qDebug("Il y a moins de deux opérandes dans la pile.");
 		emit sig_updateUiStatusBar("Erreur : il y a moins de deux opérandes dans la pile.");
 	    }
 	}
@@ -167,22 +166,4 @@ void Motor::eval()
 	emit sig_updateUiStatusBar("Erreur : il y a moins d'un opérande dans la pile.");
     }
 }
-/*
-    const ExpressionConcrete* tempExpC;
 
-    if(getExp()->getType() == TYPE_EXPRESSION_C)
-    {
-	tempExpC = static_cast<const ExpressionConcrete*>(getExp());
-	QStringList listExp = QString(tempExpC->getExp().c_str()).split(' ');
-
-	QStringList::const_iterator constIterator;
-	for (constIterator = listExp.constBegin(); constIterator != listExp.constEnd(); ++constIterator)
-	    Motor::get_motor()->empile(*constIterator);
-    }
-    else
-    {
-	setRes(getExp()->clone());
-    }
-
-    return getRes();
-}*/
