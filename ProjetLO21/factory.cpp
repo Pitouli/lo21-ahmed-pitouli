@@ -28,7 +28,7 @@ expression::Expression* Factory::analyze(QString const adn) const
 {
     QRegExp regExpressionConcrete("'(.+)'");
     QRegExp regNombre("^(?:(?:([0-9]+)(?:\\$([0-9]+))?)|(?:([0-9]+\\.[0-9]+)(?:\\$([0-9]+\\.[0-9]+))?)|(?:([0-9]+/[0-9]+)(?:\\$([0-9]+/[0-9]+))?))$");
-    QRegExp regOperateur("[A-Za-z]+|!|\\+|\\-|\\*|/");
+    QRegExp regOperateur("[A-Za-z]+|!|%|\\+|\\-|\\*|/");
 
     if(regExpressionConcrete.exactMatch(adn))
     {
@@ -101,7 +101,7 @@ expression::Operation* Factory::analyzeOperation(QString const adn) const
     else if(adn == "LOG")
 	return new expression::Log;
     else if(adn == "MOD" || adn == "%")
-    return new expression::Mod;
+	return new expression::Mod;
     else if(adn == "FACT" || adn == "!")
 	return new expression::Factoriel;
     else if(adn == "EVAL" || adn == "=")
