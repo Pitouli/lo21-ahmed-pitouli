@@ -10,6 +10,7 @@
 #include <fstream>
 #include "factory.h"
 
+
 using namespace std;
 
 namespace expression{
@@ -28,7 +29,7 @@ public:
     void recharger_pile();
     void undo();
     void redo();
-    std::vector<std::string> explode(const std::string& str, char c);
+    vector<string> explode(const std::string& str, char c);
     void push(expression::Expression* const expr) { this->append(expr); }
     expression::Expression* pop() { return this->takeLast(); }
 
@@ -36,13 +37,14 @@ public:
     void swap();
     expression::Expression* sum(const expression::Expression* x);
     expression::Expression* mean(const expression::Expression* x);
-    //void addSauv(const expression::Expression* exp){(sauv=="")?sauv+=exp->toString():sauv+=("#"+exp->toString());}
+    void sauvegarde();
     void dup();
     void drop();
+    string getSauv(){return sauv.back();}
 
 private:
     static Pile* _curPile; // Stocke le pointeur vers la pile en cours d'utilisation
-    string sauv;
+    vector<string> sauv;
 };
 
 #endif // PILE_H

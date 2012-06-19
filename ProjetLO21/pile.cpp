@@ -12,10 +12,17 @@ Pile* Pile::get_curPile() {
 }
 void Pile::set_curPile(Pile* newCurPile) { _curPile = newCurPile; }
 
-Pile::Pile()
-{
-    sauv="";
+Pile::Pile(){
     _curPile = this;
+}
+
+void Pile::sauvegarde(){
+    if(get_curPile()->size()>0){
+         string temp=get_curPile()->front()->toString();
+         for (QList<expression::Expression*>::iterator i = get_curPile()->begin()+1; i != get_curPile()->end(); ++i)
+             temp+=("#"+(*i)->toString());
+         sauv.push_back(temp);
+    }
 }
 
 vector<string> Pile::explode(const string& str, char c){
@@ -32,7 +39,14 @@ void Pile::sauv_pile(){
     ofstream fichier(filename.c_str(), ios::out | ios::trunc);
 
     if(!fichier.fail()){
-        fichier<<sauv;
+        if(sauv.size()>0){
+            fichier<<sauv.back();
+            sauv.pop_back();
+            while(! sauv.empty()){
+                fichier<<"@"<<sauv.back();
+                sauv.pop_back();
+            }
+        }
         fichier.close();
     }
     else
@@ -41,19 +55,28 @@ void Pile::sauv_pile(){
 
 void Pile::recharger_pile(){
     string filename = "sauvegarde.txt";  // je stocke dans la chaîne mon_fichier le nom du fichier à ouvrir
+    string temp;
+    ifstream fichier(filename.c_str(), ios::in);
 
-     ifstream fichier(filename.c_str(), ios::in);
-
-     if(!fichier.fail()){// si l'ouverture a réussi
-        fichier>>sauv;
+    if(!fichier.fail()){// si l'ouverture a réussi
+        fichier>>temp;
         fichier.close();  // je referme le fichier
-        vector<string> vect=explode(sauv,'#');
-        for(vector<string>::iterator i = vect.end(); i != vect.begin(); --i){
-            //empilement
-        }
+        vector<string> piles=explode(temp,'@');
 
-     }
-     else  // sinon
+        for(vector<string>::reverse_iterator i = piles.rbegin(); i != piles.rend(); ++i){
+            sauv.push_back(*i);
+        }
+        if(sauv.size()>0){
+            QString temp;
+            vector<string> pile1=explode(sauv[sauv.size()-1],'#');
+            for(vector<string>::iterator i = pile1.begin(); i != pile1.end(); ++i){
+                temp=(*i).c_str();
+                qDebug((*i).c_str());
+                get_curPile()->push(Factory::get_factory()->analyze(temp));
+            }
+        }
+    }
+    else  // sinon
         throw "Erreur à l'ouverture !";
 }
 

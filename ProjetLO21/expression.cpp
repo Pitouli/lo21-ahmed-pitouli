@@ -43,7 +43,7 @@ Reel expression::Reel::operator/(const Reel& n)const{
     if(n.getVal()!=0)
         return Reel(val/n.getVal());
     else
-        return NULL;
+        throw "La division par zero est interdite";
 }
 
 string expression::Reel::toString()const{
@@ -679,7 +679,7 @@ Expression* expression::Mod::operation(){
 
     setRes(NULL);
 
-    if((getExpLeft()->getType()==getExpRight()->getType())==TYPE_ENTIER){
+    if(getExpLeft()->getType()==TYPE_ENTIER && getExpRight()->getType()==TYPE_ENTIER){
         const Entier* expLeftTemp=static_cast<const Entier*>(getExpLeft());
         const Entier* expRightTemp=static_cast<const Entier*>(getExpRight());
         setRes(new Entier(expLeftTemp->getVal()%expRightTemp->getVal()));

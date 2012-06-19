@@ -5,6 +5,13 @@
 
 int main(int argc, char *argv[])
 {
+    try{
+        Pile::get_curPile()->recharger_pile();
+    }
+    catch(char const* e)
+    {
+        qDebug(e);
+    }
     QApplication a(argc, argv);
     QApplication::setStyle("plastique");
     MainWindow w;
