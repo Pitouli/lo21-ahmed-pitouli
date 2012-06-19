@@ -43,10 +43,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->pushButton_space, SIGNAL(clicked()), this, SLOT(slot_buttonClicked()));
 
-    // On connecte le motor à l'a pile'interface
+    // On connecte le motor à l'interface
     connect(Motor::get_motor(), SIGNAL(sig_updatePileView()), this, SLOT(slot_updatePileView()));
     connect(Motor::get_motor(), SIGNAL(sig_emptyLineSaisie()), ui->lineSaisie, SLOT(clear()));
     connect(Motor::get_motor(), SIGNAL(sig_updateUiStatusBar(QString)), this, SLOT(slot_updateUiStatusBar(QString)));
+    connect(ui->radioButton_radian, SIGNAL(toggled(bool)), Motor::get_motor(), SLOT(slot_setParamTrigo(bool)));
 
     // On connecte la checkbox de calculAuto à la fonction en charge des modification
     connect(ui->checkBox_calculAuto, SIGNAL(toggled(bool)), this, SLOT(slot_toggledCalculAuto(bool)));
@@ -246,6 +247,12 @@ void MainWindow::slot_buttonClicked()
 			ui->lineSaisie->setText(s+button->text()+"H");
 		    else
 			ui->lineSaisie->setText(s+button->text());
+		else if(button == ui->pushButton_radToDeg)
+		    ui->lineSaisie->setText(s+"RADTODEG");
+		else if(button == ui->pushButton_degToRad)
+		    ui->lineSaisie->setText(s+"DEGTORAD");
+		else if(button == ui->pushButton_pi)
+		    ui->lineSaisie->setText(s+"3.141592653589793238462643383");
 		else
 		    ui->lineSaisie->setText(s+button->text());
 

@@ -218,7 +218,7 @@ namespace expression{
             virtual Expression* operation()=0;
             virtual Operation* clone()const=0;
             virtual string toString()const=0;
-            void setRes(Expression* _res){delete res; res=_res;}
+	    void setRes(Expression* _res){delete res; res=_res;}
             Expression* getRes()const{return res;}
     };
 

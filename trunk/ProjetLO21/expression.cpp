@@ -726,8 +726,6 @@ Expression* expression::Pow::operation(){
     };
 
     return getRes();
-
-    return getRes();
 }
 
 string expression::Pow::toString()const{
@@ -737,6 +735,12 @@ string expression::Pow::toString()const{
 }
 
 Expression* expression::Sin::operation(){
+
+    if(Motor::get_motor()->get_paramTrigo() == PARAM_DEGRE)
+    {
+	Expression* exprRes = DegToRad(this->getExp()).operation();
+	this->setExp(exprRes);
+    }
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
 
@@ -773,6 +777,12 @@ string expression::Sin::toString()const{
 
 Expression* expression::Cos::operation(){
 
+    if(Motor::get_motor()->get_paramTrigo() == PARAM_DEGRE)
+    {
+	Expression* exprRes = DegToRad(this->getExp()).operation();
+	this->setExp(exprRes);
+    }
+
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
 
     const Reel* tempR;
@@ -807,6 +817,12 @@ string expression::Cos::toString()const{
 }
 
 Expression* expression::Tan::operation(){
+
+    if(Motor::get_motor()->get_paramTrigo() == PARAM_DEGRE)
+    {
+	Expression* exprRes = DegToRad(this->getExp()).operation();
+	this->setExp(exprRes);
+    }
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
 
@@ -843,6 +859,12 @@ string expression::Tan::toString()const{
 
 Expression* expression::Sinh::operation(){
 
+    if(Motor::get_motor()->get_paramTrigo() == PARAM_DEGRE)
+    {
+	Expression* exprRes = DegToRad(this->getExp()).operation();
+	this->setExp(exprRes);
+    }
+
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
 
     const Reel* tempR;
@@ -856,7 +878,7 @@ Expression* expression::Sinh::operation(){
                             break;
 
         case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (expTemp);
-                                setRes(new Reel(sinh((tempRat->getNumVal()/tempRat->getDenomVal()).getVal())));
+				setRes(new Reel(sinh((tempRat->getNumVal()/tempRat->getDenomVal()).getVal())));
                                 break;
 
         case TYPE_ENTIER:   tempE = static_cast <const Entier*> (expTemp);
@@ -877,6 +899,12 @@ string expression::Sinh::toString()const{
 }
 
 Expression* expression::Cosh::operation(){
+
+    if(Motor::get_motor()->get_paramTrigo() == PARAM_DEGRE)
+    {
+	Expression* exprRes = DegToRad(this->getExp()).operation();
+	this->setExp(exprRes);
+    }
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
 
@@ -912,6 +940,12 @@ string expression::Cosh::toString()const{
 }
 
 Expression* expression::Tanh::operation(){
+
+    if(Motor::get_motor()->get_paramTrigo() == PARAM_DEGRE)
+    {
+	Expression* exprRes = DegToRad(this->getExp()).operation();
+	this->setExp(exprRes);
+    }
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
 
@@ -1294,8 +1328,8 @@ Expression* expression::RadToDeg::operation(){
 
     switch(expTemp->getType()){
 
-        case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
-                            setRes(new Reel((*tempR)*temp));
+	case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
+			    setRes(new Reel((*tempR)*temp));
                             break;
 
         case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (expTemp);
