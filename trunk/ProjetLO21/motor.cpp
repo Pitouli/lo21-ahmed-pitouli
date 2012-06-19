@@ -57,6 +57,7 @@ void Motor::empile(QString lineSaisie)
 	{
 	    if(Pile::get_curPile()->size() >= 1)
 	    {
+        Pile::get_curPile()->sauvegarde();
 		expression::OperationUnaire* opUnaire = static_cast<expression::OperationUnaire*>(expr);
 		expression::Expression* param = Pile::get_curPile()->pop();
 		opUnaire->setExp(param);
@@ -86,6 +87,7 @@ void Motor::empile(QString lineSaisie)
 	{
 	    if(Pile::get_curPile()->size() >= 2)
 	    {
+        Pile::get_curPile()->sauvegarde();
 		expression::OperationBinaire* opBinaire = static_cast<expression::OperationBinaire*>(expr);
 		expression::Expression* param2 = Pile::get_curPile()->pop();
 		expression::Expression* param1 = Pile::get_curPile()->pop();
