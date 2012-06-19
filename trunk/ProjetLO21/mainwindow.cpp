@@ -51,9 +51,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // On connecte la checkbox de calculAuto à la fonction en charge des modification
     connect(ui->checkBox_calculAuto, SIGNAL(toggled(bool)), this, SLOT(slot_toggledCalculAuto(bool)));
 
-    // On gère les onglets de la pile
-    connect(ui->pushButton_addTab, SIGNAL(clicked()), this, SLOT(slot_addTabPile()));
-
     ui->lineSaisie->setFocus();
 }
 
@@ -273,7 +270,7 @@ void MainWindow::slot_buttonClicked()
 
     // On rend le focus à la barre de saisie
     ui->lineSaisie->setFocus();
-    ui->listWidget_pile_1->scrollToBottom();
+    ui->listWidget_pile->scrollToBottom();
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *e)
@@ -424,23 +421,15 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 void MainWindow::slot_updatePileView()
 {
     if(Pile::get_curPile()->length() > 0){
-	ui->listWidget_pile_1->clear();
+	ui->listWidget_pile->clear();
 	for(int i = 0 ; i < Pile::get_curPile()->length() ; ++i)
 	{
 	    string item = Pile::get_curPile()->at(i)->toString();
-	    ui->listWidget_pile_1->addItem(item.c_str());
+	    ui->listWidget_pile->addItem(item.c_str());
 	}
-	/*
-
-	QStringList items;
-	for(Pile::Iterator it = Pile::get_curPile()->begin(); it != Pile::get_curPile()->end(); ++it){
-	    items.append((*it)->toString());
-	}
-	qDebug() << items.at(0);
-	ui->listWidget_pile_1->addItems(items);*/
     }
     else
-	ui->listWidget_pile_1->clear();
+	ui->listWidget_pile->clear();
 }
 
 void MainWindow::slot_updateUiStatusBar(QString text)
@@ -455,13 +444,10 @@ void MainWindow::slot_toggledCalculAuto(bool checked)
 	QString s = ui->lineSaisie->text();
 	if(s.right(1) == " ") // S'il y'a un espace final
 	    s = s.left(s.length() -1); // On l'enlève
-	qDebug("empilement expression concrete");
-	Motor::get_motor()->empile("'"+s+"'");
+	if(s.length()>0)
+	{
+	    qDebug("empilement expression concrete");
+	    Motor::get_motor()->empile("'"+s+"'");
+	}
     }
-}
-
-void MainWindow::slot_addTabPile()
-{
-    QListWidget* listWidget_pile = new QListWidget(ui->tabWidget_pile);
-    int tabIndex = ui->tabWidget_pile->addTab(listWidget_pile, "Pile");
 }

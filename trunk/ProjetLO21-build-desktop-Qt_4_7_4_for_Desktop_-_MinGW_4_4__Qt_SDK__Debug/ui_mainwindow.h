@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue 19. Jun 09:46:35 2012
+** Created: Tue 19. Jun 14:36:24 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,7 +20,6 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLineEdit>
-#include <QtGui/QListView>
 #include <QtGui/QListWidget>
 #include <QtGui/QMainWindow>
 #include <QtGui/QPushButton>
@@ -101,15 +100,7 @@ public:
     QPushButton *pushButton_drop;
     QPushButton *pushButton_space;
     QSpacerItem *verticalSpacer;
-    QVBoxLayout *panneauPile;
-    QPushButton *pushButton_addTab;
-    QTabWidget *tabWidget_pile;
-    QWidget *tab_pile_1;
-    QHBoxLayout *horizontalLayout;
-    QListWidget *listWidget_pile_1;
-    QWidget *tab_pile_2;
-    QHBoxLayout *horizontalLayout_3;
-    QListView *listWidget_pile_2;
+    QListWidget *listWidget_pile;
     QStatusBar *statusBar;
     QButtonGroup *buttonGroup_trigo;
     QButtonGroup *buttonGroup_type;
@@ -118,7 +109,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(733, 353);
+        MainWindow->resize(731, 353);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout_7 = new QGridLayout(centralWidget);
@@ -126,9 +117,10 @@ public:
         gridLayout_7->setContentsMargins(11, 11, 11, 11);
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
         panneauSaisie = new QVBoxLayout();
-        panneauSaisie->setSpacing(6);
+        panneauSaisie->setSpacing(7);
         panneauSaisie->setObjectName(QString::fromUtf8("panneauSaisie"));
         panneauSaisie->setSizeConstraint(QLayout::SetFixedSize);
+        panneauSaisie->setContentsMargins(-1, -1, -1, 0);
         lineSaisie = new QLineEdit(centralWidget);
         lineSaisie->setObjectName(QString::fromUtf8("lineSaisie"));
         QFont font;
@@ -452,58 +444,21 @@ public:
 
         panneauSaisie->addWidget(pushButton_space);
 
-        verticalSpacer = new QSpacerItem(20, 1000, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        panneauSaisie->addItem(verticalSpacer);
-
 
         gridLayout_7->addLayout(panneauSaisie, 0, 0, 1, 2);
 
-        panneauPile = new QVBoxLayout();
-        panneauPile->setSpacing(6);
-        panneauPile->setObjectName(QString::fromUtf8("panneauPile"));
-        pushButton_addTab = new QPushButton(centralWidget);
-        pushButton_addTab->setObjectName(QString::fromUtf8("pushButton_addTab"));
+        verticalSpacer = new QSpacerItem(20, 1000, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        panneauPile->addWidget(pushButton_addTab);
+        gridLayout_7->addItem(verticalSpacer, 1, 0, 1, 2);
 
-        tabWidget_pile = new QTabWidget(centralWidget);
-        tabWidget_pile->setObjectName(QString::fromUtf8("tabWidget_pile"));
-        tabWidget_pile->setMinimumSize(QSize(250, 0));
-        tabWidget_pile->setTabsClosable(true);
-        tab_pile_1 = new QWidget();
-        tab_pile_1->setObjectName(QString::fromUtf8("tab_pile_1"));
-        horizontalLayout = new QHBoxLayout(tab_pile_1);
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        listWidget_pile_1 = new QListWidget(tab_pile_1);
-        listWidget_pile_1->setObjectName(QString::fromUtf8("listWidget_pile_1"));
+        listWidget_pile = new QListWidget(centralWidget);
+        listWidget_pile->setObjectName(QString::fromUtf8("listWidget_pile"));
+        listWidget_pile->setMinimumSize(QSize(250, 0));
         QFont font1;
-        font1.setPointSize(14);
-        listWidget_pile_1->setFont(font1);
-        listWidget_pile_1->setProperty("showDropIndicator", QVariant(false));
+        font1.setPointSize(12);
+        listWidget_pile->setFont(font1);
 
-        horizontalLayout->addWidget(listWidget_pile_1);
-
-        tabWidget_pile->addTab(tab_pile_1, QString());
-        tab_pile_2 = new QWidget();
-        tab_pile_2->setObjectName(QString::fromUtf8("tab_pile_2"));
-        horizontalLayout_3 = new QHBoxLayout(tab_pile_2);
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        listWidget_pile_2 = new QListView(tab_pile_2);
-        listWidget_pile_2->setObjectName(QString::fromUtf8("listWidget_pile_2"));
-
-        horizontalLayout_3->addWidget(listWidget_pile_2);
-
-        tabWidget_pile->addTab(tab_pile_2, QString());
-
-        panneauPile->addWidget(tabWidget_pile);
-
-
-        gridLayout_7->addLayout(panneauPile, 0, 2, 1, 1);
+        gridLayout_7->addWidget(listWidget_pile, 0, 3, 2, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(MainWindow);
@@ -539,7 +494,6 @@ public:
         retranslateUi(MainWindow);
 
         tabWidget_saisie->setCurrentIndex(3);
-        tabWidget_pile->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -867,9 +821,6 @@ public:
 "Raccourci : P", 0, QApplication::UnicodeUTF8));
         pushButton_space->setText(QApplication::translate("MainWindow", "Espace / Valider / Point / Virgule / Dollar / Slash", 0, QApplication::UnicodeUTF8));
         pushButton_space->setShortcut(QApplication::translate("MainWindow", "Space", 0, QApplication::UnicodeUTF8));
-        pushButton_addTab->setText(QApplication::translate("MainWindow", "Add Tab", 0, QApplication::UnicodeUTF8));
-        tabWidget_pile->setTabText(tabWidget_pile->indexOf(tab_pile_1), QApplication::translate("MainWindow", "Pile 1", 0, QApplication::UnicodeUTF8));
-        tabWidget_pile->setTabText(tabWidget_pile->indexOf(tab_pile_2), QApplication::translate("MainWindow", "Pile 2", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
