@@ -2,7 +2,11 @@
 
 Pile* Pile::_curPile = NULL;
 string Pile::sauv = "";
-Pile* Pile::get_curPile() { return _curPile; }
+Pile* Pile::get_curPile() {
+    if(_curPile == NULL)
+	_curPile = new Pile();
+    return _curPile;
+}
 void Pile::set_curPile(Pile* newCurPile) { _curPile = newCurPile; }
 
 Pile::Pile()

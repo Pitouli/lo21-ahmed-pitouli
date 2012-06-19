@@ -51,6 +51,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // On connecte la checkbox de calculAuto à la fonction en charge des modification
     connect(ui->checkBox_calculAuto, SIGNAL(toggled(bool)), this, SLOT(slot_toggledCalculAuto(bool)));
 
+    // On gère les onglets de la pile
+    connect(ui->pushButton_addTab, SIGNAL(clicked()), this, SLOT(slot_addTabPile()));
+
     ui->lineSaisie->setFocus();
 }
 
@@ -455,4 +458,10 @@ void MainWindow::slot_toggledCalculAuto(bool checked)
 	qDebug("empilement expression concrete");
 	Motor::get_motor()->empile("'"+s+"'");
     }
+}
+
+void MainWindow::slot_addTabPile()
+{
+    QListWidget* listWidget_pile = new QListWidget(ui->tabWidget_pile);
+    int tabIndex = ui->tabWidget_pile->addTab(listWidget_pile, "Pile");
 }

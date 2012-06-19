@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>731</width>
-    <height>374</height>
+    <width>733</width>
+    <height>353</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,60 +15,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_7">
-    <item row="0" column="2" rowspan="5">
-     <widget class="QTabWidget" name="tabWidget_pile">
-      <property name="minimumSize">
-       <size>
-        <width>250</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <property name="tabsClosable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="tab_pile_1">
-       <attribute name="title">
-        <string>Pile 1</string>
-       </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QListWidget" name="listWidget_pile_1">
-          <property name="font">
-           <font>
-            <pointsize>14</pointsize>
-           </font>
-          </property>
-          <property name="showDropIndicator" stdset="0">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="tab_8">
-       <attribute name="title">
-        <string>Pile 2</string>
-       </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_3"/>
-      </widget>
-     </widget>
-    </item>
-    <item row="4" column="0" colspan="2">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>1000</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
     <item row="0" column="0" colspan="2">
      <layout class="QVBoxLayout" name="panneauSaisie">
       <property name="sizeConstraint">
@@ -544,7 +490,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Dépile X rempile son évaluation (en particulier si X est une expression non évaluée)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Dépile X puis rempile son évaluation (en particulier si X est une expression non évaluée)&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;X: Entier, Rationnel, Réel&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;right&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;Rac.:  &lt;/span&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;=&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
@@ -610,7 +556,7 @@ p, li { white-space: pre-wrap; }
                <bool>true</bool>
               </property>
               <attribute name="buttonGroup">
-               <string>buttonGroup_2</string>
+               <string>buttonGroup_trigo</string>
               </attribute>
              </widget>
             </item>
@@ -650,7 +596,7 @@ p, li { white-space: pre-wrap; }
                <string>D</string>
               </property>
               <attribute name="buttonGroup">
-               <string>buttonGroup_2</string>
+               <string>buttonGroup_trigo</string>
               </attribute>
              </widget>
             </item>
@@ -841,6 +787,75 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
       </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>1000</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="2">
+     <layout class="QVBoxLayout" name="panneauPile">
+      <item>
+       <widget class="QPushButton" name="pushButton_addTab">
+        <property name="text">
+         <string>Add Tab</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="tabWidget_pile">
+        <property name="minimumSize">
+         <size>
+          <width>250</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <property name="tabsClosable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="tab_pile_1">
+         <attribute name="title">
+          <string>Pile 1</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QListWidget" name="listWidget_pile_1">
+            <property name="font">
+             <font>
+              <pointsize>14</pointsize>
+             </font>
+            </property>
+            <property name="showDropIndicator" stdset="0">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_pile_2">
+         <attribute name="title">
+          <string>Pile 2</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QListView" name="listWidget_pile_2"/>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>
@@ -854,7 +869,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>radioButton_rationnel</tabstop>
   <tabstop>radioButton_entier</tabstop>
   <tabstop>checkBox_calculAuto</tabstop>
-  <tabstop>tabWidget_pile</tabstop>
   <tabstop>pushButton_pow</tabstop>
   <tabstop>pushButton_inv</tabstop>
   <tabstop>pushButton_mod</tabstop>
@@ -881,7 +895,7 @@ p, li { white-space: pre-wrap; }
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup_trigo"/>
   <buttongroup name="buttonGroup_type"/>
  </buttongroups>
 </ui>

@@ -24,6 +24,7 @@ public:
 public slots:
     void slot_buttonClicked();
     void slot_updatePileView();
+    void slot_addTabPile();
     void slot_updateUiStatusBar(QString text);
     void slot_toggledCalculAuto(bool);
 private:
