@@ -1,7 +1,7 @@
 #include "pile.h"
+using namespace std;
 
 Pile* Pile::_curPile = NULL;
-string Pile::sauv = "";
 Pile* Pile::get_curPile() {
     if(_curPile == NULL)
 	_curPile = new Pile();
@@ -11,21 +11,47 @@ void Pile::set_curPile(Pile* newCurPile) { _curPile = newCurPile; }
 
 Pile::Pile()
 {
+    sauv="";
     _curPile = this;
 }
 
-void Pile::sauv_piles(){
+vector<string> Pile::explode(const string& str, char c){
+    std::istringstream split(str); // flux d'exatraction sur un std::string
+    std::vector<std::string> tokens;
+    for (std::string each; std::getline(split, each, c); tokens.push_back(each));
+    return tokens;
+}
+
+void Pile::sauv_pile(){
     string filename = "sauvegarde.txt";
 
     // ouverture en écriture avec effacement du fichier ouvert
     ofstream fichier(filename.c_str(), ios::out | ios::trunc);
 
     if(!fichier.fail()){
-
+        fichier<<sauv;
         fichier.close();
     }
     else
-        cerr << "Impossible d'ouvrir le fichier !" << endl;
+        throw "Impossible d'ouvrir le fichier !";
+}
+
+void Pile::recharger_pile(){
+    string filename = "sauvegarde.txt";  // je stocke dans la chaîne mon_fichier le nom du fichier à ouvrir
+
+     ifstream fichier(filename.c_str(), ios::in);
+
+     if(!fichier.fail()){// si l'ouverture a réussi
+        fichier>>sauv;
+        fichier.close();  // je referme le fichier
+        vector<string> vect=explode(sauv,'#');
+        for(vector<string>::iterator i = vect.end(); i != vect.begin(); --i){
+            //empilement
+        }
+
+     }
+     else  // sinon
+        throw "Erreur à l'ouverture !";
 }
 
 void Pile::clear()
@@ -153,3 +179,4 @@ void Pile::drop()
     if(!this->isEmpty())
 	this->removeLast();
 }
+
