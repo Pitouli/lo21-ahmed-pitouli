@@ -14,6 +14,7 @@ public:
     static Motor* get_motor();
     static void del_motor();
     void empile(QString lineSaisie);
+    void eval();
 signals:
     void sig_updatePileView();
     void sig_emptyLineSaisie();

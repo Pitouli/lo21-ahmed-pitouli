@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	QPushButton* button = qobject_cast<QPushButton*>(widget);
 
 	if(button)
-	    connect(button, SIGNAL(clicked()), this, SLOT(buttonPressed()));
+	    connect(button, SIGNAL(clicked()), this, SLOT(slot_buttonClicked()));
     }
     for (int i = 0; i < ui->gridLayout_tabDivers->count(); ++i)
     {
@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	QPushButton* button = qobject_cast<QPushButton*>(widget);
 
 	if(button)
-	    connect(button, SIGNAL(clicked()), this, SLOT(buttonPressed()));
+	    connect(button, SIGNAL(clicked()), this, SLOT(slot_buttonClicked()));
     }
     for (int i = 0; i < ui->gridLayout_tabTrigo->count(); ++i)
     {
@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	QPushButton* button = qobject_cast<QPushButton*>(widget);
 
 	if(button)
-	    connect(button, SIGNAL(clicked()), this, SLOT(buttonPressed()));
+	    connect(button, SIGNAL(clicked()), this, SLOT(slot_buttonClicked()));
     }
     for (int i = 0; i < ui->gridLayout_tabPile->count(); ++i)
     {
@@ -38,15 +38,18 @@ MainWindow::MainWindow(QWidget *parent) :
 	QPushButton* button = qobject_cast<QPushButton*>(widget);
 
 	if(button)
-	    connect(button, SIGNAL(clicked()), this, SLOT(buttonPressed()));
+	    connect(button, SIGNAL(clicked()), this, SLOT(slot_buttonClicked()));
     }
 
-    connect(ui->pushButton_space, SIGNAL(clicked()), this, SLOT(buttonPressed()));
+    connect(ui->pushButton_space, SIGNAL(clicked()), this, SLOT(slot_buttonClicked()));
 
     // On connecte le motor à l'a pile'interface
     connect(Motor::get_motor(), SIGNAL(sig_updatePileView()), this, SLOT(slot_updatePileView()));
     connect(Motor::get_motor(), SIGNAL(sig_emptyLineSaisie()), ui->lineSaisie, SLOT(clear()));
-    connect(Motor::get_motor(), SIGNAL(sig_updateUiStatusBar(QString text)), ui->statusBar, SLOT(showMessage(QString text)));
+    connect(Motor::get_motor(), SIGNAL(sig_updateUiStatusBar(QString)), this, SLOT(slot_updateUiStatusBar(QString)));
+
+    // On connecte la checkbox de calculAuto à la fonction en charge des modification
+    connect(ui->checkBox_calculAuto, SIGNAL(toggled(bool)), this, SLOT(slot_toggledCalculAuto(bool)));
 
     ui->lineSaisie->setFocus();
 }
@@ -56,7 +59,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::buttonPressed()
+void MainWindow::slot_buttonClicked()
 {
     QPushButton* button = qobject_cast<QPushButton*>( sender() );
 
@@ -235,9 +238,14 @@ void MainWindow::buttonPressed()
 		}
 
 		if(button == ui->pushButton_mod)
-		    ui->lineSaisie->setText(ui->lineSaisie->text()+"%");
+		    ui->lineSaisie->setText(s+"%");
 		else if(button == ui->pushButton_fact)
-		    ui->lineSaisie->setText(ui->lineSaisie->text()+"!");
+		    ui->lineSaisie->setText(s+"!");
+		else if(button == ui->pushButton_sin || button == ui->pushButton_cos || button == ui->pushButton_tan)
+		    if(ui->checkBox_hyperbolic->isChecked())
+			ui->lineSaisie->setText(s+button->text()+"H");
+		    else
+			ui->lineSaisie->setText(s+button->text());
 		else
 		    ui->lineSaisie->setText(s+button->text());
 
@@ -430,4 +438,21 @@ void MainWindow::slot_updatePileView()
     }
     else
 	ui->listWidget_pile_1->clear();
+}
+
+void MainWindow::slot_updateUiStatusBar(QString text)
+{
+    ui->statusBar->showMessage(text, 3000);
+}
+
+void MainWindow::slot_toggledCalculAuto(bool checked)
+{
+    if(checked)
+    {
+	QString s = ui->lineSaisie->text();
+	if(s.right(1) == " ") // S'il y'a un espace final
+	    s = s.left(s.length() -1); // On l'enlève
+	qDebug("empilement expression concrete");
+	Motor::get_motor()->empile("'"+s+"'");
+    }
 }
