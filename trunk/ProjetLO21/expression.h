@@ -27,8 +27,9 @@
     #define TYPE_OPERATION_NONAIRE_START 125
 	#define TYPE_CLEAR 135
 	#define TYPE_DUP 139
-    #define TYPE_DROP 143
-    #define TYPE_SWAP 147
+	#define TYPE_DROP 143
+	#define TYPE_SWAP 147
+	#define TYPE_EVAL 150
     #define TYPE_OPERATION_NONAIRE_END 198
 
     #define TYPE_OPERATION_UNAIRE_START 200
@@ -47,7 +48,6 @@
 	#define TYPE_SQR 234
 	#define TYPE_CUBE 236
 	#define TYPE_FACTORIEL 238
-	#define TYPE_EVAL 240
 	#define TYPE_DEGTORAD 242
 	#define TYPE_RADTODEG 244
     #define TYPE_SIGN 246
@@ -71,9 +71,11 @@
 #include <iostream>
 #include <cmath>
 #include <sstream>
+#include <QStringList>
 //#include "pile.h"
 
 class Pile;
+class Motor;
 
 using namespace std;
 
@@ -103,6 +105,7 @@ namespace expression{
             ExpressionConcrete* clone()const{return new ExpressionConcrete(*this);}
             string toString()const{stringstream ss; ss<<"'"<<exp<<"'"; return ss.str();}
             ExpressionConcrete* operation(){return NULL;}
+	    string getExp()const{return exp;}
     };
 
     class Nombre: public Expression{
@@ -429,14 +432,6 @@ namespace expression{
 	Factoriel* clone() const { return new Factoriel(*this); }
     };
 
-    class Eval: public OperationUnaire{
-    public:
-    Eval(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_EVAL){}
-        Expression* operation();
-        string toString()const{return "";}
-	Eval* clone() const { return new Eval(*this); }
-    };
-
     class DegToRad: public OperationUnaire{
     public:
     DegToRad(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_DEGTORAD){}
@@ -483,6 +478,14 @@ namespace expression{
         Expression* operation();
         string toString()const{return "";}
         Drop* clone() const { return new Drop(*this); }
+    };
+
+    class Eval: public OperationNonaire{
+    public:
+    Eval():OperationNonaire(TYPE_EVAL){}
+	Expression* operation();
+	string toString()const{return "";}
+	Eval* clone() const { return new Eval(*this); }
     };
 }
 

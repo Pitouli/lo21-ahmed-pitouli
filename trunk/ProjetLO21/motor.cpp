@@ -30,7 +30,7 @@ void Motor::empile(QString lineSaisie)
     {
 	expression::Expression* expr = Factory::get_factory()->analyze(lineSaisie);
 
-	if(expr->getType() > TYPE_NOMBRE_START && expr->getType() < TYPE_NOMBRE_END)
+	if((expr->getType() > TYPE_NOMBRE_START && expr->getType() < TYPE_NOMBRE_END) || expr->getType() == TYPE_EXPRESSION_C)
 	{
 	    Pile::get_curPile()->push(expr);
 	    emit sig_emptyLineSaisie();
@@ -84,36 +84,105 @@ void Motor::empile(QString lineSaisie)
 	}
 	else if(expr->getType() > TYPE_OPERATION_BINAIRE_START && expr->getType() < TYPE_OPERATION_BINAIRE_END)
 	{
-	    expression::OperationBinaire* opBinaire = static_cast<expression::OperationBinaire*>(expr);
-	    expression::Expression* param2 = Pile::get_curPile()->pop();
-	    expression::Expression* param1 = Pile::get_curPile()->pop();
-	    opBinaire->setExp(param1, param2);
-
-	    try
+	    if(Pile::get_curPile()->size() >= 2)
 	    {
-		expression::Expression* resultat = opBinaire->operation();
-		qDebug("type resultat : "+resultat->getType());
-		Pile::get_curPile()->push(resultat);
-		emit sig_emptyLineSaisie();
-		delete param1;
-		delete param2;
-	    }
-	    catch(char const* e)
-	    {
-		qDebug("Erreur détectée en opération binaire : ");
-		qDebug(e);
-		Pile::get_curPile()->push(param1);
-		Pile::get_curPile()->push(param2);
-	    }
+		expression::OperationBinaire* opBinaire = static_cast<expression::OperationBinaire*>(expr);
+		expression::Expression* param2 = Pile::get_curPile()->pop();
+		expression::Expression* param1 = Pile::get_curPile()->pop();
+		opBinaire->setExp(param1, param2);
 
-	    delete opBinaire;
+		try
+		{
+		    expression::Expression* resultat = opBinaire->operation();
+		    qDebug("type resultat : "+resultat->getType());
+		    Pile::get_curPile()->push(resultat);
+		    emit sig_emptyLineSaisie();
+		    delete param1;
+		    delete param2;
+		}
+		catch(char const* e)
+		{
+		    qDebug("Erreur détectée en opération binaire : ");
+		    qDebug(e);
+		    Pile::get_curPile()->push(param1);
+		    Pile::get_curPile()->push(param2);
+		    emit sig_updateUiStatusBar(e);
+		}
+
+		delete opBinaire;
+	    }
+	    else
+	    {
+		qDebug("Erreur détectée en opération unaire : ");
+		qDebug("Il y a moins d'un opérande dans la pile.");
+		emit sig_updateUiStatusBar("Erreur : il y a moins de deux opérandes dans la pile.");
+	    }
 	}
     }
     catch(char const* e)
     {
 	qDebug("Erreur détectée en factory : ");
 	qDebug(e);
+	emit sig_updateUiStatusBar("Erreur : nous n'avons pas su interpréter la commande.");
     }
 
     emit sig_updatePileView();
 }
+
+void Motor::eval()
+{
+    if(Pile::get_curPile()->size() >= 1)
+    {
+	expression::Expression* param = Pile::get_curPile()->pop();
+	const expression::ExpressionConcrete* tempExpC;
+
+	try
+	{
+	    if(param->getType() == TYPE_EXPRESSION_C) // Si l'opérande est une expression concrète on l'évalue
+	    {
+		tempExpC = static_cast<const expression::ExpressionConcrete*>(param);
+		QStringList listExp = QString(tempExpC->getExp().c_str()).split(' ');
+
+		QStringList::const_iterator constIterator;
+		for (constIterator = listExp.constBegin(); constIterator != listExp.constEnd(); ++constIterator)
+		    this->empile(*constIterator);
+
+		delete param;
+	    }
+	    else // Sinon on rempile l'opérande
+		Pile::get_curPile()->push(param);
+	}
+	catch(char const* e)
+	{
+	    qDebug("Erreur détectée en opération d'évaluation' : ");
+	    qDebug(e);
+	    Pile::get_curPile()->push(param);
+	    emit sig_updateUiStatusBar(e);
+	}
+    }
+    else
+    {
+	qDebug("Erreur détectée en opération d'evaluation' : ");
+	qDebug("Il y a moins d'un opérande dans la pile.");
+	emit sig_updateUiStatusBar("Erreur : il y a moins d'un opérande dans la pile.");
+    }
+}
+/*
+    const ExpressionConcrete* tempExpC;
+
+    if(getExp()->getType() == TYPE_EXPRESSION_C)
+    {
+	tempExpC = static_cast<const ExpressionConcrete*>(getExp());
+	QStringList listExp = QString(tempExpC->getExp().c_str()).split(' ');
+
+	QStringList::const_iterator constIterator;
+	for (constIterator = listExp.constBegin(); constIterator != listExp.constEnd(); ++constIterator)
+	    Motor::get_motor()->empile(*constIterator);
+    }
+    else
+    {
+	setRes(getExp()->clone());
+    }
+
+    return getRes();
+}*/

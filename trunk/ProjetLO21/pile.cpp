@@ -116,8 +116,7 @@ expression::Expression* Pile::mean(const expression::Expression* x)
 	{
 	    qDebug() << "Le int_x vaut : " << int_x;
 
-	    this->sum(x); // On fait faire la somme par sum()
-	    expression::Expression* resSomme = this->pop(); // On récupère le résultat de la somme
+	    expression::Expression* resSomme = this->sum(x); // On fait faire la somme par sum()
 
 	    expression::Division* division = new expression::Division(resSomme, x); // On initialise la division avec le résultat de la somme et le nb par lequel diviser
 

@@ -1,5 +1,6 @@
 #include "expression.h"
 #include "pile.h"
+#include "motor.h"
 
 using namespace expression;
 
@@ -1204,10 +1205,6 @@ string expression::Factoriel::toString()const{
     return ss.str();
 }
 
-Expression* expression::Eval::operation(){
-    return getRes();
-}
-
 Expression* expression::DegToRad::operation(){
 
     const Nombre* expTemp=static_cast<const Nombre*>(getExp());
@@ -1313,6 +1310,12 @@ Expression* expression::Dup::operation(){
 Expression* expression::Drop::operation(){
     setRes(NULL);
     Pile::get_curPile()->drop();
+    return getRes();
+}
+
+Expression* expression::Eval::operation(){
+    setRes(NULL);
+    Motor::get_motor()->eval();
     return getRes();
 }
 

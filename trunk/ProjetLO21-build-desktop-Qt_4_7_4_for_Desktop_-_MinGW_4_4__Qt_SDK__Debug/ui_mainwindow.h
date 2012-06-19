@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri 15. Jun 17:28:41 2012
+** Created: Tue 19. Jun 03:49:38 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -27,6 +27,7 @@
 #include <QtGui/QSpacerItem>
 #include <QtGui/QStatusBar>
 #include <QtGui/QTabWidget>
+#include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -36,13 +37,15 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QGridLayout *gridLayout_7;
-    QLineEdit *lineSaisie;
     QTabWidget *tabWidget_pile;
     QWidget *tab_pile_1;
     QHBoxLayout *horizontalLayout;
     QListWidget *listWidget_pile_1;
     QWidget *tab_8;
     QHBoxLayout *horizontalLayout_3;
+    QSpacerItem *verticalSpacer;
+    QVBoxLayout *panneauSaisie;
+    QLineEdit *lineSaisie;
     QHBoxLayout *paramSaisie;
     QCheckBox *checkBox_complexe;
     QRadioButton *radioButton_reel;
@@ -50,7 +53,6 @@ public:
     QRadioButton *radioButton_entier;
     QSpacerItem *horizontalSpacer;
     QCheckBox *checkBox_calculAuto;
-    QSpacerItem *verticalSpacer;
     QTabWidget *tabWidget_saisie;
     QWidget *tab_basique;
     QGridLayout *gridLayout_2;
@@ -112,25 +114,13 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(702, 351);
+        MainWindow->resize(731, 374);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout_7 = new QGridLayout(centralWidget);
         gridLayout_7->setSpacing(6);
         gridLayout_7->setContentsMargins(11, 11, 11, 11);
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
-        lineSaisie = new QLineEdit(centralWidget);
-        lineSaisie->setObjectName(QString::fromUtf8("lineSaisie"));
-        QFont font;
-        font.setPointSize(16);
-        lineSaisie->setFont(font);
-        lineSaisie->setMouseTracking(false);
-        lineSaisie->setAcceptDrops(false);
-        lineSaisie->setInputMethodHints(Qt::ImhUppercaseOnly);
-        lineSaisie->setReadOnly(true);
-
-        gridLayout_7->addWidget(lineSaisie, 0, 0, 1, 1);
-
         tabWidget_pile = new QTabWidget(centralWidget);
         tabWidget_pile->setObjectName(QString::fromUtf8("tabWidget_pile"));
         tabWidget_pile->setMinimumSize(QSize(250, 0));
@@ -143,9 +133,9 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         listWidget_pile_1 = new QListWidget(tab_pile_1);
         listWidget_pile_1->setObjectName(QString::fromUtf8("listWidget_pile_1"));
-        QFont font1;
-        font1.setPointSize(14);
-        listWidget_pile_1->setFont(font1);
+        QFont font;
+        font.setPointSize(14);
+        listWidget_pile_1->setFont(font);
         listWidget_pile_1->setProperty("showDropIndicator", QVariant(false));
 
         horizontalLayout->addWidget(listWidget_pile_1);
@@ -159,7 +149,27 @@ public:
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         tabWidget_pile->addTab(tab_8, QString());
 
-        gridLayout_7->addWidget(tabWidget_pile, 0, 1, 5, 1);
+        gridLayout_7->addWidget(tabWidget_pile, 0, 2, 5, 1);
+
+        verticalSpacer = new QSpacerItem(20, 1000, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout_7->addItem(verticalSpacer, 4, 0, 1, 2);
+
+        panneauSaisie = new QVBoxLayout();
+        panneauSaisie->setSpacing(6);
+        panneauSaisie->setObjectName(QString::fromUtf8("panneauSaisie"));
+        panneauSaisie->setSizeConstraint(QLayout::SetFixedSize);
+        lineSaisie = new QLineEdit(centralWidget);
+        lineSaisie->setObjectName(QString::fromUtf8("lineSaisie"));
+        QFont font1;
+        font1.setPointSize(16);
+        lineSaisie->setFont(font1);
+        lineSaisie->setMouseTracking(false);
+        lineSaisie->setAcceptDrops(false);
+        lineSaisie->setInputMethodHints(Qt::ImhUppercaseOnly);
+        lineSaisie->setReadOnly(true);
+
+        panneauSaisie->addWidget(lineSaisie);
 
         paramSaisie = new QHBoxLayout();
         paramSaisie->setSpacing(6);
@@ -204,14 +214,12 @@ public:
         paramSaisie->addWidget(checkBox_calculAuto);
 
 
-        gridLayout_7->addLayout(paramSaisie, 1, 0, 1, 1);
-
-        verticalSpacer = new QSpacerItem(20, 1000, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout_7->addItem(verticalSpacer, 4, 0, 1, 1);
+        panneauSaisie->addLayout(paramSaisie);
 
         tabWidget_saisie = new QTabWidget(centralWidget);
         tabWidget_saisie->setObjectName(QString::fromUtf8("tabWidget_saisie"));
+        tabWidget_saisie->setMinimumSize(QSize(450, 0));
+        tabWidget_saisie->setMaximumSize(QSize(450, 16777215));
         tab_basique = new QWidget();
         tab_basique->setObjectName(QString::fromUtf8("tab_basique"));
         gridLayout_2 = new QGridLayout(tab_basique);
@@ -467,25 +475,26 @@ public:
 
         tabWidget_saisie->addTab(tab_pile, QString());
 
-        gridLayout_7->addWidget(tabWidget_saisie, 2, 0, 1, 1);
+        panneauSaisie->addWidget(tabWidget_saisie);
 
         pushButton_space = new QPushButton(centralWidget);
         pushButton_space->setObjectName(QString::fromUtf8("pushButton_space"));
 
-        gridLayout_7->addWidget(pushButton_space, 3, 0, 1, 1);
+        panneauSaisie->addWidget(pushButton_space);
+
+
+        gridLayout_7->addLayout(panneauSaisie, 0, 0, 1, 2);
 
         MainWindow->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
-        QWidget::setTabOrder(tabWidget_saisie, checkBox_complexe);
         QWidget::setTabOrder(checkBox_complexe, radioButton_reel);
         QWidget::setTabOrder(radioButton_reel, radioButton_rationnel);
         QWidget::setTabOrder(radioButton_rationnel, radioButton_entier);
         QWidget::setTabOrder(radioButton_entier, checkBox_calculAuto);
         QWidget::setTabOrder(checkBox_calculAuto, tabWidget_pile);
-        QWidget::setTabOrder(tabWidget_pile, pushButton_space);
-        QWidget::setTabOrder(pushButton_space, pushButton_pow);
+        QWidget::setTabOrder(tabWidget_pile, pushButton_pow);
         QWidget::setTabOrder(pushButton_pow, pushButton_inv);
         QWidget::setTabOrder(pushButton_inv, pushButton_mod);
         QWidget::setTabOrder(pushButton_mod, pushButton_sqrt);
@@ -507,7 +516,6 @@ public:
         QWidget::setTabOrder(pushButton_sum, pushButton_dup);
         QWidget::setTabOrder(pushButton_dup, pushButton_mean);
         QWidget::setTabOrder(pushButton_mean, pushButton_drop);
-        QWidget::setTabOrder(pushButton_drop, lineSaisie);
 
         retranslateUi(MainWindow);
 
@@ -531,6 +539,10 @@ public:
         radioButton_rationnel->setShortcut(QApplication::translate("MainWindow", "F3", 0, QApplication::UnicodeUTF8));
         radioButton_entier->setText(QApplication::translate("MainWindow", "Entier", 0, QApplication::UnicodeUTF8));
         radioButton_entier->setShortcut(QApplication::translate("MainWindow", "F4", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        checkBox_calculAuto->setToolTip(QApplication::translate("MainWindow", "En calcul auto, le calcul est effectu\303\251 au fur et \303\240 mesure de la saisie.\n"
+"En d\303\251cochant la case, vous pouvez entrer des expressions compl\303\250tes qui seront \303\251valu\303\251esgr\303\242ce \303\240 l'op\303\251rateur EVAL", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         checkBox_calculAuto->setText(QApplication::translate("MainWindow", "Calcul auto", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         tabWidget_saisie->setToolTip(QString());
@@ -569,12 +581,33 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Y: Entier, Rationnel, R\303\251el</span></p>\n"
 "<p align=\"right\" styl"
-                        "e=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.: **</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+                        "e=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">W</span></p></body></html>", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         pushButton_pow->setText(QApplication::translate("MainWindow", "POW", 0, QApplication::UnicodeUTF8));
         pushButton_pow->setShortcut(QApplication::translate("MainWindow", "W", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_inv->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X rempile son inverse</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">V</spa"
+                        "n></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_inv->setText(QApplication::translate("MainWindow", "INV", 0, QApplication::UnicodeUTF8));
         pushButton_inv->setShortcut(QApplication::translate("MainWindow", "V", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_mod->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X puis Y et effectue Y modulo X</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Y: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p align=\"right\" style=\""
+                        " margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">%</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_mod->setText(QApplication::translate("MainWindow", "MOD", 0, QApplication::UnicodeUTF8));
         pushButton_mod->setShortcut(QApplication::translate("MainWindow", "%", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
@@ -585,52 +618,231 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X et rempile sa racine carr\303\251e</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
 "<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.: </span><span style=\" font-size:8pt; font-weight"
-                        ":600;\">^</span><span style=\" font-size:8pt; font-style:italic;\">+</span><span style=\" font-size:8pt; font-weight:600;\">/</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+                        ":600;\">Q</span></p></body></html>", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         pushButton_sqrt->setText(QApplication::translate("MainWindow", "SQRT", 0, QApplication::UnicodeUTF8));
         pushButton_sqrt->setShortcut(QApplication::translate("MainWindow", "Q", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_sign->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X puis rempile son oppos\303\251</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:60"
+                        "0;\">S</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_sign->setText(QApplication::translate("MainWindow", "SIGN", 0, QApplication::UnicodeUTF8));
         pushButton_sign->setShortcut(QApplication::translate("MainWindow", "S", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_fact->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X puis rempile son factoriel</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\""
+                        ">!</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_fact->setText(QApplication::translate("MainWindow", "FACT", 0, QApplication::UnicodeUTF8));
         pushButton_fact->setShortcut(QApplication::translate("MainWindow", "!", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_sqr->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X et rempile son carr\303\251</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\""
+                        ">\302\262</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_sqr->setText(QApplication::translate("MainWindow", "SQR", 0, QApplication::UnicodeUTF8));
         pushButton_sqr->setShortcut(QApplication::translate("MainWindow", "\302\262", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_ln->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X puis rempile son logarithme n\303\251p\303\251rien</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size"
+                        ":8pt; font-weight:600;\">L</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_ln->setText(QApplication::translate("MainWindow", "LN", 0, QApplication::UnicodeUTF8));
         pushButton_ln->setShortcut(QApplication::translate("MainWindow", "L", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_cube->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X puis rempile son cube</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">B</s"
+                        "pan></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_cube->setText(QApplication::translate("MainWindow", "CUBE", 0, QApplication::UnicodeUTF8));
         pushButton_cube->setShortcut(QApplication::translate("MainWindow", "B", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_log->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X puis empile son logarithme d\303\251cimal</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; fon"
+                        "t-weight:600;\">G</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_log->setText(QApplication::translate("MainWindow", "LOG", 0, QApplication::UnicodeUTF8));
         pushButton_log->setShortcut(QApplication::translate("MainWindow", "G", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_eval->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X rempile son \303\251valuation (en particulier si X est une expression non \303\251valu\303\251e)</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:it"
+                        "alic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">=</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_eval->setText(QApplication::translate("MainWindow", "EVAL", 0, QApplication::UnicodeUTF8));
         pushButton_eval->setShortcut(QApplication::translate("MainWindow", "=", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabText(tabWidget_saisie->indexOf(tab_divers), QApplication::translate("MainWindow", "D&ivers", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabToolTip(tabWidget_saisie->indexOf(tab_divers), QApplication::translate("MainWindow", "Diverses fonctions math\303\251matiques\n"
 "Raccourci : I", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_sin->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X puis rempile son sinus</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">S</"
+                        "span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_sin->setText(QApplication::translate("MainWindow", "SIN", 0, QApplication::UnicodeUTF8));
         pushButton_sin->setShortcut(QApplication::translate("MainWindow", "S", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        radioButton_radian->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Appliquer les fonctions trigonom\303\251triques sur des radians</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">R</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         radioButton_radian->setText(QApplication::translate("MainWindow", "Radian", 0, QApplication::UnicodeUTF8));
         radioButton_radian->setShortcut(QApplication::translate("MainWindow", "R", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_cos->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X puis rempile son cosinus</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">C"
+                        "</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_cos->setText(QApplication::translate("MainWindow", "COS", 0, QApplication::UnicodeUTF8));
         pushButton_cos->setShortcut(QApplication::translate("MainWindow", "C", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        radioButton_degre->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Appliquer les fonctions trigonom\303\251triques sur des degr\303\251s</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">D</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         radioButton_degre->setText(QApplication::translate("MainWindow", "Degr\303\251", 0, QApplication::UnicodeUTF8));
         radioButton_degre->setShortcut(QApplication::translate("MainWindow", "D", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_tan->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X puis rempile sa tangente</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier, Rationnel, R\303\251el</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">T"
+                        "</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_tan->setText(QApplication::translate("MainWindow", "TAN", 0, QApplication::UnicodeUTF8));
         pushButton_tan->setShortcut(QApplication::translate("MainWindow", "T", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        checkBox_hyperbolic->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Appliquer les fonctions trigonom\303\251triques dans leur forme hyperbolique</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">H</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         checkBox_hyperbolic->setText(QApplication::translate("MainWindow", "Hyperbolic", 0, QApplication::UnicodeUTF8));
         checkBox_hyperbolic->setShortcut(QApplication::translate("MainWindow", "H", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabText(tabWidget_saisie->indexOf(tab_trigo), QApplication::translate("MainWindow", "Trig&o", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabToolTip(tabWidget_saisie->indexOf(tab_trigo), QApplication::translate("MainWindow", "Fonctions trigonom\303\251triques\n"
 "Raccourci : O", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_swap->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X puis Y intervertit les expressions situ\303\251es au rangs X et Y, compt\303\251s \303\240 partir de 1 depuis la 1\303\250re expression entr\303\251e dans la pile</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" fo"
+                        "nt-size:8pt; font-style:italic;\">Y: Entier</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">&lt;</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_swap->setText(QApplication::translate("MainWindow", "SWAP", 0, QApplication::UnicodeUTF8));
         pushButton_swap->setShortcut(QApplication::translate("MainWindow", "<", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_clear->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Vide la pile</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">Ctrl + Suppr</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_clear->setText(QApplication::translate("MainWindow", "CLEAR", 0, QApplication::UnicodeUTF8));
         pushButton_clear->setShortcut(QApplication::translate("MainWindow", "Ctrl+Del", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_sum->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X puis effectue la somme des Y derni\303\250res expressions \303\240 avoir \303\251t\303\251 entr\303\251es dans la pile</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:ital"
+                        "ic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">Ctrl + +</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_sum->setText(QApplication::translate("MainWindow", "SUM", 0, QApplication::UnicodeUTF8));
         pushButton_sum->setShortcut(QApplication::translate("MainWindow", "Ctrl++", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_dup->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Duplique la derni\303\250re expression entr\303\251e</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">Retour (entr\303\251e)</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_dup->setText(QApplication::translate("MainWindow", "DUP", 0, QApplication::UnicodeUTF8));
         pushButton_dup->setShortcut(QApplication::translate("MainWindow", "Return", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_mean->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">D\303\251pile X puis effectue la moyenne des X derni\303\250res expressions \303\240 avoir \303\251t\303\251 rentr\303\251es dans la pile</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">X: Entier</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:i"
+                        "talic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">Ctrl + /</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_mean->setText(QApplication::translate("MainWindow", "MEAN", 0, QApplication::UnicodeUTF8));
         pushButton_mean->setShortcut(QApplication::translate("MainWindow", "Ctrl+/", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        pushButton_drop->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Supprime la derni\303\250re expression entr\303\251e</span></p>\n"
+"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">Suppr</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         pushButton_drop->setText(QApplication::translate("MainWindow", "DROP", 0, QApplication::UnicodeUTF8));
         pushButton_drop->setShortcut(QApplication::translate("MainWindow", "Del", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabText(tabWidget_saisie->indexOf(tab_pile), QApplication::translate("MainWindow", "&Pile", 0, QApplication::UnicodeUTF8));
