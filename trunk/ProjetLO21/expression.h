@@ -312,7 +312,7 @@ namespace expression{
     public:
         Sum(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SUM){}
         Expression* operation();
-        string toString()const{return "";}
+	string toString()const;
         Sum* clone() const { return new Sum(*this); }
     };
 
@@ -320,7 +320,7 @@ namespace expression{
     public:
         Mean(const Expression* _exp = NULL):OperationUnaire(_exp,TYPE_SUM){}
         Expression* operation();
-        string toString()const{return "";}
+	string toString()const;
         Mean* clone() const { return new Mean(*this); }
     };
 
@@ -457,7 +457,7 @@ namespace expression{
     public:
         Swap():OperationNonaire(TYPE_SWAP){}
         Expression* operation();
-        string toString()const{return "";}
+	string toString()const;
         Swap* clone() const { return new Swap(*this); }
     };
 
@@ -465,7 +465,7 @@ namespace expression{
     public:
         Clear():OperationNonaire(TYPE_CLEAR){}
         Expression* operation();
-        string toString()const{return "";}
+	string toString()const;
         Clear* clone() const { return new Clear(*this); }
     };
 
@@ -473,7 +473,7 @@ namespace expression{
     public:
         Dup():OperationNonaire(TYPE_DUP){}
         Expression* operation();
-        string toString()const{return "";}
+	string toString()const;
         Dup* clone() const { return new Dup(*this); }
     };
 
@@ -481,7 +481,7 @@ namespace expression{
     public:
         Drop():OperationNonaire(TYPE_DROP){}
         Expression* operation();
-        string toString()const{return "";}
+	string toString()const;
         Drop* clone() const { return new Drop(*this); }
     };
 
@@ -489,7 +489,7 @@ namespace expression{
     public:
     Eval():OperationNonaire(TYPE_EVAL){}
 	Expression* operation();
-	string toString()const{return "";}
+	string toString()const;
 	Eval* clone() const { return new Eval(*this); }
     };
 }
