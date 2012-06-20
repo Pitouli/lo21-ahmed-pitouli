@@ -16,7 +16,8 @@ void Pile::sauvegarde(){
          string temp=get_curPile()->front()->toString();
          for (QList<expression::Expression*>::iterator i = get_curPile()->begin()+1; i != get_curPile()->end(); ++i)
              temp+=("#"+(*i)->toString());
-         sauv.push_back(temp);
+         get_curPile()->sauv.push_back(temp);
+         indiceSauv=sauv.size()-1;
          get_curPile()->sauv_pile();
     }
 }
@@ -30,17 +31,14 @@ vector<string> Pile::explode(const string& str, char c){
 
 void Pile::sauv_pile(){
     string filename = "sauvegarde.txt";
-    qDebug("sauvegarde");
     // ouverture en écriture avec effacement du fichier ouvert
     ofstream fichier(filename.c_str(), ios::out | ios::trunc);
 
     if(!fichier.fail()){
         if(sauv.size()>0){
-            fichier<<sauv.back();
-            sauv.pop_back();
-            while(! sauv.empty()){
-                fichier<<"@"<<sauv.back();
-                sauv.pop_back();
+            fichier<<sauv[sauv.size()-1];
+            for(int i=sauv.size()-2;i>=0;--i){
+                fichier<<"@"<<sauv[i];
             }
         }
         fichier.close();
@@ -64,53 +62,49 @@ void Pile::recharger_pile(){
         }
         if(sauv.size()>0){
             QString temp;
-            vector<string> pile1=explode(sauv[sauv.size()-1],'#');
+            vector<string> pile1=explode(sauv.operator [](sauv.size()-1),'#');
             for(vector<string>::iterator i = pile1.begin(); i != pile1.end(); ++i){
                 temp=(*i).c_str();
-                qDebug((*i).c_str());
                 get_curPile()->push(Factory::get_factory()->analyze(temp));
             }
         }
         indiceSauv=sauv.size()-1;
         emit sig_updatePileViewAfterReloading();
     }
-    /*else  // sinon
-    {
-	qDebug("plop");
-        throw "Erreur à l'ouverture !";
 }*/
 }
 
 void Pile::undo(){
     if(indiceSauv>=0){
-        vector<string> pile1=explode(sauv[indiceSauv],'#');
-        get_curPile()->clear();
-        QString temp;
-        for(vector<string>::iterator i = pile1.begin(); i != pile1.end(); ++i){
-            temp=(*i).c_str();
-            qDebug((*i).c_str());
-            get_curPile()->push(Factory::get_factory()->analyze(temp));
-        }
         indiceSauv--;
+        if(indiceSauv<sauv.size()){
+            vector<string> pile1=explode(sauv[indiceSauv],'#');
+            get_curPile()->clear();
+            QString temp;
+            for(vector<string>::iterator i = pile1.begin(); i != pile1.end(); ++i){
+                temp=(*i).c_str();
+                get_curPile()->push(Factory::get_factory()->analyze(temp));
+            }
+            //emit sig_updatePileViewAfterReloading();
+        }
     }
 }
 
 void Pile::redo(){
-    if(indiceSauv<=(sauv.size()-1)){
+    if(indiceSauv>=0 && indiceSauv<(sauv.size()-1)){
+        indiceSauv++;
         vector<string> pile1=explode(sauv[indiceSauv],'#');
         get_curPile()->clear();
         QString temp;
         for(vector<string>::iterator i = pile1.begin(); i != pile1.end(); ++i){
             temp=(*i).c_str();
-            qDebug((*i).c_str());
             get_curPile()->push(Factory::get_factory()->analyze(temp));
         }
-        indiceSauv++;
     }
 }
 
 void Pile::nouveau(){
-    for(unsigned int i=sauv.size()-indiceSauv-1; i<0 && !sauv.empty(); i--)
+    while(sauv.size()>(indiceSauv+1) && !sauv.empty())
         sauv.pop_back();
     sauvegarde();
 }
