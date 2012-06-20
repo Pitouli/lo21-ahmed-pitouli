@@ -6,15 +6,10 @@ Pile* Pile::get_curPile() {
     if(_curPile == NULL)
     {
 	_curPile = new Pile();
-	//this->recharger_pile();
     }
     return _curPile;
 }
 void Pile::set_curPile(Pile* newCurPile) { _curPile = newCurPile; }
-
-Pile::Pile(){
-    _curPile = this;
-}
 
 void Pile::sauvegarde(){
     if(get_curPile()->size()>0){
@@ -22,6 +17,7 @@ void Pile::sauvegarde(){
          for (QList<expression::Expression*>::iterator i = get_curPile()->begin()+1; i != get_curPile()->end(); ++i)
              temp+=("#"+(*i)->toString());
          sauv.push_back(temp);
+         get_curPile()->sauv_pile();
     }
 }
 
@@ -34,7 +30,7 @@ vector<string> Pile::explode(const string& str, char c){
 
 void Pile::sauv_pile(){
     string filename = "sauvegarde.txt";
-
+    qDebug("sauvegarde");
     // ouverture en écriture avec effacement du fichier ouvert
     ofstream fichier(filename.c_str(), ios::out | ios::trunc);
 
@@ -75,9 +71,45 @@ void Pile::recharger_pile(){
                 get_curPile()->push(Factory::get_factory()->analyze(temp));
             }
         }
+        indiceSauv=sauv.size()-1;
+        emit sig_updatePileViewAfterReloading();
     }
     else  // sinon
         throw "Erreur à l'ouverture !";
+}
+
+void Pile::undo(){
+    if(indiceSauv>=0){
+        vector<string> pile1=explode(sauv[indiceSauv],'#');
+        get_curPile()->clear();
+        QString temp;
+        for(vector<string>::iterator i = pile1.begin(); i != pile1.end(); ++i){
+            temp=(*i).c_str();
+            qDebug((*i).c_str());
+            get_curPile()->push(Factory::get_factory()->analyze(temp));
+        }
+        indiceSauv--;
+    }
+}
+
+void Pile::redo(){
+    if(indiceSauv<=(sauv.size()-1)){
+        vector<string> pile1=explode(sauv[indiceSauv],'#');
+        get_curPile()->clear();
+        QString temp;
+        for(vector<string>::iterator i = pile1.begin(); i != pile1.end(); ++i){
+            temp=(*i).c_str();
+            qDebug((*i).c_str());
+            get_curPile()->push(Factory::get_factory()->analyze(temp));
+        }
+        indiceSauv++;
+    }
+}
+
+void Pile::nouveau(){
+    for(unsigned int i=sauv.size()-indiceSauv-1; i<0 && !sauv.empty(); i--)
+        sauv.pop_back();
+    sauvegarde();
 }
 
 void Pile::clear()
