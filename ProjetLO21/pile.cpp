@@ -71,8 +71,8 @@ void Pile::recharger_pile(){
         indiceSauv=sauv.size()-1;
         emit sig_updatePileViewAfterReloading();
     }
-}*/
 }
+
 
 void Pile::undo(){
     if(indiceSauv>=0){
