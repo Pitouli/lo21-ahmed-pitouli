@@ -62,7 +62,7 @@ void Pile::recharger_pile(){
         }
         if(sauv.size()>0){
             QString temp;
-            vector<string> pile1=explode(sauv.operator [](sauv.size()-1),'#');
+            vector<string> pile1=explode(sauv[sauv.size()-1],'#');
             for(vector<string>::iterator i = pile1.begin(); i != pile1.end(); ++i){
                 temp=(*i).c_str();
                 get_curPile()->push(Factory::get_factory()->analyze(temp));
@@ -75,7 +75,7 @@ void Pile::recharger_pile(){
 
 
 void Pile::undo(){
-    if(indiceSauv>=0){
+    if(indiceSauv>0){
         indiceSauv--;
         if(indiceSauv<sauv.size()){
             vector<string> pile1=explode(sauv[indiceSauv],'#');
