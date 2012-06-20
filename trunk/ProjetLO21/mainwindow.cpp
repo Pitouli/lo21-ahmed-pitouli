@@ -43,6 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->pushButton_space, SIGNAL(clicked()), this, SLOT(slot_buttonClicked()));
 
+    connect(Pile::get_curPile(), SIGNAL(sig_updatePileViewAfterReloading()), this, SLOT(slot_updatePileView()));
+
     // On connecte le motor à l'interface
     connect(Motor::get_motor(), SIGNAL(sig_updatePileView()), this, SLOT(slot_updatePileView()));
     connect(Motor::get_motor(), SIGNAL(sig_emptyLineSaisie()), ui->lineSaisie, SLOT(clear()));
@@ -53,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->checkBox_calculAuto, SIGNAL(toggled(bool)), this, SLOT(slot_toggledCalculAuto(bool)));
 
     ui->lineSaisie->setFocus();
+    Pile::get_curPile()->recharger_pile();
 }
 
 MainWindow::~MainWindow()

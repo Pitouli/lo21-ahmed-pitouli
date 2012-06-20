@@ -33,6 +33,7 @@ void Motor::empile(QString lineSaisie)
 	if((expr->getType() > TYPE_NOMBRE_START && expr->getType() < TYPE_NOMBRE_END) || expr->getType() == TYPE_EXPRESSION_C)
 	{
 	    Pile::get_curPile()->push(expr);
+        Pile::get_curPile()->nouveau();
 	    emit sig_emptyLineSaisie();
 	}
 	else if(expr->getType() > TYPE_OPERATION_NONAIRE_START && expr->getType() < TYPE_OPERATION_NONAIRE_END)
@@ -64,6 +65,7 @@ void Motor::empile(QString lineSaisie)
 		try
 		{
 		    Pile::get_curPile()->push(opUnaire->operation());
+            Pile::get_curPile()->nouveau();
 		    emit sig_emptyLineSaisie();
 		    delete param;
 		}
@@ -97,6 +99,7 @@ void Motor::empile(QString lineSaisie)
 		{
 		    expression::Expression* resultat = opBinaire->operation();
 		    Pile::get_curPile()->push(resultat);
+            Pile::get_curPile()->nouveau();
 		    emit sig_emptyLineSaisie();
 		    delete param1;
 		    delete param2;
