@@ -383,6 +383,14 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
 	ui->pushButton_space->setDown(false);
 	ui->pushButton_space->click();
     }
+    else if(e->key() == Qt::Key_Z){
+        Pile::get_curPile()->undo();
+        slot_updatePileView();
+    }
+    else if(e->key() == Qt::Key_Y){
+        Pile::get_curPile()->redo();
+        slot_updatePileView();
+    }
     else
 	QMainWindow::keyReleaseEvent(e);
 }
