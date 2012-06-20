@@ -85,7 +85,7 @@ expression::Operation* Factory::analyzeOperation(QString const adn) const
     else if(adn == "*" || adn == "MULTIPLIER")
 	return new expression::Multiplication;
     else if(adn == "POW")
-    return new expression::Pow;
+	return new expression::Pow;
     else if(adn == "SQRT")
 	return new expression::Sqrt;
     else if(adn == "SQR")
@@ -93,9 +93,9 @@ expression::Operation* Factory::analyzeOperation(QString const adn) const
     else if(adn == "CUBE")
 	return new expression::Cube;
     else if(adn == "INV")
-    return new expression::Inv;
+	return new expression::Inv;
     else if(adn == "SIGN")
-    return new expression::Sign;
+	return new expression::Sign;
     else if(adn == "LN")
 	return new expression::Ln;
     else if(adn == "LOG")

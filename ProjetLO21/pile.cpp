@@ -74,8 +74,11 @@ void Pile::recharger_pile(){
         indiceSauv=sauv.size()-1;
         emit sig_updatePileViewAfterReloading();
     }
-    else  // sinon
+    /*else  // sinon
+    {
+	qDebug("plop");
         throw "Erreur à l'ouverture !";
+}*/
 }
 
 void Pile::undo(){

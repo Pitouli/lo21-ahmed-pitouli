@@ -32,7 +32,9 @@ void Motor::empile(QString lineSaisie)
 
 	if((expr->getType() > TYPE_NOMBRE_START && expr->getType() < TYPE_NOMBRE_END) || expr->getType() == TYPE_EXPRESSION_C)
 	{
+	    Pile::get_curPile()->sauvegarde();
 	    Pile::get_curPile()->push(expr);
+	    Pile::get_curPile()->nouveau();
 	    emit sig_emptyLineSaisie();
 	}
 	else if(expr->getType() > TYPE_OPERATION_NONAIRE_START && expr->getType() < TYPE_OPERATION_NONAIRE_END)
@@ -43,6 +45,8 @@ void Motor::empile(QString lineSaisie)
 	    try
 	    {
 		opNonaire->operation();
+		Pile::get_curPile()->nouveau();
+
 		emit sig_emptyLineSaisie();
 	    }
 	    catch(char const* e)
@@ -66,7 +70,7 @@ void Motor::empile(QString lineSaisie)
 		if(param->getType() == TYPE_EXPRESSION_C)
 		{
 		    expression::ExpressionConcrete* exprC = static_cast<expression::ExpressionConcrete*>(param);
-		    Pile::get_curPile()->push(new expression::ExpressionConcrete(exprC->getExp()+opUnaire->toString()));
+		    Pile::get_curPile()->push(new expression::ExpressionConcrete(exprC->getExp()+" "+opUnaire->toString()));
 		    Pile::get_curPile()->nouveau();
 
 		    emit sig_emptyLineSaisie();
@@ -78,6 +82,8 @@ void Motor::empile(QString lineSaisie)
 		    try
 		    {
 			Pile::get_curPile()->push(opUnaire->operation());
+			Pile::get_curPile()->nouveau();
+
 			emit sig_emptyLineSaisie();
 			delete param;
 		    }
@@ -113,7 +119,7 @@ void Motor::empile(QString lineSaisie)
 		{
 		    expression::ExpressionConcrete* exprC1 = static_cast<expression::ExpressionConcrete*>(param1);
 		    expression::ExpressionConcrete* exprC2 = static_cast<expression::ExpressionConcrete*>(param2);
-		    expression::ExpressionConcrete* res = new expression::ExpressionConcrete(exprC1->getExp()+exprC2->getExp()+opBinaire->toString());
+		    expression::ExpressionConcrete* res = new expression::ExpressionConcrete(exprC1->getExp()+" "+exprC2->getExp()+" "+opBinaire->toString());
 
 		    Pile::get_curPile()->push(res);
 		    Pile::get_curPile()->nouveau();
@@ -125,7 +131,7 @@ void Motor::empile(QString lineSaisie)
 		else if(param1->getType() == TYPE_EXPRESSION_C)
 		{
 		    expression::ExpressionConcrete* exprC1 = static_cast<expression::ExpressionConcrete*>(param1);
-		    expression::ExpressionConcrete* res = new expression::ExpressionConcrete(exprC1->getExp()+param2->toString()+opBinaire->toString());
+		    expression::ExpressionConcrete* res = new expression::ExpressionConcrete(exprC1->getExp()+" "+param2->toString()+" "+opBinaire->toString());
 
 		    Pile::get_curPile()->push(res);
 		    Pile::get_curPile()->nouveau();
@@ -137,7 +143,7 @@ void Motor::empile(QString lineSaisie)
 		else if(param2->getType() == TYPE_EXPRESSION_C)
 		{
 		    expression::ExpressionConcrete* exprC2 = static_cast<expression::ExpressionConcrete*>(param2);
-		    expression::ExpressionConcrete* res = new expression::ExpressionConcrete(param1->toString()+exprC2->getExp()+opBinaire->toString());
+		    expression::ExpressionConcrete* res = new expression::ExpressionConcrete(param1->toString()+" "+exprC2->getExp()+" "+opBinaire->toString());
 
 		    Pile::get_curPile()->push(res);
 		    Pile::get_curPile()->nouveau();
@@ -228,56 +234,3 @@ void Motor::eval()
 	emit sig_updateUiStatusBar("Erreur : il y a moins d'un opérande dans la pile.");
     }
 }
-
-
-	}
-    }
-    catch(char const* e)
-    {
-	qDebug("Erreur détectée en factory : ");
-	qDebug(e);
-	emit sig_updateUiStatusBar("Erreur : nous n'avons pas su interpréter la commande.");
-    }
-
-    emit sig_updatePileView();
-}
-
-void Motor::eval()
-{
-    if(Pile::get_curPile()->size() >= 1)
-    {
-	expression::Expression* param = Pile::get_curPile()->pop();
-	const expression::ExpressionConcrete* tempExpC;
-
-	try
-	{
-	    if(param->getType() == TYPE_EXPRESSION_C) // Si l'opérande est une expression concrète on l'évalue
-	    {
-		tempExpC = static_cast<const expression::ExpressionConcrete*>(param);
-		QStringList listExp = QString(tempExpC->getExp().c_str()).split(' ');
-
-		QStringList::const_iterator constIterator;
-		for (constIterator = listExp.constBegin(); constIterator != listExp.constEnd(); ++constIterator)
-		    this->empile(*constIterator);
-
-		delete param;
-	    }
-	    else // Sinon on rempile l'opérande
-		Pile::get_curPile()->push(param);
-	}
-	catch(char const* e)
-	{
-	    qDebug("Erreur détectée en opération d'évaluation' : ");
-	    qDebug(e);
-	    Pile::get_curPile()->push(param);
-	    emit sig_updateUiStatusBar(e);
-	}
-    }
-    else
-    {
-	qDebug("Erreur détectée en opération d'evaluation' : ");
-	qDebug("Il y a moins d'un opérande dans la pile.");
-	emit sig_updateUiStatusBar("Erreur : il y a moins d'un opérande dans la pile.");
-    }
-}
-

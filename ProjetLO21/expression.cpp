@@ -416,7 +416,10 @@ Expression* expression::Somme::operation(){
 
 string expression::Somme::toString()const{
     stringstream ss;
-    ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" +";
+    if(getExpLeft() != NULL && getExpRight() != NULL)
+	ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" +";
+    else
+	ss<<"+";
     return ss.str();
 }
 
@@ -501,7 +504,10 @@ Expression* expression::Difference::operation(){
 
 string expression::Difference::toString()const{
     stringstream ss;
-    ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" -";
+    if(getExpLeft() != NULL && getExpRight() != NULL)
+	ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" -";
+    else
+	ss<<"-";
     return ss.str();
 }
 
@@ -586,7 +592,10 @@ Expression* expression::Multiplication::operation(){
 
 string expression::Multiplication::toString()const{
     stringstream ss;
-    ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" *";
+    if(getExpLeft() != NULL && getExpRight() != NULL)
+	ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" *";
+    else
+	ss<<"*";
     return ss.str();
 }
 
@@ -671,7 +680,10 @@ Expression* expression::Division::operation(){
 
 string expression::Division::toString()const{
     stringstream ss;
-    ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" /";
+    if(getExpLeft() != NULL && getExpRight() != NULL)
+	ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" /";
+    else
+	ss<<"/";
     return ss.str();
 }
 
@@ -692,7 +704,10 @@ Expression* expression::Mod::operation(){
 
 string expression::Mod::toString()const{
     stringstream ss;
-    ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" %";
+    if(getExpLeft() != NULL && getExpRight() != NULL)
+	ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" %";
+    else
+	ss<<"%";
     return ss.str();
 }
 
@@ -730,7 +745,10 @@ Expression* expression::Pow::operation(){
 
 string expression::Pow::toString()const{
     stringstream ss;
-    ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" ^";
+    if(getExpLeft() != NULL && getExpRight() != NULL)
+	ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" POW";
+    else
+	ss<<"POW";
     return ss.str();
 }
 
@@ -771,7 +789,10 @@ Expression* expression::Sin::operation(){
 
 string expression::Sin::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" SIN";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" SIN";
+    else
+	ss<<"SIN";
     return ss.str();
 }
 
@@ -812,7 +833,10 @@ Expression* expression::Cos::operation(){
 
 string expression::Cos::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" COS";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" COS";
+    else
+	ss<<"COS";
     return ss.str();
 }
 
@@ -853,7 +877,10 @@ Expression* expression::Tan::operation(){
 
 string expression::Tan::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" TAN";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" TAN";
+    else
+	ss<<"TAN";
     return ss.str();
 }
 
@@ -894,7 +921,10 @@ Expression* expression::Sinh::operation(){
 
 string expression::Sinh::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" SINH";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" SINH";
+    else
+	ss<<"SINH";
     return ss.str();
 }
 
@@ -935,7 +965,10 @@ Expression* expression::Cosh::operation(){
 
 string expression::Cosh::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" COSH";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" COSH";
+    else
+	ss<<"COSH";
     return ss.str();
 }
 
@@ -976,7 +1009,10 @@ Expression* expression::Tanh::operation(){
 
 string expression::Tanh::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" TANH";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" TANH";
+    else
+	ss<<"TANH";
     return ss.str();
 }
 
@@ -1011,7 +1047,10 @@ Expression* expression::Ln::operation(){
 
 string expression::Ln::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" LN";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" LN";
+    else
+	ss<<"LN";
     return ss.str();
 }
 
@@ -1046,7 +1085,10 @@ Expression* expression::Log::operation(){
 
 string expression::Log::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" LOG";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" LOG";
+    else
+	ss<<"LOG";
     return ss.str();
 }
 
@@ -1085,7 +1127,10 @@ Expression* expression::Sign::operation(){
 
 string expression::Sign::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" SIGN";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" SIGN";
+    else
+	ss<<"SIGN";
     return ss.str();
 }
 
@@ -1119,7 +1164,10 @@ Expression* expression::Inv::operation(){
 
 string expression::Inv::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" INV";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" INV";
+    else
+	ss<<"INV";
     return ss.str();
 }
 
@@ -1157,7 +1205,10 @@ Expression* expression::Sqrt::operation(){
 
 string expression::Sqrt::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" SQRT";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" SQRT";
+    else
+	ss<<"SQRT";
     return ss.str();
 }
 
@@ -1197,7 +1248,10 @@ Expression* expression::Sqr::operation(){
 
 string expression::Sqr::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" SQR";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" SQR";
+    else
+	ss<<"SQR";
     return ss.str();
 }
 
@@ -1236,7 +1290,10 @@ Expression* expression::Cube::operation(){
 
 string expression::Cube::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" CUBE";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" CUBE";
+    else
+	ss<<"CUBE";
     return ss.str();
 }
 
@@ -1277,7 +1334,10 @@ Expression* expression::Factoriel::operation(){
 
 string expression::Factoriel::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" FACT";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" !";
+    else
+	ss<<"!";
     return ss.str();
 }
 
@@ -1313,7 +1373,10 @@ Expression* expression::DegToRad::operation(){
 
 string expression::DegToRad::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" DEGTORAD";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" DEGTORAD";
+    else
+	ss<<"DEGTORAD";
     return ss.str();
 }
 
@@ -1349,7 +1412,10 @@ Expression* expression::RadToDeg::operation(){
 
 string expression::RadToDeg::toString()const{
     stringstream ss;
-    ss<<getExp()->toString()<<" RADTODEG";
+    if(getExp() != NULL)
+	ss<<getExp()->toString()<<" RADTODEG";
+    else
+	ss<<"RADTODEG";
     return ss.str();
 }
 
@@ -1359,10 +1425,23 @@ Expression* expression::Sum::operation(){
     return getRes();
 }
 
+string expression::Sum::toString()const{
+    stringstream ss;
+    ss<<"SUM";
+    return ss.str();
+}
+
+
 Expression* expression::Mean::operation(){
 
     setRes(Pile::get_curPile()->mean(getExp()));
     return getRes();
+}
+
+string expression::Mean::toString()const{
+    stringstream ss;
+    ss<<"MEAN";
+    return ss.str();
 }
 
 Expression* expression::Swap::operation(){
@@ -1371,10 +1450,22 @@ Expression* expression::Swap::operation(){
     return getRes();
 }
 
+string expression::Swap::toString()const{
+    stringstream ss;
+    ss<<"SWAP";
+    return ss.str();
+}
+
 Expression* expression::Clear::operation(){
     setRes(NULL);
     Pile::get_curPile()->clear();
     return getRes();
+}
+
+string expression::Clear::toString()const{
+    stringstream ss;
+    ss<<"CLEAR";
+    return ss.str();
 }
 
 Expression* expression::Dup::operation(){
@@ -1383,10 +1474,22 @@ Expression* expression::Dup::operation(){
     return getRes();
 }
 
+string expression::Dup::toString()const{
+    stringstream ss;
+    ss<<"DUP";
+    return ss.str();
+}
+
 Expression* expression::Drop::operation(){
     setRes(NULL);
     Pile::get_curPile()->drop();
     return getRes();
+}
+
+string expression::Drop::toString()const{
+    stringstream ss;
+    ss<<"DROP";
+    return ss.str();
 }
 
 Expression* expression::Eval::operation(){
@@ -1395,3 +1498,8 @@ Expression* expression::Eval::operation(){
     return getRes();
 }
 
+string expression::Eval::toString()const{
+    stringstream ss;
+    ss<<"EVAL";
+    return ss.str();
+}
