@@ -27,7 +27,7 @@ Factory::~Factory()
 expression::Expression* Factory::analyze(QString const adn) const
 {
     QRegExp regExpressionConcrete("'(.+)'");
-    QRegExp regNombre("^(?:(?:([0-9]+)(?:\\$([0-9]+))?)|(?:([0-9]+\\.[0-9]+)(?:\\$([0-9]+\\.[0-9]+))?)|(?:([0-9]+/[0-9]+)(?:\\$([0-9]+/[0-9]+))?))$");
+    QRegExp regNombre("^(?:(?:((?:-)?[0-9]+)(?:\\$((?:-)?[0-9]+))?)|(?:((?:-)?[0-9]+\\.[0-9]+)(?:\\$((?:-)?[0-9]+\\.[0-9]+))?)|(?:((?:-)?[0-9]+/[0-9]+)(?:\\$((?:-)?[0-9]+/[0-9]+))?))$");
     QRegExp regOperateur("[A-Za-z]+|!|%|\\+|\\-|\\*|/");
 
     if(regExpressionConcrete.exactMatch(adn))
@@ -50,9 +50,9 @@ expression::Expression* Factory::analyze(QString const adn) const
 
 expression::Nombre* Factory::analyzeNombre(QString const adn) const
 {
-    QRegExp regRelationnel("^(?:([0-9]+)/([0-9]+))$");
-    QRegExp regEntier("^([0-9]+)$");
-    QRegExp regReel("^((?:[0-9]+)\\.(?:[0-9]+))$");
+    QRegExp regRelationnel("^(?:((?:-)?[0-9]+)/((?:-)?[0-9]+))$");
+    QRegExp regEntier("^((?:-)?[0-9]+)$");
+    QRegExp regReel("^((?:-)?(?:[0-9]+)\\.(?:[0-9]+))$");
     QRegExp regComplexe("(.+)\\$(.+)");
 
     if(regRelationnel.exactMatch(adn))

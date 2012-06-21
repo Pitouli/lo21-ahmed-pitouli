@@ -48,6 +48,8 @@ Reel expression::Reel::operator/(const Reel& n)const{
 
 string expression::Reel::toString()const{
     stringstream ss;
+    ss.unsetf(ios_base::floatfield);
+    ss.precision(15);
     ss<<val;
     return ss.str();
 }

@@ -274,7 +274,18 @@ void MainWindow::slot_buttonClicked()
 		}
 	    }
 	    else
-		ui->statusBar->showMessage("Finissez d'écrire votre nombre !", 3000);
+	    {
+		if(button == ui->pushButton_moins)
+		{
+
+		    if(s.contains(QRegExp("^(.*[ \\$])?([0-9/\\.]+)$"))) // Si on est en train d'écrire un nombre
+		    {
+
+		    }
+		}
+		else
+		    ui->statusBar->showMessage("Finissez d'écrire votre nombre !", 3000);
+	    }
 	}
     }
 
