@@ -24,20 +24,29 @@ LogSystem::~LogSystem()
     if(_logSystem != 0) delete _logSystem;
 }
 
-void addMessage(std::string message, int priorite)
+void LogSystem::addMessage(std::string const message, int priorite)
 {
     LogMessage logMessage(message, priorite);
     std::cout<<logMessage.toString();
+
+    std::string filename = "log.txt";
+    // ouverture en écriture avec effacement du fichier ouvert
+    std::ofstream fichier(filename.c_str(), std::ios::out | std::ios::app);
+
+    if(!fichier.fail()){
+	fichier<<logMessage.toString()<<std::endl;
+	fichier.close();
+    }
 }
 
 std::string LogMessage::toString() const
 {
     if(_priorite == LOG_INFO)
-	return _date.toString().toStdString()+" INFO : "+_message;
+	return _date.toString("yyyy-MM-dd hh:mm:ss").toStdString()+" INFO : "+_message;
     else if(_priorite == LOG_WARNING)
-	return _date.toString().toStdString()+" WARING : "+_message;
+	return _date.toString("yyyy-MM-dd hh:mm:ss").toStdString()+" WARNING : "+_message;
     else if(_priorite == LOG_ERROR)
-	return _date.toString().toStdString()+" ERROR : "+_message;
+	return _date.toString("yyyy-MM-dd hh:mm:ss").toStdString()+" ERROR : "+_message;
     else
-	return _date.toString().toStdString()+" BIZARRE : "+_message;
+	return _date.toString("yyyy-MM-dd hh:mm:ss").toStdString()+" BIZARRE : "+_message;
 }

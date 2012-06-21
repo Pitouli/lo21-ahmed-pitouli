@@ -4,6 +4,7 @@
 #include <QString>
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <QDate>
 
 #define LOG_WARNING 1
@@ -13,13 +14,13 @@
 class LogMessage
 {
 public:
-    LogMessage(std::string message, int priorite = LOG_INFO, QDate date = QDate::currentDate()):
+    LogMessage(std::string const message, int priorite = LOG_INFO, QDateTime date = QDateTime::currentDateTime()):
 	_message(message), _priorite(priorite), _date(date) {}
     std::string toString() const;
 private:
     std::string _message;
     int _priorite;
-    QDate _date;
+    QDateTime _date;
 };
 
 class LogSystem
@@ -27,10 +28,10 @@ class LogSystem
 public:
     static LogSystem* get_logger();
     static void del_logger();
-    void addError(std::string message){ addMessage(message, LOG_ERROR); }
-    void addWarning(std::string message){ addMessage(message, LOG_WARNING); }
-    void addInfo(std::string message){ addMessage(message, LOG_INFO); }
-    void addMessage(std::string message, int priorite);
+    void addError(std::string const message){ this->addMessage(message, LOG_ERROR); }
+    void addWarning(std::string const message){ this->addMessage(message, LOG_WARNING); }
+    void addInfo(std::string const message){ this->addMessage(message, LOG_INFO); }
+    void addMessage(std::string const message, int priorite);
 protected:
     LogSystem(){}
     LogSystem(const LogSystem&);
