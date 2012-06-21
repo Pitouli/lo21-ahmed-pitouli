@@ -376,6 +376,16 @@ void MainWindow::keyReleaseEvent(QKeyEvent *e)
 	ui->pushButton_fois->setDown(false);
 	ui->pushButton_fois->click();
     }
+    else if(e->key() == Qt::Key_Delete)
+    {
+	ui->pushButton_drop->setDown(false);
+	ui->pushButton_drop->click();
+    }
+    else if(e->key() == Qt::Key_Enter)
+    {
+	ui->pushButton_dup->setDown(false);
+	ui->pushButton_dup->click();
+    }
     else if(e->key() == Qt::Key_Slash)
     {
 	if(ui->radioButton_rationnel->isChecked() && ui->lineSaisie->text().contains(QRegExp("[0-9]$")))
@@ -439,6 +449,10 @@ void MainWindow::keyPressEvent(QKeyEvent *e)
 	ui->pushButton_moins->setDown(true);
     else if(e->key() == Qt::Key_Asterisk)
 	ui->pushButton_fois->setDown(true);
+    else if(e->key() == Qt::Key_Delete)
+	ui->pushButton_drop->setDown(true);
+    else if(e->key() == Qt::Key_Enter)
+	ui->pushButton_dup->setDown(true);
     else if(e->key() == Qt::Key_Slash)
 	if(ui->radioButton_rationnel->isChecked() && ui->lineSaisie->text().contains(QRegExp("[0-9]$")))
 	    ui->pushButton_space->setDown(true);
