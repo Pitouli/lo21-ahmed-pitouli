@@ -1540,6 +1540,7 @@ string expression::Swap::toString()const{
 Expression* expression::Clear::operation(){
     setRes(NULL);
     Pile::get_curPile()->clear();
+    Pile::get_curPile()->razFile();
     return getRes();
 }
 

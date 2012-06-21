@@ -125,12 +125,10 @@ void Pile::nouveau(){
 
 void Pile::clear()
 {
-    while(!this->isEmpty())
-    {
+    while(!this->isEmpty()){
 	expression::Expression* expr = this->takeFirst(); // On supprime le 1er élément de la pile
 	delete expr; // On supprime l'élément de la mémoire
     }
-    razFile();
 }
 
 void Pile::swap()

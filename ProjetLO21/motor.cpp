@@ -38,7 +38,6 @@ void Motor::empile(QString lineSaisie)
 	}
 	else if(expr->getType() > TYPE_OPERATION_NONAIRE_START && expr->getType() < TYPE_OPERATION_NONAIRE_END)
 	{
-	    Pile::get_curPile()->sauvegarde();
 	    expression::OperationNonaire* opNonaire = static_cast<expression::OperationNonaire*>(expr);
 
 	    try
@@ -198,6 +197,7 @@ void Motor::eval()
 {
     if(Pile::get_curPile()->size() >= 1)
     {
+    Pile::get_curPile()->sauvegarde();
 	expression::Expression* param = Pile::get_curPile()->pop();
 	const expression::ExpressionConcrete* tempExpC;
 
@@ -216,6 +216,7 @@ void Motor::eval()
 	    }
 	    else // Sinon on rempile l'opérande
 		Pile::get_curPile()->push(param);
+        Pile::get_curPile()->sauvegarde();
 	}
 	catch(char const* e)
 	{
