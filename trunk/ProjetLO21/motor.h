@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include "pile.h"
 #include "expression.h"
+#include "logsystem.h"
 
 #define PARAM_RADIAN 1
 #define PARAM_DEGRE 0
