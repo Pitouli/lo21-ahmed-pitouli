@@ -10,8 +10,9 @@ expression::Reel::Reel(const Nombre& n):Nombre(TYPE_REEL){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+        //on teste le type pour recuperer le pointeur adequat
     switch(n.getType()){
-	case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (&n);
+    case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (&n);
                             val=(tempRat->getNumVal()/tempRat->getDenomVal()).getVal();
                             break;
 
@@ -26,6 +27,8 @@ expression::Reel::Reel(const Nombre& n):Nombre(TYPE_REEL){
                         break;
     };
 }
+
+/*** Operation pour reel **/
 
 Reel expression::Reel::operator+(const Reel& n)const{
     return Reel(val+n.getVal());
@@ -83,6 +86,7 @@ expression::Complexe::Complexe(const Nombre& n):Nombre(TYPE_COMPLEXE){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+    //on teste le type pour recuperer le pointeur adequat
     switch(n.getType()){
 	case TYPE_COMPLEXE: tempC = static_cast <const Complexe*> (&n);
                         partieI=tempC->getPartieIVal().clone();
@@ -114,6 +118,8 @@ expression::Complexe::~Complexe(){
     delete partieI;
 }
 
+
+/*** Operation pour complexe **/
 Complexe expression::Complexe::operator+(const Complexe& n)const{
     return Complexe(getPartieRVal()+n.getPartieRVal(),getPartieIVal()+n.getPartieIVal());
 }
@@ -132,6 +138,7 @@ Complexe expression::Complexe::operator/(const Complexe& n)const{
         ||((n.getPartieRVal()*n.getPartieRVal())+(n.getPartieIVal()*n.getPartieIVal())).getVal()==0)
        throw "La division par zero est interdite";
 
+    //Temp est une variable intermerdiare qui correspond a 1/z avec z le complexe passe en parametre
     Complexe temp(n.getPartieRVal()/((n.getPartieRVal()*n.getPartieRVal())+(n.getPartieIVal()*n.getPartieIVal())),
                   n.getPartieRVal()/((n.getPartieRVal()*n.getPartieRVal())+(n.getPartieIVal()*n.getPartieIVal())));
 
@@ -160,6 +167,7 @@ string expression::Complexe::toString()const{
 expression::Entier::Entier(const Nombre& n):NombreE(TYPE_ENTIER){
     const Entier* tempE;
 
+        //on teste le type pour recuperer le pointeur adequat
     switch(n.getType()){
 	case TYPE_ENTIER:   tempE = static_cast <const Entier*> (&n);
                             val=tempE->getVal();
@@ -170,6 +178,7 @@ expression::Entier::Entier(const Nombre& n):NombreE(TYPE_ENTIER){
     };
 }
 
+/*** Operation pour entier **/
 Entier expression::Entier::operator+(const Entier& n)const{
     return Entier(val+n.getVal());
 }
@@ -203,11 +212,11 @@ expression::Rationnel::Rationnel(Entier* _num, Entier* _denom):NombreE(TYPE_RATI
     if(_denom==0)
         denom=new Entier(1);
     else{
-        if(_denom->getVal()==0)
+        if(_denom->getVal()==0)//on verifie que le denominateur n'est pas nul
             throw "Le denominateur ne peut pas etre nul";
        denom=_denom;
     }
-    simplification();
+    simplification();//On simplfie la fraction
 }
 
 expression::Rationnel::Rationnel(const Nombre& _num, const Nombre& _denom):NombreE(TYPE_RATIONNEL){
@@ -217,10 +226,11 @@ expression::Rationnel::Rationnel(const Nombre& _num, const Nombre& _denom):Nombr
     const Entier* tempE1;
     const Entier* tempE2;
 
+    //On verifie qu'on a deux objets du meme type
     switch(_num.getType()+_denom.getType()){
 	case TYPE_RATIONNEL*2:  tempRat1 = static_cast <const Rationnel*> (&_num);
                             tempRat2 = static_cast <const Rationnel*> (&_denom);
-                            if(tempRat2->getDenomVal().getVal()==0)
+                            if(tempRat2->getDenomVal().getVal()==0)//On verifie que le denominateur n'est pas nul
                                 throw "Le denominateur ne peut pas etre nul";
                             num=new Entier(tempRat1->getNumVal()/tempRat2->getDenomVal());
                             denom=new Entier(tempRat2->getNumVal()/tempRat2->getDenomVal());
@@ -228,35 +238,38 @@ expression::Rationnel::Rationnel(const Nombre& _num, const Nombre& _denom):Nombr
 
 	case TYPE_ENTIER*2: tempE1 = static_cast <const Entier*> (&_num);
                         tempE2 = static_cast <const Entier*> (&_denom);
-                        if(tempE2->getVal()==0)
+                        if(tempE2->getVal()==0)//On verifie que le denominateur n'est pas nul
                             throw "Le denominateur ne peut pas etre nul";
                         num=new Entier(tempE1->getVal());
                         denom=new Entier(tempE2->getVal());
                         break;
 
-    default:                tempR = new Reel(_num);
+    default:                //Si les deux sont differends on les convertie en reel
+                            tempR = new Reel(_num);
                             num=new Entier((int)tempR->getVal());
                             delete tempR;
+
                             tempR = new Reel(_denom);
-                            if(tempR->getVal()==0)
+                            if(tempR->getVal()==0)//On verifie que le denominateur n'est pas nul
                                 throw "Le denominateur ne peut pas etre nul";
                             denom=new Entier((int)tempR->getVal());
                             delete tempR;
                             break;
     };
-    simplification();
+    simplification();//On simplfie la fraction
 }
 
 expression::Rationnel::Rationnel(const Rationnel& c):NombreE(TYPE_RATIONNEL){
     num=c.num->clone();
     denom=c.denom->clone();
-    simplification();
+    simplification();//On simplfie la fraction
 }
 
 expression::Rationnel::Rationnel(const Nombre& n):NombreE(TYPE_RATIONNEL){
     const Rationnel* tempRat;
     const Entier* tempE;
 
+    //on teste le type pour recuperer le pointeur adequat
     switch(n.getType()){
     case TYPE_RATIONNEL:        tempRat = static_cast <const Rationnel*> (&n);
                                 num=tempRat->getNumVal().clone();
@@ -271,7 +284,7 @@ expression::Rationnel::Rationnel(const Nombre& n):NombreE(TYPE_RATIONNEL){
     default:   throw "La conversion en Rationnel n'est possible que pour les entiers";
                break;
     };
-    simplification();
+    simplification();//On simplfie la fraction
 }
 
 int expression::Rationnel::pgcd(int a, int b) const {
@@ -296,6 +309,7 @@ void expression::Rationnel::simplification(){
     }
 }
 
+/*** Operation pour rationnel ***/
 Rationnel expression::Rationnel::operator+(const Rationnel& c)const{
     return Rationnel((getNumVal()*c.getDenomVal())+(c.getNumVal()*getDenomVal()),getDenomVal()*c.getDenomVal());
 }
@@ -322,7 +336,7 @@ Rationnel& expression::Rationnel::operator=(const Rationnel& n){
         num=n.num->clone();
         denom=n.denom->clone();
     }
-    simplification();
+    simplification();//On simplfie la fraction
     return *this;
 }
 
@@ -351,8 +365,15 @@ Expression* expression::Somme::operation(){
     const Rationnel* tempRat2;
 
     setRes(NULL);
+    /*Pour faire les operations une des deux epressions peut être converti
+      dans le type de l'autre si ce dernier appartient a un ensemble plus grand*/
 
+    /*Le resultat est renvoyé dans un objet du meme type que l'expression qui
+      a l'ensemble le plus grand*/
+
+    //On choisit l'expression qui appartient a l'ensemble le plus grand
     if(expLeftTemp->getType()<=expRightTemp->getType()){
+        //On teste le type du premier
         switch(expLeftTemp->getType()){
         case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
                                 tempC2 = new Complexe(*expRightTemp);
@@ -383,6 +404,7 @@ Expression* expression::Somme::operation(){
         };
     }
     else{
+        //On teste le type du second
         switch(expRightTemp->getType()){
             case TYPE_COMPLEXE: tempC2 = new Complexe(*expLeftTemp);
                                 tempC1 = static_cast <const Complexe*> (expRightTemp);
@@ -418,6 +440,7 @@ Expression* expression::Somme::operation(){
 
 string expression::Somme::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExpLeft() != NULL && getExpRight() != NULL)
 	ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" +";
     else
@@ -439,7 +462,13 @@ Expression* expression::Difference::operation(){
     const Rationnel* tempRat2;
 
     setRes(NULL);
+    /*Pour faire les operations une des deux epressions peut être converti
+      dans le type de l'autre si ce dernier appartient a un ensemble plus grand*/
 
+    /*Le resultat est renvoyé dans un objet du meme type que l'expression qui
+      a l'ensemble le plus grand*/
+
+    //On choisit l'expression qui appartient a l'ensemble le plus grand
     if(expLeftTemp->getType()<expRightTemp->getType()){
         switch(expLeftTemp->getType()){
         case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
@@ -506,6 +535,7 @@ Expression* expression::Difference::operation(){
 
 string expression::Difference::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExpLeft() != NULL && getExpRight() != NULL)
 	ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" -";
     else
@@ -528,6 +558,13 @@ Expression* expression::Multiplication::operation(){
 
     setRes(NULL);
 
+    /*Pour faire les operations une des deux epressions peut être converti
+      dans le type de l'autre si ce dernier appartient a un ensemble plus grand*/
+
+    /*Le resultat est renvoyé dans un objet du meme type que l'expression qui
+      a l'ensemble le plus grand*/
+
+    //On choisit l'expression qui appartient a l'ensemble le plus grand
     if(expLeftTemp->getType()<expRightTemp->getType()){
         switch(expLeftTemp->getType()){
         case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
@@ -594,6 +631,7 @@ Expression* expression::Multiplication::operation(){
 
 string expression::Multiplication::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExpLeft() != NULL && getExpRight() != NULL)
 	ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" *";
     else
@@ -615,7 +653,13 @@ Expression* expression::Division::operation(){
     const Rationnel* tempRat2;
 
     setRes(NULL);
+    /*Pour faire les operations une des deux epressions peut être converti
+      dans le type de l'autre si ce dernier appartient a un ensemble plus grand*/
 
+    /*Le resultat est renvoyé dans un objet du meme type que l'expression qui
+      a l'ensemble le plus grand*/
+
+    //On choisit l'expression qui appartient a l'ensemble le plus grand
     if(expLeftTemp->getType()<expRightTemp->getType()){
         switch(expLeftTemp->getType()){
         case TYPE_COMPLEXE:     tempC1 = static_cast <const Complexe*> (expLeftTemp);
@@ -682,6 +726,7 @@ Expression* expression::Division::operation(){
 
 string expression::Division::toString()const{
     stringstream ss;
+    //On verifie que l'operation a des operandes initialises
     if(getExpLeft() != NULL && getExpRight() != NULL)
 	ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" /";
     else
@@ -693,6 +738,7 @@ Expression* expression::Mod::operation(){
 
     setRes(NULL);
 
+    //on teste le type pour recuperer le pointeur adequat
     if(getExpLeft()->getType()==TYPE_ENTIER && getExpRight()->getType()==TYPE_ENTIER){
         const Entier* expLeftTemp=static_cast<const Entier*>(getExpLeft());
         const Entier* expRightTemp=static_cast<const Entier*>(getExpRight());
@@ -706,6 +752,7 @@ Expression* expression::Mod::operation(){
 
 string expression::Mod::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExpLeft() != NULL && getExpRight() != NULL)
 	ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" %";
     else
@@ -723,6 +770,7 @@ Expression* expression::Pow::operation(){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+    //on teste le type pour recuperer le pointeur adequat
     switch(expTemp->getType()){
 
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
@@ -747,6 +795,7 @@ Expression* expression::Pow::operation(){
 
 string expression::Pow::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExpLeft() != NULL && getExpRight() != NULL)
 	ss<<getExpLeft()->toString()<<" "<<getExpRight()->toString()<<" POW";
     else
@@ -768,6 +817,7 @@ Expression* expression::Sin::operation(){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+    //on teste le type pour recuperer le pointeur adequat
     switch(expTemp->getType()){
 
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
@@ -791,6 +841,7 @@ Expression* expression::Sin::operation(){
 
 string expression::Sin::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" SIN";
     else
@@ -812,6 +863,7 @@ Expression* expression::Cos::operation(){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+        //on teste le type pour recuperer le pointeur adequat
     switch(expTemp->getType()){
 
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
@@ -835,6 +887,7 @@ Expression* expression::Cos::operation(){
 
 string expression::Cos::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" COS";
     else
@@ -856,6 +909,8 @@ Expression* expression::Tan::operation(){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+    /*on teste le type pour recuperer le pointeur adequat et on fait appel
+      a la fonction de cmath correspondant a l'operation que l'on effectue*/
     switch(expTemp->getType()){
 
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
@@ -879,6 +934,7 @@ Expression* expression::Tan::operation(){
 
 string expression::Tan::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" TAN";
     else
@@ -888,6 +944,7 @@ string expression::Tan::toString()const{
 
 Expression* expression::Sinh::operation(){
 
+    //Si on est en mode degre on conertit l'expression en radian
     if(Motor::get_motor()->get_paramTrigo() == PARAM_DEGRE)
     {
 	Expression* exprRes = DegToRad(this->getExp()).operation();
@@ -900,6 +957,7 @@ Expression* expression::Sinh::operation(){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+        //on teste le type pour recuperer le pointeur adequat
     switch(expTemp->getType()){
 
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
@@ -907,7 +965,7 @@ Expression* expression::Sinh::operation(){
                             break;
 
         case TYPE_RATIONNEL:    tempRat = static_cast <const Rationnel*> (expTemp);
-				setRes(new Reel(sinh((tempRat->getNumVal()/tempRat->getDenomVal()).getVal())));
+                                setRes(new Reel(sinh((tempRat->getNumVal()/tempRat->getDenomVal()).getVal())));
                                 break;
 
         case TYPE_ENTIER:   tempE = static_cast <const Entier*> (expTemp);
@@ -923,6 +981,7 @@ Expression* expression::Sinh::operation(){
 
 string expression::Sinh::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" SINH";
     else
@@ -944,6 +1003,7 @@ Expression* expression::Cosh::operation(){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+        //on teste le type pour recuperer le pointeur adequat
     switch(expTemp->getType()){
 
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
@@ -967,6 +1027,7 @@ Expression* expression::Cosh::operation(){
 
 string expression::Cosh::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" COSH";
     else
@@ -988,6 +1049,7 @@ Expression* expression::Tanh::operation(){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+        //on teste le type pour recuperer le pointeur adequat
     switch(expTemp->getType()){
 
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
@@ -1011,6 +1073,7 @@ Expression* expression::Tanh::operation(){
 
 string expression::Tanh::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" TANH";
     else
@@ -1026,6 +1089,7 @@ Expression* expression::Ln::operation(){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+        //on teste le type pour recuperer le pointeur adequat
     switch(expTemp->getType()){
 
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
@@ -1049,6 +1113,7 @@ Expression* expression::Ln::operation(){
 
 string expression::Ln::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" LN";
     else
@@ -1064,6 +1129,7 @@ Expression* expression::Log::operation(){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+        //on teste le type pour recuperer le pointeur adequat
     switch(expTemp->getType()){
 
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
@@ -1087,6 +1153,7 @@ Expression* expression::Log::operation(){
 
 string expression::Log::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" LOG";
     else
@@ -1103,6 +1170,7 @@ Expression* expression::Sign::operation(){
     const Rationnel* tempRat;
     Entier temp(-1);
 
+        //on teste le type pour recuperer le pointeur adequat
     switch(expTemp->getType()){
         case TYPE_COMPLEXE: tempC = static_cast <const Complexe*> (expTemp);
                             setRes(new Complexe(tempC->getPartieRVal()*temp,tempC->getPartieIVal()*temp));
@@ -1129,6 +1197,7 @@ Expression* expression::Sign::operation(){
 
 string expression::Sign::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" SIGN";
     else
@@ -1143,6 +1212,7 @@ Expression* expression::Inv::operation(){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+        //on teste le type pour recuperer le pointeur adequat
     switch(expTemp->getType()){
 
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
@@ -1166,6 +1236,7 @@ Expression* expression::Inv::operation(){
 
 string expression::Inv::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" INV";
     else
@@ -1181,6 +1252,7 @@ Expression* expression::Sqrt::operation(){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+        //on teste le type pour recuperer le pointeur adequat
     switch(expTemp->getType()){
 
         case TYPE_REEL:     tempR = static_cast <const Reel*> (expTemp);
@@ -1207,6 +1279,7 @@ Expression* expression::Sqrt::operation(){
 
 string expression::Sqrt::toString()const{
     stringstream ss;
+    //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" SQRT";
     else
@@ -1223,6 +1296,7 @@ Expression* expression::Sqr::operation(){
     const Entier* tempE;
     const Rationnel* tempRat;
 
+        //on teste le type pour recuperer le pointeur adequat
     switch(expTemp->getType()){
         case TYPE_COMPLEXE: tempC = static_cast <const Complexe*> (expTemp);
                             setRes(new Complexe((*tempC)*(*tempC)));
@@ -1250,6 +1324,7 @@ Expression* expression::Sqr::operation(){
 
 string expression::Sqr::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" SQR";
     else
@@ -1292,6 +1367,7 @@ Expression* expression::Cube::operation(){
 
 string expression::Cube::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" CUBE";
     else
@@ -1336,6 +1412,7 @@ Expression* expression::Factoriel::operation(){
 
 string expression::Factoriel::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" !";
     else
@@ -1375,6 +1452,7 @@ Expression* expression::DegToRad::operation(){
 
 string expression::DegToRad::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" DEGTORAD";
     else
@@ -1414,6 +1492,7 @@ Expression* expression::RadToDeg::operation(){
 
 string expression::RadToDeg::toString()const{
     stringstream ss;
+        //On verifie que l'operation a des operandes initialises
     if(getExp() != NULL)
 	ss<<getExp()->toString()<<" RADTODEG";
     else
