@@ -90,9 +90,9 @@ void Pile::razFile(){
 }
 
 void Pile::undo(){
-    if(indiceSauv>0){
+    if(indiceSauv>0 && !get_curPile()->empty()){
         indiceSauv--;
-        if(indiceSauv<sauv.size()){
+        if(indiceSauv<(int)sauv.size()){
             vector<string> pile1=explode(sauv[indiceSauv],'#');
             get_curPile()->clear();
             QString temp;
@@ -105,7 +105,7 @@ void Pile::undo(){
 }
 
 void Pile::redo(){
-    if(indiceSauv>=0 && indiceSauv<(sauv.size()-1)){
+    if((indiceSauv>=0 && indiceSauv<(int)(sauv.size()-1)) && !get_curPile()->empty()){
         indiceSauv++;
         vector<string> pile1=explode(sauv[indiceSauv],'#');
         get_curPile()->clear();
@@ -118,7 +118,7 @@ void Pile::redo(){
 }
 
 void Pile::nouveau(){
-    while(sauv.size()>(indiceSauv+1) && !sauv.empty())
+    while((int)sauv.size()>(indiceSauv+1) && !sauv.empty())
         sauv.pop_back();
     sauvegarde();
 }
