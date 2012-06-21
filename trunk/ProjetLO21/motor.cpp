@@ -51,6 +51,7 @@ void Motor::empile(QString lineSaisie)
 	    {
 		qDebug("Erreur détectée en opération nonaire : ");
 		qDebug(e);
+		LogSystem::get_logger()->addWarning("Erreur détectée en opération nonaire : "+std::string(e));
 		emit sig_updateUiStatusBar(e);
 	    }
 
@@ -89,6 +90,7 @@ void Motor::empile(QString lineSaisie)
 		    {
 			qDebug("Erreur détectée en opération unaire : ");
 			qDebug(e);
+			LogSystem::get_logger()->addWarning("Erreur détectée en opération unaire : "+std::string(e));
 			Pile::get_curPile()->push(param);
 			emit sig_updateUiStatusBar(e);
 		    }
@@ -100,7 +102,8 @@ void Motor::empile(QString lineSaisie)
 	    {
 		qDebug("Erreur détectée en opération unaire : ");
 		qDebug("Il y a moins d'un opérande dans la pile.");
-		emit sig_updateUiStatusBar("Erreur : il y a moins d'un opérande dans la pile.");
+		LogSystem::get_logger()->addWarning("Erreur détectée en opération unaire : il y a moins d'un opérande dans la pile.");
+		emit sig_updateUiStatusBar("Erreur détectée en opération unaire : il y a moins d'un opérande dans la pile.");
 	    }
 	}
 	else if(expr->getType() > TYPE_OPERATION_BINAIRE_START && expr->getType() < TYPE_OPERATION_BINAIRE_END)
@@ -165,8 +168,9 @@ void Motor::empile(QString lineSaisie)
 		    }
 		    catch(char const* e)
 		    {
-			qDebug("Erreur détectée en opération binaire 1 : ");
+			qDebug("Erreur détectée en opération binaire : ");
 			qDebug(e);
+			LogSystem::get_logger()->addInfo("Erreur détectée en opération binaire : "+std::string(e));
 			Pile::get_curPile()->push(param1);
 			Pile::get_curPile()->push(param2);
 			emit sig_updateUiStatusBar(e);
@@ -177,8 +181,9 @@ void Motor::empile(QString lineSaisie)
 	    }
 	    else
 	    {
-		qDebug("Erreur détectée en opération binaire 2 : ");
+		qDebug("Erreur détectée en opération binaire : ");
 		qDebug("Il y a moins de deux opérandes dans la pile.");
+		LogSystem::get_logger()->addWarning("Erreur détectée en opération binaire : il y a moins de deux opérandes sur la pile");
 		emit sig_updateUiStatusBar("Erreur : il y a moins de deux opérandes dans la pile.");
 	    }
 	}
@@ -188,6 +193,7 @@ void Motor::empile(QString lineSaisie)
 	qDebug("Erreur détectée en factory : ");
 	qDebug(e);
 	emit sig_updateUiStatusBar("Erreur : nous n'avons pas su interpréter la commande.");
+	LogSystem::get_logger()->addWarning("Erreur détectée en factory : "+std::string(e));
     }
 
     emit sig_updatePileView();
@@ -222,6 +228,7 @@ void Motor::eval()
 	{
 	    qDebug("Erreur détectée en opération d'évaluation' : ");
 	    qDebug(e);
+	    LogSystem::get_logger()->addWarning("Erreur détectée en opération d'évaluation' : "+std::string(e));
 	    Pile::get_curPile()->push(param);
 	    emit sig_updateUiStatusBar(e);
 	}
@@ -230,6 +237,7 @@ void Motor::eval()
     {
 	qDebug("Erreur détectée en opération d'evaluation' : ");
 	qDebug("Il y a moins d'un opérande dans la pile.");
+	LogSystem::get_logger()->addWarning("Erreur détectée en opération d'évaluation : il y a moins d'un opérande dans la pile.");
 	emit sig_updateUiStatusBar("Erreur : il y a moins d'un opérande dans la pile.");
     }
 }
