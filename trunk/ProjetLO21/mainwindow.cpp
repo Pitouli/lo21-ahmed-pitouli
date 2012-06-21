@@ -70,13 +70,14 @@ void MainWindow::slot_buttonClicked()
     if(button)
     {
 	QString s = ui->lineSaisie->text();
+	QRegExp regNombre = QRegExp("^(.* )?([0-9-]+[0-9-/\\$\\.]*)$");
 
 	if(button == ui->pushButton_space)
 	{
 	    bool nbWriting = false;
 	    bool nbWrited = false;
 
-	    if(s.contains(QRegExp("^(.* )?([0-9]+[0-9/\\$\\.]*)$"))) // Si on est en train d'écrire un nombre
+	    if(s.contains(regNombre)) // Si on est en train d'écrire un nombre
 	    {
 		for (int i = 0; i < ui->paramSaisie->count(); ++i)
 		    if(qobject_cast<QRadioButton*>(ui->paramSaisie->itemAt(i)->widget()) || qobject_cast<QCheckBox*>(ui->paramSaisie->itemAt(i)->widget()))
@@ -87,9 +88,9 @@ void MainWindow::slot_buttonClicked()
 		// Ecriture d'un réel non complexe
 		if(ui->radioButton_reel->isChecked() && !ui->checkBox_complexe->isChecked())
 		{
-		    if(s.contains(QRegExp("^(.* )?([0-9]+)$"))) // Si la partie entière est ecrite
+		    if(s.contains(QRegExp("^(.* )?(-?[0-9]+)$"))) // Si la partie entière est ecrite
 			ui->lineSaisie->setText(s+"."); // On ajoute le point
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\.$"))) // Si la partie entière et le point sont écrits
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)\\.$"))) // Si la partie entière et le point sont écrits
 		    {
 			ui->lineSaisie->setText(s+"0"); // On ajoute un zéro en partie décimale
 			nbWrited = true;
@@ -100,9 +101,9 @@ void MainWindow::slot_buttonClicked()
 		// Ecriture d'un rationnel non complexe
 		else if(ui->radioButton_rationnel->isChecked() && !ui->checkBox_complexe->isChecked())
 		{
-		    if(s.contains(QRegExp("^(.* )?([0-9]+)$"))) // Si le numérateur est écrit
+		    if(s.contains(QRegExp("^(.* )?(-?[0-9]+)$"))) // Si le numérateur est écrit
 			ui->lineSaisie->setText(s+"/"); // On ajoute le slash
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)/$"))) // Si le numérateur et le slash sont écrits
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)/$"))) // Si le numérateur et le slash sont écrits
 		    {
 			ui->lineSaisie->setText(s+"1"); // On ajoute un 1 au dénominateur
 			nbWrited = true;
@@ -113,9 +114,9 @@ void MainWindow::slot_buttonClicked()
 		// Ecriture d'un entier complexe
 		else if(ui->radioButton_entier->isChecked() && ui->checkBox_complexe->isChecked())
 		{
-		    if(s.contains(QRegExp("^(.* )?([0-9]+)$"))) // Si la partie réelle est ecrite
+		    if(s.contains(QRegExp("^(.* )?(-?[0-9]+)$"))) // Si la partie réelle est ecrite
 			ui->lineSaisie->setText(s+"$"); // On ajoute le dollars
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\$$"))) // Si la partie réelle et le dollar sont écrits
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)\\$-?$"))) // Si la partie réelle et le dollar sont écrits
 		    {
 			ui->lineSaisie->setText(s+"0"); // On ajoute un zéro en partie imaginaire
 			nbWrited = true;
@@ -126,20 +127,20 @@ void MainWindow::slot_buttonClicked()
 		// Ecriture d'un rationnel complexe
 		else if(ui->radioButton_rationnel->isChecked() && ui->checkBox_complexe->isChecked())
 		{
-		    if(s.contains(QRegExp("^(.* )?([0-9]+)$"))) // Si le numérateur réel est écrit
+		    if(s.contains(QRegExp("^(.* )?(-?[0-9]+)$"))) // Si le numérateur réel est écrit
 			ui->lineSaisie->setText(s+"/"); // On ajoute le slash
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)/$"))) // Si le numérateur réel et le slash sont écrits
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)/$"))) // Si le numérateur réel et le slash sont écrits
 			ui->lineSaisie->setText(s+"1$"); // On ajoute un 1 au dénominateur et un dollar pour la partie imaginaire
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)/([0-9]+)$"))) // Si le numérateur réel, le slash et le dénominateur réel sont écrits
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)/([0-9]+)$"))) // Si le numérateur réel, le slash et le dénominateur réel sont écrits
 			ui->lineSaisie->setText(s+"$"); // On ajoute un dollar pour la partie imaginaire
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)/([0-9]+)\\$$"))) // Si la partie réelle est écrite mais pas la partie imaginaire
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)/([0-9]+)\\$-?$"))) // Si la partie réelle est écrite mais pas la partie imaginaire
 		    {
 			ui->lineSaisie->setText(s+"0/1"); // On ajoute la partie imaginaire nulle
 			nbWrited = true;
 		    }
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)/([0-9]+)\\$([0-9]+)$"))) // Si la partie réelle et le numérateur imaginaire sont écrits
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)/([0-9]+)\\$(-?[0-9]+)$"))) // Si la partie réelle et le numérateur imaginaire sont écrits
 			ui->lineSaisie->setText(s+"/"); // On ajoute le slash
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)/([0-9]+)\\$([0-9]+)/$"))) // s'il ne manque que le dénominateur imaginaire
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)/([0-9]+)\\$(-?[0-9]+)/$"))) // s'il ne manque que le dénominateur imaginaire
 		    {
 			ui->lineSaisie->setText(s+"1"); // On ajoute 1 par défaut
 			nbWrited = true;
@@ -150,20 +151,20 @@ void MainWindow::slot_buttonClicked()
 		// Ecriture d'un réel complexe
 		else if(ui->radioButton_reel->isChecked() && ui->checkBox_complexe->isChecked())
 		{
-		    if(s.contains(QRegExp("^(.* )?([0-9]+)$"))) // Si la partie entière réelle est écrite
+		    if(s.contains(QRegExp("^(.* )?(-?[0-9]+)$"))) // Si la partie entière réelle est écrite
 			ui->lineSaisie->setText(s+"."); // On ajoute le point
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\.$"))) // Si la partie entière réelle et le point sont écrits
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)\\.$"))) // Si la partie entière réelle et le point sont écrits
 			ui->lineSaisie->setText(s+"0$"); // On ajoute un 0 au dénominateur et un dollar pour la partie imaginaire
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\.([0-9]+)$"))) // Si la partie entière réelle, le point et la partie décimale réelle sont écrits
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)\\.([0-9]+)$"))) // Si la partie entière réelle, le point et la partie décimale réelle sont écrits
 			ui->lineSaisie->setText(s+"$"); // On ajoute un dollar pour la partie imaginaire
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\.([0-9]+)\\$$"))) // Si la partie réelle est écrite mais pas la partie imaginaire
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)\\.([0-9]+)\\$-?$"))) // Si la partie réelle est écrite mais pas la partie imaginaire
 		    {
 			ui->lineSaisie->setText(s+"0.0"); // On ajoute la partie imaginaire nulle
 			nbWrited = true;
 		    }
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\.([0-9]+)\\$([0-9]+)$"))) // Si la partie réelle et la partie entière imaginaire sont écrits
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)\\.([0-9]+)\\$(-?[0-9]+)$"))) // Si la partie réelle et la partie entière imaginaire sont écrits
 			ui->lineSaisie->setText(s+"."); // On ajoute le point
-		    else if(s.contains(QRegExp("^(.* )?([0-9]+)\\.([0-9]+)\\$([0-9]+)\\.$"))) // s'il ne manque que la aprtie décimale imaginaire
+		    else if(s.contains(QRegExp("^(.* )?(-?[0-9]+)\\.([0-9]+)\\$(-?[0-9]+)\\.$"))) // s'il ne manque que la aprtie décimale imaginaire
 		    {
 			ui->lineSaisie->setText(s+"0"); // On ajoute 0 par défaut
 			nbWrited = true;
@@ -233,7 +234,7 @@ void MainWindow::slot_buttonClicked()
 	}
 	else // Si le bouton n'est ni un chiffre ni la barre espace
 	{
-	    if(!s.contains(QRegExp("^(.* )?([0-9]+[0-9/\\$\\.]*)$"))) // Si on est en train d'écrire un nombre
+	    if(!s.contains(regNombre)) // Si on est pas en train d'écrire un nombre
 	    {
 		if(!s.contains(QRegExp("(?: $)|(?:^$)"))) // S'il n'y a pas déjà un espace
 		{
@@ -277,11 +278,15 @@ void MainWindow::slot_buttonClicked()
 	    {
 		if(button == ui->pushButton_moins)
 		{
+		    QRegExp regNbNegatif = QRegExp("^(.*[ \\$])?\\-([0-9/\\.]+)$");
+		    QRegExp regNbPositif = QRegExp("^(.*[ \\$])?([0-9/\\.]+)$");
 
-		    if(s.contains(QRegExp("^(.*[ \\$])?([0-9/\\.]+)$"))) // Si on est en train d'écrire un nombre
-		    {
-
-		    }
+		    if(s.contains(regNbNegatif)) // Si on est en train d'écrire un nombre
+			ui->lineSaisie->setText(regNbNegatif.cap(1)+regNbNegatif.cap(2));
+		    else if(s.contains(regNbPositif))
+			ui->lineSaisie->setText(regNbPositif.cap(1)+"-"+regNbPositif.cap(2));
+		    else
+			ui->statusBar->showMessage("Finissez d'écrire votre nombre !", 3000);
 		}
 		else
 		    ui->statusBar->showMessage("Finissez d'écrire votre nombre !", 3000);
