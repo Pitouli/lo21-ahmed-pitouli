@@ -27,7 +27,7 @@ Factory::~Factory()
 expression::Expression* Factory::analyze(QString const adn) const
 {
     QRegExp regExpressionConcrete("'(.+)'");
-    QRegExp regNombre("^(?:(?:((?:-)?[0-9]+)(?:\\$((?:-)?[0-9]+))?)|(?:((?:-)?[0-9]+\\.[0-9]+)(?:\\$((?:-)?[0-9]+\\.[0-9]+))?)|(?:((?:-)?[0-9]+/[0-9]+)(?:\\$((?:-)?[0-9]+/[0-9]+))?))$");
+    QRegExp regNombre("^(?:(?:((?:-)?[0-9]+)(?:\\$((?:-)?[0-9]+))?)|(?:((?:-)?[0-9]+\\.[0-9]+)(?:\\$((?:-)?[0-9]+\\.[0-9]+))?)|(?:((?:-)?[0-9]\\.[0-9]+e\\+[0-9]+)(?:\\$((?:-)?[0-9]\\.[0-9]+e\\+[0-9]+))?)|(?:((?:-)?[0-9]+/[0-9]+)(?:\\$((?:-)?[0-9]+/[0-9]+))?))$");
     QRegExp regOperateur("[A-Za-z]+|!|%|\\+|\\-|\\*|/");
 
     if(regExpressionConcrete.exactMatch(adn))
@@ -52,7 +52,7 @@ expression::Nombre* Factory::analyzeNombre(QString const adn) const
 {
     QRegExp regRelationnel("^(?:((?:-)?[0-9]+)/((?:-)?[0-9]+))$");
     QRegExp regEntier("^((?:-)?[0-9]+)$");
-    QRegExp regReel("^((?:-)?(?:[0-9]+)\\.(?:[0-9]+))$");
+    QRegExp regReel("^((?:-)?(?:[0-9]+)\\.(?:[0-9]+))|(?:((?:-)?[0-9]\\.[0-9]+e\\+[0-9]+)(?:\\$((?:-)?[0-9]\\.[0-9]+e\\+[0-9]+))?)$");
     QRegExp regComplexe("(.+)\\$(.+)");
 
     if(regRelationnel.exactMatch(adn))
@@ -61,7 +61,12 @@ expression::Nombre* Factory::analyzeNombre(QString const adn) const
     else if(regEntier.exactMatch(adn))
 	return new expression::Entier(regEntier.cap(1).toInt());
     else if(regReel.exactMatch(adn))
-	return new expression::Reel(regReel.cap(1).toDouble());
+	if(regReel.cap(1) != "")
+	    return new expression::Reel(regReel.cap(1).toDouble());
+	else if(regReel.cap(2) != "")
+	    return new expression::Reel(regReel.cap(2).toDouble());
+	else
+	    return new expression::Reel();
     else if(regComplexe.exactMatch(adn))
     {
 	expression::Nombre* nb1 = this->analyzeNombre(regComplexe.cap(1));
