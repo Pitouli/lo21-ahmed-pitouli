@@ -15,15 +15,13 @@ SOURCES += main.cpp\
     expression.cpp \
     pile.cpp \
     factory.cpp \
-    motor.cpp \
-    logsystem.cpp
+    motor.cpp
 
 HEADERS  += mainwindow.h \
     expression.h \
     pile.h \
     factory.h \
-    motor.h \
-    logsystem.h
+    motor.h
 
 FORMS    += mainwindow.ui
 
