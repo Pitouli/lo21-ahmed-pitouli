@@ -34,6 +34,7 @@ public:
     void undo();
     void redo();
     void nouveau();
+    void razFile();
     vector<string> explode(const std::string& str, char c);
     void push(expression::Expression* const expr) { this->append(expr); }
     expression::Expression* pop() { return this->takeLast(); }

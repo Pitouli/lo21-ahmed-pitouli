@@ -81,6 +81,8 @@ using namespace std;
 
 namespace expression{
 
+    //Classe abstraite qui regroupe tous les types de nombre
+    //et d'operation
     class Expression{
         private:
            int type;
@@ -97,6 +99,7 @@ namespace expression{
             string exp;
     };
 
+    //Expression non evaluée
     class ExpressionConcrete: public Expression{
         private:
             string exp;
@@ -187,7 +190,6 @@ namespace expression{
             Entier* denom;
         public:
             Rationnel(Entier* _num=0, Entier* _denom=0);
-            //Rationnel(int _num, int _denom);
             Rationnel(const Nombre& _num, const Nombre& _denom);
             Rationnel(const Rationnel& c);
             Rationnel(const Nombre& n);
@@ -201,15 +203,20 @@ namespace expression{
             Rationnel& operator=(const Rationnel& n);
             Rationnel* clone()const{return new Rationnel(*this);}
             string toString()const;
+
+            //accesseurs et mutateurs
             const Entier* getNum()const{return num;}
             const Entier* getDenom()const{return denom;}
             Entier getNumVal()const{return *num;}
             Entier getDenomVal()const{return *denom;}
             void setNum(int _val){num->setVal(_val);}
             void setDenom(int _val){denom->setVal(_val);}
+
+
             NombreE* operation(){return NULL;}
     };
 
+    //Classe abstraite qui regoupe toutes les operations
     class Operation: public Expression{
         private:
             Expression* res;

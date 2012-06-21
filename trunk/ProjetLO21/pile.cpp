@@ -63,9 +63,16 @@ void Pile::recharger_pile(){
         if(sauv.size()>0){
             QString temp;
             vector<string> pile1=explode(sauv[sauv.size()-1],'#');
-            for(vector<string>::iterator i = pile1.begin(); i != pile1.end(); ++i){
-                temp=(*i).c_str();
-                get_curPile()->push(Factory::get_factory()->analyze(temp));
+            try{
+                for(vector<string>::iterator i = pile1.begin(); i != pile1.end(); ++i){
+                    temp=(*i).c_str();
+                    get_curPile()->push(Factory::get_factory()->analyze(temp));
+                }
+            }
+            catch(const char* e){
+                qDebug("catch");
+                razFile();
+                get_curPile()->clear();
             }
         }
         indiceSauv=sauv.size()-1;
@@ -73,6 +80,14 @@ void Pile::recharger_pile(){
     }
 }
 
+void Pile::razFile(){
+    string filename = "sauvegarde.txt";
+    // ouverture en écriture avec effacement du fichier ouvert
+    ofstream fichier(filename.c_str(), ios::out | ios::trunc);
+    fichier.close();
+    while(! sauv.empty())
+        sauv.pop_back();
+}
 
 void Pile::undo(){
     if(indiceSauv>0){
@@ -85,7 +100,6 @@ void Pile::undo(){
                 temp=(*i).c_str();
                 get_curPile()->push(Factory::get_factory()->analyze(temp));
             }
-            //emit sig_updatePileViewAfterReloading();
         }
     }
 }
@@ -116,6 +130,7 @@ void Pile::clear()
 	expression::Expression* expr = this->takeFirst(); // On supprime le 1er élément de la pile
 	delete expr; // On supprime l'élément de la mémoire
     }
+    razFile();
 }
 
 void Pile::swap()
