@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu 21. Jun 16:17:23 2012
+** Created: Thu 21. Jun 17:18:09 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -511,7 +511,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget_saisie->setCurrentIndex(0);
+        tabWidget_saisie->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -821,7 +821,7 @@ public:
 "<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">Ctrl + Suppr</span></p></body></html>", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         pushButton_clear->setText(QApplication::translate("MainWindow", "CLEAR", 0, QApplication::UnicodeUTF8));
-        pushButton_clear->setShortcut(QApplication::translate("MainWindow", "Ctrl+Del", 0, QApplication::UnicodeUTF8));
+        pushButton_clear->setShortcut(QApplication::translate("MainWindow", "Ctrl+C", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         pushButton_sum->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -843,7 +843,6 @@ public:
 "<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">Retour (entr\303\251e)</span></p></body></html>", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         pushButton_dup->setText(QApplication::translate("MainWindow", "DUP", 0, QApplication::UnicodeUTF8));
-        pushButton_dup->setShortcut(QApplication::translate("MainWindow", "Return", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         pushButton_mean->setToolTip(QApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -865,7 +864,6 @@ public:
 "<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; font-style:italic;\">Rac.:  </span><span style=\" font-size:8pt; font-weight:600;\">Suppr</span></p></body></html>", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         pushButton_drop->setText(QApplication::translate("MainWindow", "DROP", 0, QApplication::UnicodeUTF8));
-        pushButton_drop->setShortcut(QApplication::translate("MainWindow", "Del", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabText(tabWidget_saisie->indexOf(tab_pile), QApplication::translate("MainWindow", "&Pile", 0, QApplication::UnicodeUTF8));
         tabWidget_saisie->setTabToolTip(tabWidget_saisie->indexOf(tab_pile), QApplication::translate("MainWindow", "Fonctions pour agir sur la pile.\n"
 "Raccourci : P", 0, QApplication::UnicodeUTF8));

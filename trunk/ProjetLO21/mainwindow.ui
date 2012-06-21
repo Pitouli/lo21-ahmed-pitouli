@@ -165,7 +165,7 @@ p, li { white-space: pre-wrap; }
          <string/>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="tab_basique">
          <property name="accessibleName">
@@ -748,7 +748,7 @@ p, li { white-space: pre-wrap; }
                <string>CLEAR</string>
               </property>
               <property name="shortcut">
-               <string>Ctrl+Del</string>
+               <string>Ctrl+C</string>
               </property>
              </widget>
             </item>
@@ -784,9 +784,6 @@ p, li { white-space: pre-wrap; }
               <property name="text">
                <string>DUP</string>
               </property>
-              <property name="shortcut">
-               <string>Return</string>
-              </property>
              </widget>
             </item>
             <item row="2" column="0">
@@ -820,9 +817,6 @@ p, li { white-space: pre-wrap; }
               </property>
               <property name="text">
                <string>DROP</string>
-              </property>
-              <property name="shortcut">
-               <string>Del</string>
               </property>
              </widget>
             </item>
