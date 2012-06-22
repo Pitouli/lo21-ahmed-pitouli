@@ -68,6 +68,12 @@
 
 // FIN DE DEFINITION DES TYPES DE VALEURS
 
+/**
+  *\file expression.h
+  *\brief Toutes les expressions utilisees par la calculatrice
+  *\version 1.42
+  */
+
 #include <iostream>
 #include <cmath>
 #include <sstream>
@@ -81,16 +87,38 @@ using namespace std;
 
 namespace expression{
 
-    //Classe abstraite qui regroupe tous les types de nombre
-    //et d'operation
+/**
+  *\class Expression
+  *\brief Classe abstraite qui regroupe tous les types de nombre et d'operation
+  */
+    //Classe abstraite qui regroupe tous les types de nombre et d'operation
     class Expression{
         private:
            int type;
         public:
             Expression(int _type=TYPE_EXPRESSION):type(_type){}
+            /**
+              *\brief operation
+              * execute l'operation associee a la classe
+              *\return Expression* obtenu à partir du resultat de l'operation. Throw des erreurs en cas de problème.
+              */
             virtual Expression* operation()=0;
+
+            /**
+              *\brief clone
+              * clone l'element sur lequel on applique la fonction
+              *\return un pointeur du meme type que l'element sur lequel on applique la fonction. Throw des erreurs en cas de problème.
+              */
             virtual Expression* clone()const=0;
+
+            /**
+              *\brief toString
+              * Construit une chaine de caractere correspondant à l'expression
+              *\return string cree.
+              */
             virtual string toString()const=0;
+
+
             int getType()const {return type;}
     };
 
@@ -99,10 +127,16 @@ namespace expression{
             string exp;
     };
 
+
+    /**
+      *\class ExpressionConcrete
+      *\brief Expression non evaluée
+      */
+
     //Expression non evaluée
     class ExpressionConcrete: public Expression{
         private:
-            string exp;
+            string exp; /**< chaine de caractere qui contient l'expression concrete */
         public:
             ExpressionConcrete(string _exp=""):Expression(TYPE_EXPRESSION_C),exp(_exp){}
             ExpressionConcrete* clone()const{return new ExpressionConcrete(*this);}
@@ -111,6 +145,10 @@ namespace expression{
 	    string getExp()const{return exp;}
     };
 
+    /**
+      *\class Nombre
+      *\brief Classe abstraite qui regroupe tous les types de nombre
+      */
     class Nombre: public Expression{
         public:
             Nombre(int _type=TYPE_NOMBRE):Expression(_type){}
@@ -119,9 +157,13 @@ namespace expression{
             Nombre* operation()=0;
     };
 
+    /**
+      *\class Reel
+      *\brief Classe qui contient les reels
+      */
     class Reel: public Nombre{
         private:
-            double val;
+            double val; /**< double qui contient la valeur du reel */
         public:
             Reel(double _val=0):Nombre(TYPE_REEL),val(_val){}
             Reel(const Nombre& n);
@@ -135,10 +177,14 @@ namespace expression{
             Nombre* operation(){return NULL;}
     };
 
+    /**
+      *\class Complexe
+      *\brief Classe qui contient les complexes
+      */
     class Complexe: public Nombre{
         private:
-            Nombre* partieR;
-            Nombre* partieI;
+            Nombre* partieR; /**< Partie reel du complexe */
+            Nombre* partieI; /**< Partie imaginaire du complexe */
         public:
             Complexe(Nombre* _partieR=0, Nombre* _partieI=0);
             Complexe(const Nombre& _partieR, const Nombre& _partieI);
@@ -159,6 +205,10 @@ namespace expression{
             Nombre* operation(){return NULL;}
     };
 
+    /**
+      *\class NombreE
+      *\brief Classe abstraite qui regroupe tous les types de nombre qui contiennent des entiers
+      */
     class NombreE: public Nombre{
         public:
             NombreE(int _type=20):Nombre(_type){}
@@ -167,9 +217,13 @@ namespace expression{
             NombreE* operation()=0;
     };
 
+    /**
+      *\class Entier
+      *\brief Classe qui contient les entiers
+      */
     class Entier: public NombreE{
         private:
-            int val;
+            int val; /**< int qui contient la valeur de l'entier */
         public:
             Entier(int _val=0):NombreE(TYPE_ENTIER),val(_val){}
             Entier(const Nombre& n);
@@ -184,10 +238,14 @@ namespace expression{
             NombreE* operation(){return NULL;}
     };
 
+    /**
+      *\class Rationnel
+      *\brief Classe qui contient les rationnels
+      */
     class Rationnel: public NombreE{
         private:
-            Entier* num;
-            Entier* denom;
+            Entier* num; /**< Numerateur du rationnel */
+            Entier* denom; /**< Denominateur du rationnel */
         public:
             Rationnel(Entier* _num=0, Entier* _denom=0);
             Rationnel(const Nombre& _num, const Nombre& _denom);
@@ -216,6 +274,10 @@ namespace expression{
             NombreE* operation(){return NULL;}
     };
 
+    /**
+      *\class Operation
+      *\brief Classe abstraite qui regoupe toutes les operations
+      */
     //Classe abstraite qui regoupe toutes les operations
     class Operation: public Expression{
         private:
@@ -229,6 +291,10 @@ namespace expression{
             Expression* getRes()const{return res;}
     };
 
+    /**
+      *\class OperationNonaire
+      *\brief Classe abstraite qui regoupe toutes les operations nonaires
+      */
     class OperationNonaire: public Operation{
 	public:
         OperationNonaire(int _type=TYPE_OPERATION):Operation(_type){}
@@ -237,6 +303,10 @@ namespace expression{
         virtual string toString()const=0;
     };
 
+    /**
+      *\class OperationUnaire
+      *\brief Classe abstraite qui regoupe toutes les operations unaires
+      */
     class OperationUnaire: public Operation{
         private:
             const Expression* exp;
@@ -249,6 +319,10 @@ namespace expression{
             const Expression* getExp()const{return exp;}
     };
 
+    /**
+      *\class OperationBinaire
+      *\brief Classe abstraite qui regoupe toutes les operations binaires
+      */
     class OperationBinaire: public Operation{
         private:
             const Expression* expLeft;
