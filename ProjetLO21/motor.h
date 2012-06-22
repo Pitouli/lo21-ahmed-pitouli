@@ -1,6 +1,12 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 
+/**
+  *\file motor.h
+  *\brief Système de coordination des modules calculatrice
+  *\version 1.33.7.42
+  */
+
 #include <QString>
 #include <QObject>
 #include "mainwindow.h"
@@ -11,6 +17,12 @@
 #define PARAM_RADIAN 1
 #define PARAM_DEGRE 0
 
+/**
+  *\class Motor
+  *\brief Moteur de la calculatrice
+  * Classe permettant de faire interagir entre eux les différents éléments de la calculatrice
+  * Moteur est un singleton.
+  */
 class Motor : public QObject
 {
     Q_OBJECT
